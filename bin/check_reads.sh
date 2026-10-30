@@ -12,6 +12,7 @@
 # plausible-looking but wrong counts.
 #
 # Writes <out_tsv> with columns: r1<TAB>cdna (one row per lane chunk).
+# find -L: Nextflow stages the input folder as a symlink.
 set -euo pipefail
 
 dir=${1:?fastq dir}
@@ -24,20 +25,20 @@ case "$declared" in
   *) echo "ERROR: chemistry must be v2 or v3, got '$declared'" >&2; exit 2 ;;
 esac
 
-r1_files=$(find "$dir" -name '*_R1_*.fastq.gz' | sort)
+r1_files=$(find -L "$dir" -name '*_R1_*.fastq.gz' | sort)
 if [ -z "$r1_files" ]; then
   echo "ERROR: no *_R1_*.fastq.gz files under $dir" >&2
   exit 1
 fi
 
-if [ -n "$(find "$dir" -name '*_R3_*.fastq.gz' | head -n 1)" ]; then
+if [ -n "$(find -L "$dir" -name '*_R3_*.fastq.gz' | head -n 1)" ]; then
   cdna_tag=R3
 else
   cdna_tag=R2
 fi
 
 : > "$out"
-for r1 in $r1_files; do
+while IFS= read -r r1; do
   cdna=${r1/_R1_/_${cdna_tag}_}
   if [ ! -s "$cdna" ]; then
     echo "ERROR: no ${cdna_tag} partner for $r1" >&2
@@ -52,7 +53,7 @@ for r1 in $r1_files; do
     exit 1
   fi
   if [ "$(printf '%s\n' "$r1_lens" | wc -l)" -ne 1 ] || [ "$r1_lens" -ne "$expected" ]; then
-    echo "ERROR: $r1 has barcode-read length(s) $(echo $r1_lens) but chemistry $declared needs $expected." >&2
+    echo "ERROR: $r1 has barcode-read length(s) $(tr '\n' ' ' <<< "$r1_lens")but chemistry $declared needs $expected." >&2
     echo "       Check the chemistry column of the samplesheet for this sample." >&2
     exit 1
   fi
@@ -61,6 +62,6 @@ for r1 in $r1_files; do
     exit 1
   fi
   printf '%s\t%s\n' "$r1" "$cdna" >> "$out"
-done
+done <<< "$r1_files"
 
 echo "chemistry $declared confirmed (R1 = $expected nt); cDNA read is $cdna_tag; $(wc -l < "$out") file pair(s)"

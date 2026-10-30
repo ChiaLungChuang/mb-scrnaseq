@@ -1,0 +1,93 @@
+nextflow_pipeline {
+
+    name "mb-scrnaseq phase 1 on the synthetic dataset"
+    script "../main.nf"
+
+    test("re-quantification reproduces the synthetic ground truth") {
+        when {
+            params {
+                outdir = "$outputDir"
+            }
+        }
+        then {
+            assert workflow.success
+
+            def verdict = new groovy.json.JsonSlurper().parse(file("$outputDir/concordance/concordance_summary.verdict.json"))
+            assert verdict.passed
+            assert verdict.n_samples == 2
+
+            // Both bamtofastq layouts were exercised.
+            def logs = file("$outputDir/reads_check").listFiles().collect { f -> f.text }.join('\n')
+            assert logs.contains('cDNA read is R2')
+            assert logs.contains('cDNA read is R3')
+
+            // Every true cell's UMI total matches the generator's truth exactly.
+            def truth = new groovy.json.JsonSlurper().parse(file("${projectDir}/tests/data/truth.json"))
+            ['sampleA', 'sampleB'].each { s ->
+                def rows = path("$outputDir/concordance/${s}.per_cell.tsv.gz").linesGzip.drop(1)*.split('\t')
+                assert rows.size() == 20
+                rows.each { r -> assert (r[1] as double) == truth[s].cells[r[0]].total_umi }
+
+                // QC flags exactly the three planted low-quality cells.
+                def qc = path("$outputDir/qc/${s}.qc_cells.tsv.gz").linesGzip
+                def header = qc[0].split('\t') as List
+                def flagged = qc.drop(1)*.split('\t').findAll { r -> r[header.indexOf('flag_any')] == 'TRUE' }.collect { r -> r[0].split('-')[0] } as Set
+                def planted = truth[s].cells.findAll { _cb, v -> v.low_quality }.keySet()
+                assert flagged == planted
+            }
+
+            def prov = new groovy.json.JsonSlurper().parse(file("$outputDir/pipeline_info/run_provenance.json"))
+            assert prov.success
+            assert prov.preregistration.sha256 ==~ /[0-9a-f]{64}/
+            assert file("$outputDir/pipeline_info/software_versions.yml").text.count('STARSOLO') == 1
+        }
+    }
+
+    test("a sample declared with the wrong chemistry is refused") {
+        when {
+            new File("$outputDir").mkdirs()
+            new File("$outputDir/wrong_chemistry.csv").text =
+                "sample,bam,chemistry,published_label\nsampleA,${projectDir}/tests/data/sampleA.bam,v2,MB001\n"
+            params {
+                outdir = "$outputDir"
+                input  = "$outputDir/wrong_chemistry.csv"
+                whitelist_v2 = "${projectDir}/tests/data/whitelist_v3.txt"
+            }
+        }
+        then {
+            assert workflow.failed
+            assert (workflow.stdout + workflow.stderr).join('\n').contains('chemistry v2 needs 26')
+        }
+    }
+
+    test("concordance refuses to run against unlocked criteria") {
+        when {
+            params {
+                outdir = "$outputDir"
+                allow_unlocked_criteria = false
+            }
+        }
+        then {
+            assert workflow.failed
+            assert (workflow.stdout + workflow.stderr).join('\n').contains('not pre-registered')
+        }
+    }
+
+    test("a duplicated sample name is refused before anything runs") {
+        when {
+            def bam = "${projectDir}/tests/data/sampleA.bam"
+            new File("$outputDir").mkdirs()
+            new File("$outputDir/dup.csv").text =
+                "sample,bam,chemistry,published_label\nsampleA,${bam},v3,MB001\nsampleA,${bam},v3,MB001\n"
+            params {
+                outdir = "$outputDir"
+                input  = "$outputDir/dup.csv"
+            }
+        }
+        then {
+            assert workflow.failed
+            assert !(workflow.stdout + workflow.stderr).join('\n').contains('BAMTOFASTQ')
+            assert (workflow.stdout + workflow.stderr).join('\n').contains("duplicate sample 'sampleA'")
+        }
+    }
+}

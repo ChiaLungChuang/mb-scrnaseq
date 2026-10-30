@@ -1,0 +1,19 @@
+# Parameters for the real GSE155446 run. Copy, fill in the paths, and pass
+# with:  nextflow run . -profile stjude -params-file my_params.yaml -resume
+# Replace every <...> placeholder; see docs/RUNBOOK.md.
+
+input: <path>/samplesheet.csv
+outdir: <path>/results
+
+# First run: build the index from FASTA + GTF. It is published to
+# <outdir>/reference/star_index; afterwards set star_index to that path and
+# remove genome_fasta / genome_gtf.
+genome_fasta: <path>/refdata-<version>/fasta/genome.fa
+genome_gtf: <path>/refdata-<version>/genes/genes.gtf
+# star_index: <outdir>/reference/star_index
+star_sjdb_overhang: 100
+
+whitelist_v2: <path>/737K-august-2016.txt
+whitelist_v3: <path>/3M-february-2018.txt.gz
+
+published_counts: <path>/GSE155446_human_raw_counts.csv.gz

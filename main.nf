@@ -106,17 +106,23 @@ workflow {
             error("samples use chemistry ${c} but --whitelist_${c} is not set")
         }
     }
-    def prereg = doConcordance ? checkPreregistration(params.criteria, params.allow_unlocked_criteria) : null
+    if (doConcordance) {
+        // Recorded at launch, so the gate's view of the criteria is kept even if the run fails.
+        writeJson("${params.outdir}/pipeline_info/preregistration_check.json",
+                  checkPreregistration(params.criteria, params.allow_unlocked_criteria))
+    }
 
     def lib = channel.value(file("${projectDir}/lib/R", checkIfExists: true))
 
     // Reference index: reuse a pre-built one when given, otherwise build it.
     def index
+    def versions = channel.empty()
     if (params.star_index) {
         index = channel.value(file(params.star_index, checkIfExists: true))
     } else {
         STAR_GENOMEGENERATE(file(params.genome_fasta, checkIfExists: true), file(params.genome_gtf, checkIfExists: true))
         index = STAR_GENOMEGENERATE.out.index
+        versions = versions.mix(STAR_GENOMEGENERATE.out.versions)
     }
 
     BAMTOFASTQ(channel.fromList(samples))
@@ -135,37 +141,50 @@ workflow {
         SUMMARISE_CONCORDANCE(CONCORDANCE.out.json.map { _meta, json -> json }.collect(), lib)
     }
 
-    BAMTOFASTQ.out.versions
-        .mix(STARSOLO.out.versions, SAMPLE_QC.out.versions)
+    // One entry per tool: every sample writes an identical versions.yml.
+    versions
+        .mix(BAMTOFASTQ.out.versions, STARSOLO.out.versions, SAMPLE_QC.out.versions)
+        .map { f -> f.text }
         .unique()
         .collectFile(name: 'software_versions.yml', storeDir: "${params.outdir}/pipeline_info", sort: true, newLine: false)
 
-    workflow.onComplete {
-        def info = [
-            pipeline: workflow.manifest.name,
-            pipeline_version: workflow.manifest.version,
-            git_commit: workflow.commitId ?: gitHead(projectDir),
-            run_name: workflow.runName,
-            session_id: workflow.sessionId.toString(),
-            started: workflow.start.toString(),
-            completed: workflow.complete.toString(),
-            success: workflow.success,
-            exit_status: workflow.exitStatus,
-            nextflow_version: workflow.nextflow.version.toString(),
-            profile: workflow.profile,
-            container_engine: workflow.containerEngine,
-            command_line: workflow.commandLine,
-            params: params.findAll { _k, v -> !(v instanceof Closure) }.collectEntries { k, v -> [(k): v?.toString()] },
-            preregistration: prereg,
-        ]
-        def out = file("${params.outdir}/pipeline_info/run_provenance.json")
-        out.parent.mkdirs()
-        out.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(info))
-        log.info("Provenance written to ${out}")
-        if (doConcordance && workflow.success) {
-            log.info("Concordance verdict: ${params.outdir}/concordance/concordance_summary.verdict.json")
-        }
+    onComplete:
+    def preregFile = file("${params.outdir}/pipeline_info/preregistration_check.json")
+    def info = [
+        pipeline: workflow.manifest.name,
+        pipeline_version: workflow.manifest.version,
+        git_commit: workflow.commitId ?: gitHead(projectDir),
+        git_uncommitted_changes: gitDirty(projectDir),
+        run_name: workflow.runName,
+        session_id: workflow.sessionId.toString(),
+        started: workflow.start.toString(),
+        completed: workflow.complete.toString(),
+        success: workflow.success,
+        exit_status: workflow.exitStatus,
+        nextflow_version: workflow.nextflow.version.toString(),
+        profile: workflow.profile,
+        container_engine: workflow.containerEngine,
+        command_line: workflow.commandLine,
+        params: params.findAll { _k, v -> !(v instanceof Closure) }.collectEntries { k, v -> [(k): v?.toString()] },
+        preregistration: preregFile.exists() ? new groovy.json.JsonSlurper().parseText(preregFile.text) : null,
+    ]
+    writeJson("${params.outdir}/pipeline_info/run_provenance.json", info)
+    log.info("Provenance written to ${params.outdir}/pipeline_info/run_provenance.json")
+    if (params.published_counts && workflow.success) {
+        log.info("Concordance verdict: ${params.outdir}/concordance/concordance_summary.verdict.json")
     }
+}
+
+def writeJson(path, obj) {
+    def out = file(path)
+    out.parent.mkdirs()
+    out.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(obj))
+}
+
+// True when the checkout has uncommitted changes (null if git is unavailable).
+def gitDirty(dir) {
+    def r = runCmd(['git', '-C', dir.toString(), 'status', '--porcelain', '--untracked-files=no'])
+    return r.code == 0 ? (r.out as boolean) : null
 }
 
 // Run a command and capture its exit code and trimmed stdout. A missing
