@@ -1,0 +1,47 @@
+# Pre-registered acceptance criteria for mb-scrnaseq.
+#
+# These thresholds decide whether our re-quantification reproduces the
+# published GSE155446 counts. They must be fixed BEFORE the first real run:
+# review them, change `status` to `locked`, and commit this file. The
+# pipeline refuses to run the concordance step on real data until the file
+# is locked, tracked by git and has no uncommitted changes, and it records
+# this file's SHA-256 and last commit in every run's provenance.
+#
+# Once locked, do not edit thresholds to make a result pass. If a criterion
+# turns out to be wrong in principle, change it in a new commit with the
+# reason in the commit message, and report both the original and the
+# revised verdict.
+
+status: proposed          # proposed -> locked
+
+phase1_concordance:
+  # Scope: each re-quantified sample, compared with the published matrix on
+  # the cells the authors kept (matched by barcode) and the genes both
+  # matrices contain. Our raw (unfiltered) STARsolo matrix is used, so
+  # differences in cell calling do not count against agreement; how many
+  # published cells STARsolo's own filter also calls is reported but not
+  # judged.
+
+  # C1. Same reads -> the authors' cell barcodes must be present in our raw
+  # matrix. A miss here means a wrong sample, chemistry or whitelist.
+  barcode_recovery_min: 0.99
+
+  # C2. Per-cell UMI totals: rank agreement, and no systematic deficit or
+  # excess (median ours/published). Totals use shared genes only.
+  umi_total_spearman_min: 0.95
+  umi_total_median_ratio: [0.85, 1.15]
+
+  # C3. Sample-level expression: Pearson correlation of log1p(CPM) of the
+  # pseudobulk (all matched cells summed) over shared genes.
+  pseudobulk_pearson_min: 0.98
+
+  # C4. Cell-level expression: median over cells of the Pearson correlation
+  # of log1p counts over shared genes.
+  per_cell_pearson_median_min: 0.90
+
+  # A sample passes when it meets C1-C4. Phase 1 passes when every
+  # re-quantified sample passes.
+
+# Phase 2 (integration, annotation, copy-number inference) criteria are
+# written separately, after phase 1, from the published metadata's column
+# names only, and locked before any phase 2 result is looked at.

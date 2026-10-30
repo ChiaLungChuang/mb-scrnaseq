@@ -1,0 +1,10 @@
+# Nextflow run state and outputs
+work/
+.nextflow/
+.nextflow.log*
+results*/
+.nf-test/
+.nf-test.log
+# R
+.Rhistory
+.RData

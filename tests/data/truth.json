@@ -1,0 +1,696 @@
+{
+ "sampleA": {
+  "published_label": "MB001",
+  "chemistry": "v3",
+  "cdna_read": "R2",
+  "n_reads": 11886,
+  "cells": {
+   "AAATTGAATACTGGCC": {
+    "total_umi": 90,
+    "low_quality": true,
+    "counts": {
+     "GENE2": 13,
+     "MT-CO1": 30,
+     "MT-ND1": 27,
+     "GENE3": 8,
+     "GENE1": 12
+    }
+   },
+   "AACATGGAGGGACATC": {
+    "total_umi": 74,
+    "low_quality": true,
+    "counts": {
+     "GENE1": 12,
+     "MT-ND1": 24,
+     "MT-CO1": 19,
+     "GENE2": 9,
+     "GENE3": 10
+    }
+   },
+   "AACCCTGGTTAGCAGA": {
+    "total_umi": 81,
+    "low_quality": true,
+    "counts": {
+     "MT-ND1": 20,
+     "MT-CO1": 22,
+     "GENE1": 19,
+     "GENE2": 11,
+     "GENE3": 9
+    }
+   },
+   "AACTATCCCAACGTCT": {
+    "total_umi": 327,
+    "low_quality": false,
+    "counts": {
+     "GENE2": 30,
+     "GENE6": 37,
+     "GENE8": 27,
+     "GENE1": 28,
+     "GENE4": 31,
+     "GENE3": 31,
+     "GENE5": 33,
+     "GENE9": 33,
+     "GENE10": 22,
+     "GENE7": 37,
+     "MT-ND1": 13,
+     "MT-CO1": 5
+    }
+   },
+   "AATGGAATTAATCAAT": {
+    "total_umi": 341,
+    "low_quality": false,
+    "counts": {
+     "GENE8": 35,
+     "GENE1": 27,
+     "GENE5": 36,
+     "GENE3": 30,
+     "GENE7": 32,
+     "GENE4": 33,
+     "MT-CO1": 6,
+     "GENE10": 34,
+     "MT-ND1": 12,
+     "GENE2": 37,
+     "GENE6": 22,
+     "GENE9": 37
+    }
+   },
+   "ACTATTCGGCGGAGTT": {
+    "total_umi": 288,
+    "low_quality": false,
+    "counts": {
+     "GENE2": 24,
+     "GENE1": 18,
+     "GENE10": 35,
+     "GENE5": 39,
+     "GENE3": 25,
+     "GENE8": 28,
+     "GENE7": 34,
+     "GENE4": 21,
+     "GENE6": 30,
+     "MT-CO1": 5,
+     "GENE9": 26,
+     "MT-ND1": 3
+    }
+   },
+   "AGAGAAAGCGCAAATC": {
+    "total_umi": 355,
+    "low_quality": false,
+    "counts": {
+     "GENE2": 33,
+     "GENE6": 25,
+     "GENE4": 24,
+     "GENE8": 30,
+     "GENE3": 40,
+     "GENE5": 31,
+     "MT-ND1": 7,
+     "GENE7": 37,
+     "GENE10": 38,
+     "GENE9": 37,
+     "GENE1": 41,
+     "MT-CO1": 12
+    }
+   },
+   "AGCAGAGGGATTGTAC": {
+    "total_umi": 385,
+    "low_quality": false,
+    "counts": {
+     "GENE2": 32,
+     "GENE6": 51,
+     "GENE5": 34,
+     "MT-ND1": 10,
+     "GENE3": 41,
+     "GENE10": 36,
+     "GENE8": 32,
+     "GENE1": 36,
+     "GENE9": 42,
+     "GENE7": 27,
+     "GENE4": 34,
+     "MT-CO1": 10
+    }
+   },
+   "AGGCTTCACATCTGTA": {
+    "total_umi": 335,
+    "low_quality": false,
+    "counts": {
+     "GENE4": 26,
+     "GENE5": 30,
+     "GENE6": 29,
+     "GENE10": 41,
+     "GENE2": 40,
+     "GENE3": 32,
+     "GENE9": 32,
+     "GENE1": 31,
+     "GENE8": 32,
+     "GENE7": 29,
+     "MT-ND1": 10,
+     "MT-CO1": 3
+    }
+   },
+   "AGTCCCTTGCCAGCTG": {
+    "total_umi": 310,
+    "low_quality": false,
+    "counts": {
+     "GENE5": 21,
+     "GENE1": 31,
+     "GENE3": 36,
+     "GENE7": 30,
+     "GENE6": 39,
+     "MT-CO1": 5,
+     "GENE10": 28,
+     "GENE2": 20,
+     "GENE9": 32,
+     "GENE8": 25,
+     "GENE4": 35,
+     "MT-ND1": 8
+    }
+   },
+   "ATAACAACCCCTGCTT": {
+    "total_umi": 361,
+    "low_quality": false,
+    "counts": {
+     "GENE6": 44,
+     "GENE9": 28,
+     "GENE3": 35,
+     "GENE4": 31,
+     "GENE5": 39,
+     "GENE1": 28,
+     "GENE7": 42,
+     "GENE2": 28,
+     "MT-ND1": 6,
+     "GENE8": 37,
+     "GENE10": 36,
+     "MT-CO1": 7
+    }
+   },
+   "ATAACCGAGTACGTAG": {
+    "total_umi": 342,
+    "low_quality": false,
+    "counts": {
+     "GENE6": 26,
+     "GENE10": 28,
+     "GENE7": 39,
+     "GENE2": 31,
+     "GENE9": 40,
+     "GENE1": 29,
+     "GENE4": 37,
+     "GENE8": 23,
+     "GENE5": 34,
+     "GENE3": 32,
+     "MT-ND1": 11,
+     "MT-CO1": 12
+    }
+   },
+   "ATCATCGGATGAGATC": {
+    "total_umi": 316,
+    "low_quality": false,
+    "counts": {
+     "GENE7": 31,
+     "GENE4": 33,
+     "GENE6": 28,
+     "GENE8": 31,
+     "GENE2": 30,
+     "MT-ND1": 10,
+     "GENE5": 36,
+     "GENE10": 23,
+     "GENE3": 32,
+     "GENE1": 28,
+     "MT-CO1": 5,
+     "GENE9": 29
+    }
+   },
+   "ATCGGACTTTTAAGTA": {
+    "total_umi": 254,
+    "low_quality": false,
+    "counts": {
+     "GENE7": 24,
+     "MT-CO1": 10,
+     "GENE5": 24,
+     "GENE10": 22,
+     "GENE2": 26,
+     "GENE9": 23,
+     "GENE6": 28,
+     "GENE1": 17,
+     "GENE3": 28,
+     "GENE8": 22,
+     "GENE4": 19,
+     "MT-ND1": 11
+    }
+   },
+   "ATGCAAAGAGAGGTCA": {
+    "total_umi": 329,
+    "low_quality": false,
+    "counts": {
+     "GENE4": 39,
+     "GENE6": 37,
+     "GENE10": 34,
+     "GENE8": 29,
+     "GENE3": 35,
+     "MT-CO1": 8,
+     "GENE7": 36,
+     "GENE2": 22,
+     "GENE9": 25,
+     "GENE5": 25,
+     "GENE1": 32,
+     "MT-ND1": 7
+    }
+   },
+   "ATGCACCGAGCCCCGC": {
+    "total_umi": 252,
+    "low_quality": false,
+    "counts": {
+     "GENE2": 31,
+     "GENE4": 23,
+     "GENE6": 28,
+     "GENE8": 31,
+     "GENE1": 21,
+     "GENE9": 29,
+     "GENE10": 20,
+     "GENE3": 18,
+     "GENE7": 18,
+     "MT-CO1": 4,
+     "MT-ND1": 6,
+     "GENE5": 23
+    }
+   },
+   "CAACGCTCTGCCACTG": {
+    "total_umi": 284,
+    "low_quality": false,
+    "counts": {
+     "GENE7": 21,
+     "GENE8": 30,
+     "GENE3": 29,
+     "GENE10": 23,
+     "GENE1": 29,
+     "GENE2": 20,
+     "GENE4": 30,
+     "GENE6": 32,
+     "MT-ND1": 9,
+     "GENE5": 30,
+     "GENE9": 22,
+     "MT-CO1": 9
+    }
+   },
+   "CAACTTACCTACCTGT": {
+    "total_umi": 357,
+    "low_quality": false,
+    "counts": {
+     "GENE4": 30,
+     "GENE2": 31,
+     "GENE6": 37,
+     "GENE7": 39,
+     "GENE3": 30,
+     "GENE5": 33,
+     "GENE9": 45,
+     "GENE8": 34,
+     "GENE1": 36,
+     "GENE10": 23,
+     "MT-ND1": 11,
+     "MT-CO1": 8
+    }
+   },
+   "CAAGGAGCACTGGGGT": {
+    "total_umi": 332,
+    "low_quality": false,
+    "counts": {
+     "GENE10": 26,
+     "GENE2": 31,
+     "GENE4": 35,
+     "GENE8": 39,
+     "GENE9": 37,
+     "GENE6": 36,
+     "GENE3": 28,
+     "GENE7": 38,
+     "MT-CO1": 7,
+     "GENE1": 25,
+     "GENE5": 26,
+     "MT-ND1": 4
+    }
+   },
+   "CAAGTGACACATTTTC": {
+    "total_umi": 393,
+    "low_quality": false,
+    "counts": {
+     "GENE10": 41,
+     "GENE8": 38,
+     "GENE7": 34,
+     "GENE1": 40,
+     "GENE2": 34,
+     "MT-CO1": 13,
+     "GENE5": 45,
+     "GENE6": 41,
+     "GENE4": 35,
+     "GENE3": 30,
+     "GENE9": 34,
+     "MT-ND1": 8
+    }
+   }
+  }
+ },
+ "sampleB": {
+  "published_label": "MB002",
+  "chemistry": "v3",
+  "cdna_read": "R3",
+  "n_reads": 11545,
+  "cells": {
+   "GCCCGCATGGGCACTC": {
+    "total_umi": 87,
+    "low_quality": true,
+    "counts": {
+     "GENE2": 10,
+     "MT-ND1": 21,
+     "MT-CO1": 28,
+     "GENE1": 17,
+     "GENE3": 11
+    }
+   },
+   "GCCCTCAATGTACCCC": {
+    "total_umi": 77,
+    "low_quality": true,
+    "counts": {
+     "GENE2": 8,
+     "MT-CO1": 25,
+     "GENE3": 5,
+     "GENE1": 13,
+     "MT-ND1": 26
+    }
+   },
+   "GCGATGTCAGCGTGTT": {
+    "total_umi": 85,
+    "low_quality": true,
+    "counts": {
+     "MT-ND1": 27,
+     "GENE1": 13,
+     "MT-CO1": 22,
+     "GENE3": 14,
+     "GENE2": 9
+    }
+   },
+   "GCGGGCATCGGTTGCG": {
+    "total_umi": 252,
+    "low_quality": false,
+    "counts": {
+     "GENE6": 30,
+     "GENE5": 25,
+     "GENE4": 19,
+     "GENE7": 21,
+     "GENE8": 26,
+     "GENE9": 25,
+     "GENE3": 30,
+     "GENE10": 24,
+     "GENE2": 18,
+     "GENE1": 27,
+     "MT-ND1": 5,
+     "MT-CO1": 2
+    }
+   },
+   "GCGTTCATATGTCCGG": {
+    "total_umi": 362,
+    "low_quality": false,
+    "counts": {
+     "GENE8": 32,
+     "MT-CO1": 13,
+     "GENE2": 34,
+     "GENE7": 27,
+     "GENE1": 31,
+     "GENE9": 36,
+     "GENE5": 39,
+     "GENE3": 46,
+     "GENE10": 32,
+     "GENE6": 35,
+     "GENE4": 28,
+     "MT-ND1": 9
+    }
+   },
+   "GCTATTTCAAGTTGGT": {
+    "total_umi": 355,
+    "low_quality": false,
+    "counts": {
+     "GENE10": 41,
+     "GENE2": 38,
+     "GENE3": 33,
+     "GENE6": 34,
+     "GENE8": 21,
+     "GENE1": 39,
+     "GENE5": 25,
+     "GENE7": 40,
+     "GENE4": 30,
+     "GENE9": 29,
+     "MT-ND1": 15,
+     "MT-CO1": 10
+    }
+   },
+   "GCTGTAATTGACGGAC": {
+    "total_umi": 272,
+    "low_quality": false,
+    "counts": {
+     "GENE3": 41,
+     "GENE1": 21,
+     "GENE8": 36,
+     "GENE6": 28,
+     "GENE5": 20,
+     "GENE9": 26,
+     "GENE10": 18,
+     "GENE7": 20,
+     "GENE2": 23,
+     "MT-ND1": 5,
+     "MT-CO1": 7,
+     "GENE4": 27
+    }
+   },
+   "GGCAGATGCGGGTTCG": {
+    "total_umi": 355,
+    "low_quality": false,
+    "counts": {
+     "GENE4": 29,
+     "GENE9": 41,
+     "GENE1": 30,
+     "GENE8": 36,
+     "GENE7": 23,
+     "GENE5": 33,
+     "GENE3": 33,
+     "GENE6": 30,
+     "GENE10": 45,
+     "MT-CO1": 14,
+     "GENE2": 33,
+     "MT-ND1": 8
+    }
+   },
+   "GGGAGAATTTAGAATA": {
+    "total_umi": 298,
+    "low_quality": false,
+    "counts": {
+     "MT-ND1": 7,
+     "GENE10": 26,
+     "GENE5": 29,
+     "GENE4": 39,
+     "GENE1": 30,
+     "GENE3": 21,
+     "MT-CO1": 9,
+     "GENE6": 24,
+     "GENE9": 21,
+     "GENE2": 23,
+     "GENE7": 37,
+     "GENE8": 32
+    }
+   },
+   "GGGCCATTTGGGGCCA": {
+    "total_umi": 273,
+    "low_quality": false,
+    "counts": {
+     "GENE3": 25,
+     "GENE7": 28,
+     "GENE10": 29,
+     "GENE4": 23,
+     "GENE9": 30,
+     "MT-ND1": 7,
+     "GENE1": 20,
+     "GENE8": 25,
+     "GENE2": 21,
+     "GENE6": 34,
+     "GENE5": 23,
+     "MT-CO1": 8
+    }
+   },
+   "GTAAGAAGGATACCCA": {
+    "total_umi": 385,
+    "low_quality": false,
+    "counts": {
+     "GENE1": 36,
+     "GENE6": 40,
+     "GENE7": 39,
+     "GENE8": 30,
+     "GENE3": 27,
+     "MT-ND1": 24,
+     "GENE10": 38,
+     "GENE9": 38,
+     "MT-CO1": 8,
+     "GENE5": 42,
+     "GENE4": 32,
+     "GENE2": 31
+    }
+   },
+   "GTAAGGAAAGTCGCCC": {
+    "total_umi": 308,
+    "low_quality": false,
+    "counts": {
+     "GENE1": 30,
+     "GENE7": 29,
+     "GENE4": 37,
+     "GENE9": 27,
+     "GENE10": 27,
+     "GENE5": 31,
+     "GENE3": 32,
+     "GENE2": 28,
+     "GENE6": 27,
+     "GENE8": 27,
+     "MT-ND1": 6,
+     "MT-CO1": 7
+    }
+   },
+   "GTAATCGTTGGCAGGG": {
+    "total_umi": 323,
+    "low_quality": false,
+    "counts": {
+     "GENE2": 39,
+     "GENE8": 36,
+     "GENE4": 28,
+     "GENE7": 36,
+     "GENE10": 29,
+     "GENE1": 27,
+     "GENE5": 28,
+     "GENE3": 30,
+     "GENE6": 28,
+     "MT-CO1": 7,
+     "GENE9": 28,
+     "MT-ND1": 7
+    }
+   },
+   "GTAATTGACTCACCGC": {
+    "total_umi": 319,
+    "low_quality": false,
+    "counts": {
+     "GENE10": 35,
+     "GENE5": 28,
+     "GENE6": 28,
+     "GENE2": 39,
+     "GENE1": 36,
+     "GENE3": 24,
+     "GENE8": 33,
+     "GENE7": 30,
+     "GENE4": 27,
+     "GENE9": 25,
+     "MT-ND1": 12,
+     "MT-CO1": 2
+    }
+   },
+   "GTCGCCGTCTAGTCGA": {
+    "total_umi": 317,
+    "low_quality": false,
+    "counts": {
+     "GENE3": 29,
+     "GENE8": 30,
+     "GENE9": 30,
+     "GENE1": 18,
+     "GENE5": 36,
+     "GENE7": 26,
+     "GENE2": 36,
+     "GENE6": 30,
+     "GENE4": 33,
+     "MT-ND1": 11,
+     "MT-CO1": 8,
+     "GENE10": 30
+    }
+   },
+   "GTGAACTGGATGGAGG": {
+    "total_umi": 311,
+    "low_quality": false,
+    "counts": {
+     "GENE9": 28,
+     "GENE2": 27,
+     "GENE1": 32,
+     "GENE4": 42,
+     "GENE3": 31,
+     "GENE10": 31,
+     "GENE5": 19,
+     "GENE6": 23,
+     "GENE7": 36,
+     "GENE8": 32,
+     "MT-ND1": 5,
+     "MT-CO1": 5
+    }
+   },
+   "GTGCCGCTAAAGCCCC": {
+    "total_umi": 292,
+    "low_quality": false,
+    "counts": {
+     "GENE8": 40,
+     "GENE5": 24,
+     "GENE7": 28,
+     "GENE1": 29,
+     "GENE10": 15,
+     "GENE2": 26,
+     "GENE6": 26,
+     "GENE3": 30,
+     "GENE9": 22,
+     "MT-CO1": 14,
+     "GENE4": 26,
+     "MT-ND1": 12
+    }
+   },
+   "GTGTCAAACGCCAAAG": {
+    "total_umi": 391,
+    "low_quality": false,
+    "counts": {
+     "GENE6": 47,
+     "GENE9": 43,
+     "GENE4": 40,
+     "GENE1": 30,
+     "GENE2": 43,
+     "GENE10": 37,
+     "MT-ND1": 8,
+     "GENE8": 27,
+     "GENE5": 36,
+     "MT-CO1": 11,
+     "GENE3": 29,
+     "GENE7": 40
+    }
+   },
+   "GTTGTACCTTAATTAC": {
+    "total_umi": 260,
+    "low_quality": false,
+    "counts": {
+     "GENE7": 19,
+     "GENE2": 31,
+     "GENE4": 24,
+     "GENE1": 25,
+     "GENE3": 34,
+     "GENE8": 26,
+     "GENE5": 29,
+     "MT-CO1": 11,
+     "GENE9": 20,
+     "MT-ND1": 2,
+     "GENE10": 16,
+     "GENE6": 23
+    }
+   },
+   "GTTTCCATGCAACAGG": {
+    "total_umi": 356,
+    "low_quality": false,
+    "counts": {
+     "GENE10": 29,
+     "MT-CO1": 11,
+     "GENE7": 31,
+     "GENE4": 37,
+     "GENE8": 47,
+     "GENE5": 33,
+     "GENE2": 30,
+     "GENE3": 48,
+     "GENE1": 27,
+     "MT-ND1": 7,
+     "GENE9": 28,
+     "GENE6": 28
+    }
+   }
+  }
+ }
+}
