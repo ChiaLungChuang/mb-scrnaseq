@@ -18,20 +18,21 @@ Claude Code updates this table at the end of every PR.
 
 | Milestone | State | Evidence |
 |---|---|---|
-| Pre-M0: phase 1 code and tests | done | tests pass locally (tools on `PATH`; no Docker) |
-| M0: repository on GitHub, CI green, image published | not started | |
+| Pre-M0: phase 1 code and tests | done | tests pass locally (tools on `PATH`) and in CI |
+| M0: repository on GitHub, CI green, image published | in progress | CI green on `main` since 31 Oct 2026 (first green run: [41181173351](https://github.com/ChiaLungChuang/mb-scrnaseq/actions/runs/41181173351)): R, script, lint and pipeline tests, the pipeline in Docker with the R image built in CI, synthetic data only. Left: tag `v0.1.0` and make the package public **[you]**, pin the image by digest, repository visibility **[you]** |
 | M1: cluster smoke test | not started | |
 | M2: real inputs and phase 1 pre-registration | not started | |
 | M3: phase 1 run on 8 tumors | not started | |
-| M4: phase 2 design and pre-registration | not started | |
+| M4: phase 2 design and pre-registration | in progress | design drafted for decision in [draft PR #4](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/4); nothing decided, no criteria drafted |
 | M5: phase 2 implementation (R analysis + Python module) and run | not started | |
 | M6: write-up | not started | |
 
 What exists before M0: the phase 1 pipeline (BAM → bamtofastq → read
 check → STARsolo → QC → concordance), the St. Jude LSF/Singularity
 profile, the R container recipe, CI configuration, the runbook, and the
-three test layers below. None of it has run in CI, in a container, on the
-cluster or on real data.
+three test layers below. Before M0 none of it had run in CI or in a
+container. Since 31 Oct 2026 it has, on synthetic data; none of it has
+run on the cluster or on real data.
 
 ## Testing rules
 
