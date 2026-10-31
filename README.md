@@ -8,10 +8,14 @@ matrix. Built with Nextflow and containers, with an execution profile for
 the St. Jude HPC cluster (LSF + Singularity).
 
 **Status:** phase 1 (reads to counts, QC, concordance) is built and passes
-its tests on a synthetic dataset with known ground truth. Those tests ran
-with locally installed tools; the containers, the CI workflow and the
-cluster profile have not been exercised yet, and nothing has been run on
-the real data. Phase 2 is planned, not started: the single-cell analysis
+its tests in CI (GitHub Actions), with the containers, on two synthetic
+datasets with known ground truth: the R unit and accuracy tests, the script
+tests, lint, and the whole pipeline under Docker
+(`nf-test test --profile +docker`, with the R image built from
+`containers/r-analysis` in the same run). The R image is not yet
+published, and nothing has been run on the St. Jude cluster (the
+LSF/Singularity profile is untested) or on the real data. Phase 2 is
+planned, not started: the single-cell analysis
 of all 28 tumors in R (Seurat), plus a Python module that compares scVI
 with Harmony integration and tests whether tumor subgroup can be predicted
 from malignant-cell expression, validated by patient.
@@ -80,8 +84,8 @@ Synthetic test (about a minute):
 nextflow run . -profile test,docker        # or test,singularity
 ```
 
-So far this has only been run with locally installed tools
-(`-profile test,local_tools`, tools on `PATH`).
+CI runs this synthetic test with Docker on every push (through nf-test; see
+Tests). The `singularity` and `stjude` profiles have not been run yet.
 
 Real data on the St. Jude cluster: see [docs/RUNBOOK.md](docs/RUNBOOK.md).
 
