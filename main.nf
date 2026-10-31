@@ -157,7 +157,7 @@ workflow {
     def prereg = null
     if (doConcordance) {
         // Recorded at launch, so the gate's view of the criteria is kept even if the run fails.
-        prereg = checkPreregistration(params.criteria, projectDir, params.allow_unlocked_criteria)
+        prereg = checkPreregistration(params.criteria, projectDir, boolParam('allow_unlocked_criteria', params.allow_unlocked_criteria))
         writeJson("${params.outdir}/pipeline_info/preregistration_check.json", prereg + [code_sha256: codeSha])
     }
 
@@ -224,6 +224,22 @@ workflow {
     if (params.published_counts && workflow.success) {
         log.info("Concordance verdict: ${params.outdir}/concordance/concordance_summary.verdict.json")
     }
+}
+
+// A boolean parameter given on the command line arrives as the string
+// "false", which Groovy treats as true. Accept only true/false.
+def boolParam(name, v) {
+    if (v instanceof Boolean) {
+        return v
+    }
+    def s = v == null ? 'false' : v.toString().trim().toLowerCase()
+    if (s == 'true') {
+        return true
+    }
+    if (s == 'false') {
+        return false
+    }
+    error("--${name} must be true or false, got '${v}'")
 }
 
 def writeJson(path, obj) {

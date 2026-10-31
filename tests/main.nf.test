@@ -104,7 +104,8 @@ nextflow_pipeline {
             params {
                 outdir = "$outputDir"
                 criteria = "$outputDir/criteria_unlocked.yaml"
-                allow_unlocked_criteria = false
+                // A string, as it arrives from the command line: must still mean false.
+                allow_unlocked_criteria = "false"
             }
         }
         then {
