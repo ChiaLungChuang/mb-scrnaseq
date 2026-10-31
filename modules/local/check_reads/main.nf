@@ -7,7 +7,7 @@ process CHECK_READS {
 
     input:
     tuple val(meta), path(fastq)
-    val fingerprint   // SHA-256 of lib/R and bin/: re-run on -resume when the code changes
+    val fingerprint   // SHA-256 of bin/check_reads.sh: re-run on -resume when the code changes
 
     output:
     tuple val(meta), path(fastq), path("${meta.id}.reads.tsv"), emit: reads

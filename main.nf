@@ -124,14 +124,15 @@ def checkPreregistration(criteriaPath, codeDir, allowUnregistered) {
 }
 
 /*
- * SHA-256 over the R library and bin/ scripts (names and contents). Passed
- * as an input to the steps that run them, so -resume re-runs those steps
- * after a code change: Nextflow hashes neither bin/ nor the contents of a
- * staged directory such as lib/R.
+ * SHA-256 over the files matching `globs` under `dir` (names and contents).
+ * Passed as an input to the steps that run that code, so -resume re-runs
+ * them after a code change: Nextflow hashes neither bin/ nor the contents
+ * of a staged directory such as lib/R. Each step gets a fingerprint of only
+ * the code it runs, so an R change does not re-run STARsolo.
  */
-def codeFingerprint(dir) {
+def codeFingerprint(dir, globs) {
     def md = java.security.MessageDigest.getInstance('SHA-256')
-    def fs = (files("${dir}/lib/R/*.R") + files("${dir}/bin/*")).sort { f -> f.toString() }
+    def fs = globs.collectMany { g -> files("${dir}/${g}") }.unique().sort { f -> f.toString() }
     fs.each { f ->
         md.update("${dir.relativize(f)}\u0000".getBytes('UTF-8'))
         md.update(f.bytes)
@@ -153,7 +154,9 @@ workflow {
             error("samples use chemistry ${c} but --whitelist_${c} is not set")
         }
     }
-    def codeSha = codeFingerprint(projectDir)
+    def codeSha = codeFingerprint(projectDir, ['lib/R/*.R', 'bin/*'])
+    def readsCheckSha = codeFingerprint(projectDir, ['bin/check_reads.sh'])
+    def rSha = codeFingerprint(projectDir, ['lib/R/*.R', 'bin/*.R'])
     def prereg = null
     if (doConcordance) {
         // Recorded at launch, so the gate's view of the criteria is kept even if the run fails.
@@ -175,18 +178,18 @@ workflow {
     }
 
     BAMTOFASTQ(channel.fromList(samples))
-    CHECK_READS(BAMTOFASTQ.out.fastq, codeSha)
+    CHECK_READS(BAMTOFASTQ.out.fastq, readsCheckSha)
 
     def solo_in = CHECK_READS.out.reads.map { meta, fastq, tsv ->
         [meta, fastq, tsv, file(params["whitelist_${meta.chemistry}"], checkIfExists: true)]
     }
     STARSOLO(solo_in, index)
 
-    SAMPLE_QC(STARSOLO.out.counts.map { meta, _raw, filtered -> [meta, filtered] }, lib, codeSha)
+    SAMPLE_QC(STARSOLO.out.counts.map { meta, _raw, filtered -> [meta, filtered] }, lib, rSha)
 
     if (doConcordance) {
-        PREP_PUBLISHED(file(params.published_counts, checkIfExists: true), lib, codeSha)
-        CONCORDANCE(STARSOLO.out.counts, PREP_PUBLISHED.out.rds, file(params.criteria), lib, "${codeSha}:${prereg.sha256}")
+        PREP_PUBLISHED(file(params.published_counts, checkIfExists: true), lib, rSha)
+        CONCORDANCE(STARSOLO.out.counts, PREP_PUBLISHED.out.rds, file(params.criteria), lib, "${rSha}:${prereg.sha256}")
         SUMMARISE_CONCORDANCE(CONCORDANCE.out.json.map { _meta, json -> json }.collect(), lib,
                               prereg.preregistered, prereg.sha256, codeSha)
     }
@@ -205,7 +208,7 @@ workflow {
         pipeline_version: workflow.manifest.version,
         git_commit: workflow.commitId ?: gitHead(projectDir),
         git_uncommitted_changes: gitDirty(projectDir),
-        code_sha256: codeFingerprint(projectDir),
+        code_sha256: codeFingerprint(projectDir, ['lib/R/*.R', 'bin/*']),
         run_name: workflow.runName,
         session_id: workflow.sessionId.toString(),
         started: workflow.start.toString(),

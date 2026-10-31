@@ -1,7 +1,7 @@
 // Compare one sample's re-quantified counts with the published counts and
 // judge the result against the pre-registered criteria.
 //
-// `fingerprint` (SHA-256 of lib/R, bin/ and the criteria file) is an input
+// `fingerprint` (SHA-256 of lib/R, bin/*.R and the criteria file) is an input
 // so that -resume re-runs this step whenever the code or the criteria
 // change; Nextflow does not hash the contents of those files itself.
 process CONCORDANCE {

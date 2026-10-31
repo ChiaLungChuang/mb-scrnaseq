@@ -7,7 +7,7 @@ process SAMPLE_QC {
     input:
     tuple val(meta), path(filtered)
     path lib
-    val fingerprint   // SHA-256 of lib/R and bin/: re-run on -resume when the code changes
+    val fingerprint   // SHA-256 of lib/R and bin/*.R: re-run on -resume when the code changes
 
     output:
     tuple val(meta), path("${meta.id}.qc_cells.tsv.gz"), emit: cells

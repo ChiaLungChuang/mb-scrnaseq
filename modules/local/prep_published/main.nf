@@ -7,7 +7,7 @@ process PREP_PUBLISHED {
     input:
     path counts
     path lib
-    val fingerprint   // SHA-256 of lib/R and bin/: re-run on -resume when the code changes
+    val fingerprint   // SHA-256 of lib/R and bin/*.R: re-run on -resume when the code changes
 
     output:
     path "published_counts.rds", emit: rds
