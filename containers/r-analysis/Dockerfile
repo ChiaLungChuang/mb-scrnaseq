@@ -13,8 +13,10 @@ LABEL org.opencontainers.image.source="https://github.com/ChiaLungChuang/mb-scrn
       org.opencontainers.image.licenses="MIT"
 
 # procps provides `ps`, which Nextflow uses to record task resource usage.
+# zlib1g-dev provides zlib.h: Bioconductor packages are installed from source,
+# and XVector (a dependency of scuttle) does not compile without it.
 RUN apt-get update \
- && apt-get install -y --no-install-recommends procps \
+ && apt-get install -y --no-install-recommends procps zlib1g-dev \
  && rm -rf /var/lib/apt/lists/*
 
 RUN install2.r --error --skipinstalled data.table jsonlite yaml BiocManager testthat withr \
