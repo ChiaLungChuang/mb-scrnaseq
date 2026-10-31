@@ -200,4 +200,4 @@ explanation together.
 | `Refusing to run the concordance check` | The message lists what is missing: lock, commit, push, or uncommitted code |
 | Job killed, exit 130-145 | Out of memory or time; retried automatically with more, twice. Confirm with `bhist -l <job id>` |
 | One sample fails, others keep going | Expected: no new jobs start, running ones finish, then the run stops. Fix the cause and `-resume` |
-| A step re-runs after `-resume` | You changed code in `lib/R` or `bin/`, or the criteria: those steps re-run by design |
+| A step re-runs after `-resume` | You changed code or the criteria; the steps that use it re-run by design. R changes re-run only the R steps; a change to `bin/check_reads.sh` also re-runs STARsolo |
