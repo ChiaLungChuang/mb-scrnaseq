@@ -62,6 +62,7 @@ Mutation checks done so far (each made the tests fail):
 | `_R1_` replaced in the folder name; cDNA always assumed R2 | `test_check_reads.sh` |
 | no `samtools quickcheck`; index not excluded from the prefetch rename | `test_fetch_inputs.sh` |
 | STARsolo with Exact UMI dedup, no multi-gene filter, no barcode correction, or unstranded counting | `accuracy.nf.test` |
+| scuttle not loadable, so testthat skips the QC tests instead of failing them | `tests/run_tests.R` (any skip fails the run) |
 
 ## M0. Repository on GitHub, CI green, image published
 
