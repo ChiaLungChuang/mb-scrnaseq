@@ -11,8 +11,10 @@ the St. Jude HPC cluster (LSF + Singularity).
 its tests on a synthetic dataset with known ground truth. Those tests ran
 with locally installed tools; the containers, the CI workflow and the
 cluster profile have not been exercised yet, and nothing has been run on
-the real data. Phase 2 (integration, annotation, copy-number inference) is
-not started.
+the real data. Phase 2 is planned, not started: the single-cell analysis
+of all 28 tumors in R (Seurat), plus a Python module that compares scVI
+with Harmony integration and tests whether tumor subgroup can be predicted
+from malignant-cell expression, validated by patient.
 
 ## Why re-quantify instead of using the published matrix
 

@@ -8,9 +8,10 @@ to do next. The plan's status table says where the project is.
 A Nextflow pipeline that re-quantifies childhood medulloblastoma 10x
 scRNA-seq (GEO GSE155446) from the deposited Cell Ranger BAMs and tests,
 against pre-registered criteria, whether the result reproduces the
-published count matrix (phase 1). Phase 2 (integration, annotation,
-copy-number inference in R/Seurat + Bioconductor) is not started. It is a
-portfolio project for Chia-Lung Chuang (GitHub `ChiaLungChuang`), so
+published count matrix (phase 1). Phase 2 is not started: the main
+single-cell analysis of all 28 tumors in R (Seurat + Bioconductor), plus a
+Python module (scvi-tools, scikit-learn) for two questions, an integration
+comparison and a tumor-subgroup classifier. It is a portfolio project for Chia-Lung Chuang (GitHub `ChiaLungChuang`), so
 honesty about what has and has not been run matters as much as the code.
 
 ## Commands
@@ -23,6 +24,9 @@ bash tests/shell/run.sh                            # script tests + test-data co
 nextflow lint . && shellcheck -x bin/*.sh scripts/*.sh tests/shell/*.sh
 nf-test test --profile +docker                     # pipeline on both synthetic datasets
 ```
+
+From M5, the Python module adds `pytest python/tests` and `ruff check python`
+(not there yet).
 
 Without Docker, `--profile +local_tools` runs with tools on `PATH`
 (STAR 2.7.11b, bamtofastq 1.4.1, samtools, R 4.4 with Matrix, data.table,
@@ -99,7 +103,15 @@ fails if committed data and generators disagree.
 
 ## Settled decisions (do not reopen without asking)
 
-- Nextflow DSL2; R (Seurat + Bioconductor) for phase 2.
+- Nextflow DSL2. Phase 1 stays in R: do not port it to Python (decided
+  31 Oct 2026; its language is infrastructure and barely shows).
+- Phase 2 splits by language, each used where it is strongest. The main
+  analysis is R (Seurat + Bioconductor): it matches the published analyses
+  of this dataset and the R-leaning roles the project targets. A Python
+  module on the same data answers two questions only: scVI versus Harmony
+  integration, and whether tumor subgroup can be predicted from
+  malignant-cell expression (scikit-learn, validated by patient). Do not
+  duplicate the R analysis in Python.
 - Phase 1 re-quantifies 8 of the 28 tumors from the BAMs; phase 2 analyses
   all 28 from the published matrix, after phase 1.
 - STARsolo 2.7.11b with the Cell Ranger 3.x options (`cellranger_compat

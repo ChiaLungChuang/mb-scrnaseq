@@ -24,7 +24,7 @@ Claude Code updates this table at the end of every PR.
 | M2: real inputs and phase 1 pre-registration | not started | |
 | M3: phase 1 run on 8 tumors | not started | |
 | M4: phase 2 design and pre-registration | not started | |
-| M5: phase 2 implementation and run | not started | |
+| M5: phase 2 implementation (R analysis + Python module) and run | not started | |
 | M6: write-up | not started | |
 
 What exists before M0: the phase 1 pipeline (BAM → bamtofastq → read
@@ -43,6 +43,7 @@ shown to fail when the bug it targets is planted (CLAUDE.md rule 3).
 | R library | `tests/testthat/` | unit tests for chosen cases; accuracy tests against an independent implementation on random inputs (`test-accuracy.R`) |
 | Scripts | `tests/shell/` | case tables on hand-built inputs; network and containers replaced by stand-ins |
 | Pipeline | `tests/*.nf.test` | whole runs on synthetic data whose correct output is known exactly |
+| Python module (from M5) | `python/tests/` | pytest unit and property tests (hypothesis) against independent implementations; known-answer data |
 
 Known-answer data is generated, never hand-edited: `tests/data/make_test_data.py`
 (basic) and `tests/data/make_accuracy_data.py` (every read type that can be
@@ -173,59 +174,112 @@ verdict.
 ## M4. Phase 2 design and pre-registration
 
 Goal: an agreed analysis plan for all 28 tumors (published matrix) and
-locked criteria for comparing it with the published annotation.
+locked criteria, before any value in the cell metadata is read.
 
-1. Claude Code writes `docs/phase2_design.md`. For each step, the options,
+Already decided (31 Oct 2026): the main analysis is R (Seurat +
+Bioconductor); a Python module answers two questions on the same data
+(below); phase 1 is not ported. Everything else is for the design doc.
+
+1. Claude Code writes `docs/phase2_design.md`. For each step: options,
    trade-offs, a recommendation, how it will be tested with known-answer
-   data, and a compute estimate. At least:
+   data, and a compute estimate.
+
+   R, main analysis:
    - QC: the published matrix is already filtered by the authors;
      re-filter with the phase 1 MAD rules or not.
    - Normalisation: LogNormalize or SCTransform (v2).
-   - Integration: none for malignant cells (patient-specific) versus
-     Harmony or Seurat v5 integration for non-malignant cells.
    - Annotation: marker-based or reference-based (e.g. SingleR) and which
      reference.
    - Copy-number inference to separate malignant cells: inferCNV,
      copykat, or numbat (which needs allele counts from BAMs, so only the
      8 re-quantified tumors); which cells serve as the normal reference.
    - Tumor programs: per-tumor NMF and meta-programs, or not.
-   - How phase 2 is wired: new processes and a subworkflow in this
-     pipeline, or a separate entry workflow.
+
+   Python module:
+   - **Integration comparison.** Harmony (run in the R analysis) against
+     scVI (scvi-tools), with no integration as the baseline. Use the cells
+     where integrating across patients makes sense: non-malignant cells
+     (immune, stromal). Malignant cells are patient-specific, so
+     integrating them can erase real differences; the design says how
+     they are handled. Metrics for batch mixing (e.g. iLISI, graph
+     connectivity) and for keeping cell types apart (e.g. ARI or NMI
+     against the published labels, cLISI), for example from
+     scib-metrics. A decision rule fixed in advance, e.g. prefer scVI only
+     if mixing improves and label ARI falls by no more than an amount set
+     now. scVI training is random: fix seeds and report the spread over
+     several.
+   - **Subgroup classifier.** Predict each tumor's subgroup from its
+     malignant cells' expression with scikit-learn. Validate by patient
+     (leave-one-patient-out or grouped folds); never split one patient's
+     cells between training and test. There is one WNT tumor, so WNT cannot
+     be both learned and tested: the classifier is SHH / Group 3 /
+     Group 4 on 27 tumors, and WNT is reported separately. Baselines: the
+     majority class and a known-marker rule. Chance level from permuting
+     subgroup labels across patients. Also run the leaky version (cells
+     split at random) once and report it next to the real one, to show
+     how much leakage inflates accuracy.
+   - **Language boundary:** how data moves from R to Python (Matrix Market
+     plus TSV, or `.h5ad`), with a round-trip test that the matrix and
+     metadata arrive identical.
+   - **Python layout:** a `python/` package (`pyproject.toml`), `bin/*.py`
+     entry points, pytest with hypothesis, ruff, a second image
+     `mb-scrnaseq-py` published and pinned like the R one, a CI job.
+
+   Wiring: new processes and a subworkflow in this pipeline, or a
+   separate entry workflow.
 2. **[you] [decide]** Choose.
 3. Claude Code drafts `preregistration/phase2_criteria.yaml` from the
-   published cell metadata's column **names** only. For example: agreement
-   of malignant/non-malignant calls with the published labels per tumor,
-   subgroup recovered for every tumor, agreement of immune subtypes. Each
-   threshold comes with its rationale.
+   published cell metadata's column **names** only: agreement of
+   annotation and malignant calls with the published labels, the
+   integration decision rule, and the classifier's claim rule (e.g. say
+   "subgroup is predictable from malignant-cell expression" only if
+   patient-level balanced accuracy beats both the permutation null at
+   p < 0.05 and the marker baseline). Each threshold has its rationale.
 4. **[you] [decide]** Review, lock, push, release `prereg-phase2`. Only
    after this may any value in the cell metadata be read.
 
 Done when: the design is approved and the phase 2 criteria are locked and
 released.
 
-## M5. Phase 2 implementation and run
+## M5. Phase 2 implementation (R analysis + Python module) and run
 
-1. Generator for phase 2 known-answer data (planted cell types, planted
-   copy-number gains and losses, planted subgroup programs) and tests that
-   each step recovers what was planted, before the step is written.
-2. Implement the steps chosen in M4, with lib/R functions, bin/ entry
-   points and Nextflow processes, under the same testing rules.
-3. Extend the R image (Seurat, the chosen integration and CNV packages),
-   with versions pinned; release a new image and pin its digest.
-4. **[you]** Run on the cluster. Commit curated outputs and a report to
-   `docs/results/phase2/` as in M3, with figures as PDF and TIFF.
+1. Known-answer data first. Generators with planted cell types, planted
+   patient batch effects and planted copy-number gains and losses (for
+   the R steps), planted subgroup signal (for the classifier), and a
+   negative control with no subgroup signal. Tests that each step
+   recovers what was planted, written before the step. The negative
+   control is the leakage test: the classifier must stay at chance on it,
+   and switching to random cell-level splits must make that test fail.
+2. R analysis: lib/R functions, `bin/*.R` entry points, Nextflow
+   processes. Extend the R image (Seurat, Harmony, the chosen annotation
+   and CNV packages), versions pinned; release and pin its digest.
+3. Python module: the `python/` package, `bin/*.py` entry points,
+   Nextflow processes, the `mb-scrnaseq-py` image (scvi-tools,
+   scikit-learn, anndata/scanpy, scib-metrics), pinned. CI job for pytest
+   and ruff. The language-boundary round-trip test runs in CI.
+4. **[you]** Run on the cluster. scVI on CPU is probably enough for about
+   40,000 cells; the design doc costs the gpu queue as an option. Commit
+   curated outputs and a report to `docs/results/phase2/` as in M3, with
+   figures as PDF and TIFF.
 
-Done when: CI is green, results and the phase 2 verdict are committed.
+Done when: CI is green for both languages, and results and the phase 2
+verdict are committed.
 
 ## M6. Write-up
 
 1. Final README: what the project shows, with links to both result
    reports and the pre-registration releases.
 2. A short report (methods, what reproduced, what did not and why).
-3. **[you]** Final CV bullets from the committed numbers.
+3. **[you]** Final CV bullets from the committed numbers: the R analysis
+   and the Python module each get their own line, with what was measured.
 
 ## Parked (do not start without asking)
 
+- Porting phase 1 to Python: decided against (31 Oct 2026).
+- The next Python-first project, aimed at Python-required roles, belongs
+  in its own repository, not here (candidate: a flow-cytometry classifier
+  on public FlowCAP-II data with scikit-learn/XGBoost and patient-level
+  validation).
 - Re-quantifying all 28 tumors from the BAMs: revisit after M3, by cost.
 - Running Cell Ranger itself: not planned (STARsolo is the method).
 - Docker on the cluster: not available; Singularity only.
@@ -238,5 +292,9 @@ Done when: CI is green, results and the phase 2 verdict are committed.
 - Gene matching is by symbol and relies on STARsolo and Cell Ranger
   listing genes in the same GTF order (true in a test with STAR 2.7.11b;
   real data will show it through `gene_match_fraction`).
+- The classifier has 27 tumors for 3 classes, and the Group 3 / Group 4
+  boundary is biologically blurred: expect errors there and a wide
+  confidence interval. The point is a correctly validated estimate, not a
+  high number.
 - Anonymous GHCR pulls from the cluster could be rate-limited; the runbook
   sets a Singularity cache so each image is pulled once.
