@@ -134,7 +134,7 @@ def make_sample(rng, sample, barcodes, contigs, genes, with_seqnames, samtools, 
     rng.shuffle(records)
     sam = out / f"{sample}.sam"
     sam.write_text("\n".join(header + records) + "\n")
-    subprocess.run([samtools, "view", "-b", "-o", str(out / f"{sample}.bam"), str(sam)], check=True)
+    subprocess.run([samtools, "view", "--no-PG", "-b", "-o", str(out / f"{sample}.bam"), str(sam)], check=True)
     sam.unlink()
     return cells, truth, read_n
 

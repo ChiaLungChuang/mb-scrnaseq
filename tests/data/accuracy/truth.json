@@ -1,0 +1,6082 @@
+{
+ "accA": {
+  "cdna_read": "R2",
+  "cells": [
+   "GGTACTAATCTTATGT",
+   "CGAGCCTACTCCGAGG",
+   "GAGAGGTGGGATTGTT",
+   "GGGTAGATACGTCCTT",
+   "GGATGACCATGCCTCT",
+   "GAAGAATGCCTGGTCA",
+   "TGCTCAACGGTGGTAC",
+   "GAAGTGTTAGATCTCA",
+   "AGGTGCATCCGCATGG",
+   "GCATCCCATTTTAGAG",
+   "TGCGGGGGAGTACGGG",
+   "CGCGTGGGTTTTGACC"
+  ],
+  "chemistry": "v3",
+  "expected": {
+   "AGGTCCATTAGGTTCT": {
+    "ENSGACC00003": 2,
+    "ENSGACC00005": 1,
+    "ENSGACC00010": 1
+   },
+   "AGGTGCATCCGCATGG": {
+    "ENSGACC00001": 11,
+    "ENSGACC00002": 12,
+    "ENSGACC00003": 15,
+    "ENSGACC00004": 15,
+    "ENSGACC00005": 10,
+    "ENSGACC00006": 15,
+    "ENSGACC00007": 16,
+    "ENSGACC00008": 5,
+    "ENSGACC00009": 17,
+    "ENSGACC00010": 19,
+    "ENSGACC00011": 13,
+    "ENSGACC00012": 20,
+    "ENSGACC00013": 2,
+    "ENSGACC00014": 4
+   },
+   "CATATACTTATGATGG": {
+    "ENSGACC00001": 1,
+    "ENSGACC00004": 1,
+    "ENSGACC00005": 1,
+    "ENSGACC00010": 1,
+    "ENSGACC00012": 1
+   },
+   "CGAGCCTACTCCGAGG": {
+    "ENSGACC00001": 15,
+    "ENSGACC00002": 19,
+    "ENSGACC00003": 20,
+    "ENSGACC00004": 16,
+    "ENSGACC00005": 14,
+    "ENSGACC00006": 15,
+    "ENSGACC00007": 15,
+    "ENSGACC00008": 18,
+    "ENSGACC00009": 22,
+    "ENSGACC00010": 22,
+    "ENSGACC00011": 14,
+    "ENSGACC00012": 14,
+    "ENSGACC00013": 3,
+    "ENSGACC00014": 1
+   },
+   "CGCCAAATGGCATATC": {
+    "ENSGACC00003": 1,
+    "ENSGACC00008": 1
+   },
+   "CGCGTGGGTTTTGACC": {
+    "ENSGACC00001": 5,
+    "ENSGACC00002": 14,
+    "ENSGACC00003": 11,
+    "ENSGACC00004": 12,
+    "ENSGACC00005": 18,
+    "ENSGACC00006": 10,
+    "ENSGACC00007": 8,
+    "ENSGACC00008": 11,
+    "ENSGACC00009": 18,
+    "ENSGACC00010": 18,
+    "ENSGACC00011": 13,
+    "ENSGACC00012": 7,
+    "ENSGACC00013": 4,
+    "ENSGACC00014": 4
+   },
+   "GAAGAATGCCTGGTCA": {
+    "ENSGACC00001": 18,
+    "ENSGACC00002": 11,
+    "ENSGACC00003": 13,
+    "ENSGACC00004": 13,
+    "ENSGACC00005": 12,
+    "ENSGACC00006": 13,
+    "ENSGACC00007": 13,
+    "ENSGACC00008": 15,
+    "ENSGACC00009": 18,
+    "ENSGACC00010": 12,
+    "ENSGACC00011": 12,
+    "ENSGACC00012": 14,
+    "ENSGACC00013": 3,
+    "ENSGACC00014": 2
+   },
+   "GAAGTGTTAGATCTCA": {
+    "ENSGACC00001": 11,
+    "ENSGACC00002": 14,
+    "ENSGACC00003": 12,
+    "ENSGACC00004": 12,
+    "ENSGACC00005": 11,
+    "ENSGACC00006": 9,
+    "ENSGACC00007": 14,
+    "ENSGACC00008": 17,
+    "ENSGACC00009": 14,
+    "ENSGACC00010": 16,
+    "ENSGACC00011": 21,
+    "ENSGACC00012": 14,
+    "ENSGACC00013": 5,
+    "ENSGACC00014": 5
+   },
+   "GAGAGGTGGGATTGTT": {
+    "ENSGACC00001": 17,
+    "ENSGACC00002": 31,
+    "ENSGACC00003": 7,
+    "ENSGACC00004": 10,
+    "ENSGACC00005": 14,
+    "ENSGACC00006": 12,
+    "ENSGACC00007": 22,
+    "ENSGACC00008": 15,
+    "ENSGACC00009": 16,
+    "ENSGACC00010": 10,
+    "ENSGACC00011": 14,
+    "ENSGACC00012": 17,
+    "ENSGACC00013": 6,
+    "ENSGACC00014": 3
+   },
+   "GAGCAAATAAACAATC": {
+    "ENSGACC00007": 1,
+    "ENSGACC00010": 1,
+    "ENSGACC00012": 1
+   },
+   "GCAGAATTTCTGGGCT": {
+    "ENSGACC00006": 1,
+    "ENSGACC00008": 2,
+    "ENSGACC00010": 1,
+    "ENSGACC00014": 1
+   },
+   "GCATCCCATTTTAGAG": {
+    "ENSGACC00001": 19,
+    "ENSGACC00002": 19,
+    "ENSGACC00003": 11,
+    "ENSGACC00004": 8,
+    "ENSGACC00005": 14,
+    "ENSGACC00006": 18,
+    "ENSGACC00007": 15,
+    "ENSGACC00008": 17,
+    "ENSGACC00009": 17,
+    "ENSGACC00010": 17,
+    "ENSGACC00011": 21,
+    "ENSGACC00012": 13,
+    "ENSGACC00013": 4,
+    "ENSGACC00014": 2
+   },
+   "GCGATCTTTCCGTGTA": {
+    "ENSGACC00003": 1,
+    "ENSGACC00004": 1,
+    "ENSGACC00008": 1,
+    "ENSGACC00009": 2
+   },
+   "GGATGACCATGCCTCT": {
+    "ENSGACC00001": 17,
+    "ENSGACC00002": 19,
+    "ENSGACC00003": 17,
+    "ENSGACC00004": 16,
+    "ENSGACC00005": 12,
+    "ENSGACC00006": 13,
+    "ENSGACC00007": 18,
+    "ENSGACC00008": 19,
+    "ENSGACC00009": 21,
+    "ENSGACC00010": 18,
+    "ENSGACC00011": 21,
+    "ENSGACC00012": 14,
+    "ENSGACC00013": 6,
+    "ENSGACC00014": 7
+   },
+   "GGGTAGATACGTCCTT": {
+    "ENSGACC00001": 8,
+    "ENSGACC00002": 15,
+    "ENSGACC00003": 14,
+    "ENSGACC00004": 14,
+    "ENSGACC00005": 14,
+    "ENSGACC00006": 14,
+    "ENSGACC00007": 10,
+    "ENSGACC00008": 7,
+    "ENSGACC00009": 17,
+    "ENSGACC00010": 17,
+    "ENSGACC00011": 12,
+    "ENSGACC00012": 16,
+    "ENSGACC00013": 4,
+    "ENSGACC00014": 4
+   },
+   "GGTACTAATCTTATGT": {
+    "ENSGACC00001": 9,
+    "ENSGACC00002": 9,
+    "ENSGACC00003": 8,
+    "ENSGACC00004": 17,
+    "ENSGACC00005": 16,
+    "ENSGACC00006": 12,
+    "ENSGACC00007": 16,
+    "ENSGACC00008": 9,
+    "ENSGACC00009": 19,
+    "ENSGACC00010": 19,
+    "ENSGACC00011": 7,
+    "ENSGACC00012": 18,
+    "ENSGACC00013": 6,
+    "ENSGACC00014": 2
+   },
+   "TCACCCATGGTAGTGG": {
+    "ENSGACC00006": 1,
+    "ENSGACC00012": 1
+   },
+   "TGCGGGGGAGTACGGG": {
+    "ENSGACC00001": 10,
+    "ENSGACC00002": 7,
+    "ENSGACC00003": 14,
+    "ENSGACC00004": 12,
+    "ENSGACC00005": 10,
+    "ENSGACC00006": 11,
+    "ENSGACC00007": 10,
+    "ENSGACC00008": 9,
+    "ENSGACC00009": 19,
+    "ENSGACC00010": 11,
+    "ENSGACC00011": 10,
+    "ENSGACC00012": 14,
+    "ENSGACC00013": 3,
+    "ENSGACC00014": 6
+   },
+   "TGCTCAACGGTGGTAC": {
+    "ENSGACC00001": 12,
+    "ENSGACC00002": 10,
+    "ENSGACC00003": 19,
+    "ENSGACC00004": 11,
+    "ENSGACC00005": 11,
+    "ENSGACC00006": 16,
+    "ENSGACC00007": 20,
+    "ENSGACC00008": 12,
+    "ENSGACC00009": 14,
+    "ENSGACC00010": 10,
+    "ENSGACC00011": 11,
+    "ENSGACC00012": 11,
+    "ENSGACC00013": 5,
+    "ENSGACC00014": 3
+   },
+   "TTAGAGTGTAAGGCTG": {
+    "ENSGACC00006": 1,
+    "ENSGACC00009": 2
+   }
+  },
+  "n_reads": 5802,
+  "published_label": "ACC1",
+  "special_molecules": [
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": "ENSGACC00005",
+    "gene": "ENSGACC00005",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "AATTGTACATAC"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": "ENSGACC00012",
+    "gene": "ENSGACC00012",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "GAATTCTCACGC"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": "ENSGACC00003",
+    "gene": "ENSGACC00003",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "ACGGAGTTAGTA"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": "ENSGACC00008",
+    "gene": "ENSGACC00008",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "TTTAATTTTTGC"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": "ENSGACC00006",
+    "gene": "ENSGACC00006",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CTTCCGTGTATC"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CCGGGGTGGTCG"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": "ENSGACC00005",
+    "gene": "ENSGACC00005",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00010",
+    "umi": "TGCTCTGTGGAG"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": "ENSGACC00004",
+    "gene": "ENSGACC00004",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00012",
+    "umi": "ATTCCATGGAAC"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": null,
+    "gene": "ENSGACC00006",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "TCCAGCGTTAAG"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": null,
+    "gene": "ENSGACC00006",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "TATCTTCTTTCA"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": null,
+    "gene": "ENSGACC00005",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "ATCATTCGTTGA"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "AATTCCGGGTCC"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "CCAGGTACCGGT"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "AAGGCTCTGCCG"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "TTCTTCGTCGGA"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "ATCAAAACAACG"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CTTAACAACTTG"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "GTTTCGGGAGTA"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "GTTAAGAAAGAC"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CGCTACGAACTC"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TACCGTGGCTCG"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ATTTACAACTGC"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CTCTGCTAGCTA"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GCTCTTATGGAC"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CGTCAACGCGCA"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GACCGTTCCTAC"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TTGCCGTTCCGA"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GTTTTTGACGTT"
+   },
+   {
+    "cb": "GGTACTAATCTTATGT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GACTTGAAATCA"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": "ENSGACC00002",
+    "gene": "ENSGACC00002",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "AGCATCGCCTTA"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": "ENSGACC00007",
+    "gene": "ENSGACC00007",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "GAAATTGACCGT"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": "ENSGACC00006",
+    "gene": "ENSGACC00006",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "AGCCGCAGTAAC"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": "ENSGACC00005",
+    "gene": "ENSGACC00005",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "TGTGAATCTGTA"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": "ENSGACC00001",
+    "gene": "ENSGACC00001",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GTAATACATGAG"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": "ENSGACC00002",
+    "gene": "ENSGACC00002",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "TACCACACTTGG"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00002",
+    "umi": "TTTTGCTATGCG"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": "ENSGACC00003",
+    "gene": "ENSGACC00003",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00006",
+    "umi": "TATACGCGGAGG"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": null,
+    "gene": "ENSGACC00005",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "TCCCGACGTGCA"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": null,
+    "gene": "ENSGACC00004",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "CTGGTAGACCAA"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": null,
+    "gene": "ENSGACC00003",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "CCCCTAGAGTAG"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "GACCGCCTTAGA"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "GCAGTAAAAGCG"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "GCTTCCAGCGGT"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "AGGGGAACCGAA"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "CAACACCTTTAG"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "AATTCGAAACTA"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TTCCTCAGGACA"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TTTGAGGAAGTC"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ACCGTACCAGGC"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CCTTCTCCGAGT"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TCTGGATTCCCT"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TCTGGCCCGGCC"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GCACGCTCATCG"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "AGCGGGCTTCTG"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GGATCTATCTTT"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TTAAATATGGTA"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TAATTGGAGTGG"
+   },
+   {
+    "cb": "CGAGCCTACTCCGAGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CTAGAGCAGCGC"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": "ENSGACC00002",
+    "gene": "ENSGACC00002",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "AATGCTTATACT"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": "ENSGACC00011",
+    "gene": "ENSGACC00011",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "TAGAGGAGCACG"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": "ENSGACC00002",
+    "gene": "ENSGACC00002",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "GATCATGGGCAA"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GGCGATAAGCCT"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": "ENSGACC00012",
+    "gene": "ENSGACC00012",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "TAGCCACGTCTG"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "TCTTGGCGCACC"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": "ENSGACC00007",
+    "gene": "ENSGACC00007",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00005",
+    "umi": "GCGCTACTAATC"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": "ENSGACC00002",
+    "gene": "ENSGACC00002",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00010",
+    "umi": "ATAACGAATAAG"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": null,
+    "gene": "ENSGACC00001",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "TCAACTGAGCGA"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": null,
+    "gene": "ENSGACC00003",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "CGTATTTCTTCG"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": null,
+    "gene": "ENSGACC00002",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "AGTCAGAGTAGC"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "GGCGAAGTCACT"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "TTCATAAAAACG"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "AAAGGCGAGTGA"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "CTACAGGTGATT"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "TGTCAGGCTTCA"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TCGGCTAGCGCC"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "AGGTGCTACACC"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TCGCGTTGCGAA"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CGGAGTCTATCA"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GTCCTTCAGTAA"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GCTGTAGATCGG"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GAACGGGAGAAA"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TGGGCTCGATTC"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GCGCTGCTCCAA"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CTGATGGACTAT"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TCCAATCTTTAG"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "ATATCGCCAGGT"
+   },
+   {
+    "cb": "GAGAGGTGGGATTGTT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TAAGGGAATAGA"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "AAGAACGTGTTA"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": "ENSGACC00008",
+    "gene": "ENSGACC00008",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "TTTGGATCGCGT"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": "ENSGACC00012",
+    "gene": "ENSGACC00012",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "TGAGGAAGTATG"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GCTCACTGTGCC"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": "ENSGACC00004",
+    "gene": "ENSGACC00004",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CATATGAGTGAA"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": "ENSGACC00003",
+    "gene": "ENSGACC00003",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "AGGGTAATTGGA"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": "ENSGACC00005",
+    "gene": "ENSGACC00005",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00006",
+    "umi": "AAACACGCGGGC"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": "ENSGACC00004",
+    "gene": "ENSGACC00004",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00006",
+    "umi": "TTTTTAGTGGAG"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": null,
+    "gene": "ENSGACC00005",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "GGGAGCCACAGC"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": null,
+    "gene": "ENSGACC00002",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "ATTGACCACCAT"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": null,
+    "gene": "ENSGACC00003",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "TATATTAACCGA"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "AGTCAAAGAGGA"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "GCCGCTAGCTGG"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "AGACATGCCTAA"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "GAGGGCGTAGTT"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "TTCAGTACGCCT"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CTTGCCAATGCG"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TGTCTTGACCTT"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "GAGCTTCGACCG"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TAGATCTAGATA"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TAACACCGAATC"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ATACGCTTACAC"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "AACAATTCACAC"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ACGTATACTATT"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TTAGGCCCCATT"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TCGTTTAGCTCC"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TAACATCTGGTT"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "AGCCGTTATTCA"
+   },
+   {
+    "cb": "GGGTAGATACGTCCTT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GTGAATATATGT"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": "ENSGACC00002",
+    "gene": "ENSGACC00002",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "CACAACCTATTT"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": "ENSGACC00008",
+    "gene": "ENSGACC00008",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "CTAAAGCCAGGA"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": "ENSGACC00011",
+    "gene": "ENSGACC00011",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "AGCGCTTACGGC"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": "ENSGACC00001",
+    "gene": "ENSGACC00001",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "AGGGTGGACGTA"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": "ENSGACC00004",
+    "gene": "ENSGACC00004",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "TGCCCGTTAATT"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": "ENSGACC00005",
+    "gene": "ENSGACC00005",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "TCGATTAGGAGG"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": "ENSGACC00002",
+    "gene": "ENSGACC00002",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00006",
+    "umi": "CCCGAGTAGAGG"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00001",
+    "umi": "TGAATCAGATGT"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": null,
+    "gene": "ENSGACC00002",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "TTTATTGTAACT"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": null,
+    "gene": "ENSGACC00002",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "GACCCAGCTCTC"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": null,
+    "gene": "ENSGACC00004",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "TAAATTTGAGGA"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "GAATGTATGACT"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "GCGTCCATTCCC"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "TTATATCCCATG"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "GTCTCTGCTAAT"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "GCAACGTACAAC"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "AAATTAGTTTTT"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "AGCCCGTTTACA"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CAGGTTCATAGA"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CCTAGCTTATCC"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GCGCCTCGGACG"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TCAACTGTCGTG"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ATAAGTTAAACA"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "AGCCTCAACTAG"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CGTGAAGCCCCC"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TTCGGGATTCCC"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TTGTCGCTGTGC"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GACGTGGCCACT"
+   },
+   {
+    "cb": "GGATGACCATGCCTCT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "ATACAAAGGACG"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "AACTTCAACTAT"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": "ENSGACC00001",
+    "gene": "ENSGACC00001",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "AGGTAAATCCGG"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": "ENSGACC00005",
+    "gene": "ENSGACC00005",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "GTGCACGCCTGT"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": "ENSGACC00012",
+    "gene": "ENSGACC00012",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "ACTTGGTAGTCT"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": "ENSGACC00004",
+    "gene": "ENSGACC00004",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "ACCAGCGGACCA"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": "ENSGACC00006",
+    "gene": "ENSGACC00006",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GCCTAGCGATAA"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": "ENSGACC00007",
+    "gene": "ENSGACC00007",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00002",
+    "umi": "GAGCTGTCCGCT"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": "ENSGACC00011",
+    "gene": "ENSGACC00011",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00009",
+    "umi": "TACACGGAAGCT"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": null,
+    "gene": "ENSGACC00001",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "AGCCTTAATCTT"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": null,
+    "gene": "ENSGACC00004",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "TTCAACGATAGG"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": null,
+    "gene": "ENSGACC00001",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "TAGGATAGGCGA"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "ACACGCTTCGGT"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "TTGGGCTAGTGC"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "GCGCTCAGGTTT"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "CCATTTTGTCGT"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "AAGTTTGCGACC"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "AGAGGAAGCCTC"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "GCTCCGGGTTTT"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TGCGTGTCTTAT"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GGGCGTTGAGTG"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ACGCCAACGCAT"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CCTCCCCTGGTA"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ACTACAAGGTTG"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GATCCTAGGGTA"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CTAAATACGCCT"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GATATCGAAATA"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "ATCTATAAGGAT"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GAGCGAAACCAC"
+   },
+   {
+    "cb": "GAAGAATGCCTGGTCA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CCTATTGATACA"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": "ENSGACC00007",
+    "gene": "ENSGACC00007",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "GATGGGAACTCA"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": "ENSGACC00011",
+    "gene": "ENSGACC00011",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "CTGCTAACACTT"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": "ENSGACC00004",
+    "gene": "ENSGACC00004",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "CGGCGCCATAAT"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": "ENSGACC00006",
+    "gene": "ENSGACC00006",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "AAAAGATTCGGT"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": "ENSGACC00006",
+    "gene": "ENSGACC00006",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CTCGAGTTGTGA"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": "ENSGACC00014",
+    "gene": "ENSGACC00014",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GGATTTCAATAG"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": "ENSGACC00003",
+    "gene": "ENSGACC00003",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00004",
+    "umi": "TGGTTCCACTAC"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": "ENSGACC00006",
+    "gene": "ENSGACC00006",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00001",
+    "umi": "TGTCACGTACGC"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": null,
+    "gene": "ENSGACC00004",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "GGGTCTATGTGA"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": null,
+    "gene": "ENSGACC00001",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "TTGTTGTAATAG"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": null,
+    "gene": "ENSGACC00003",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "AGGGGCGTAGCC"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "CGGAAATGCTGA"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "TTTACCAGTTCG"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "ATTTATTGGCCT"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "CTTATGAAACGC"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "CGCAAACCCGCT"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TTGAATTTTCTG"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "AGAAACCACATT"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "ATCAACTTCTGC"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GGTTCGGGTCTT"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TGAACAACGAAA"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GTATAGTAGCAC"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CCTAGTGTCGCC"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TGTTCGACGAAA"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TTACTTGGTCGA"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TTTCGACCTGCT"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GAAGCCCAGTTT"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "ACTTGGAGTGTT"
+   },
+   {
+    "cb": "TGCTCAACGGTGGTAC",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TCCCAGGTCTGA"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": "ENSGACC00002",
+    "gene": "ENSGACC00002",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "TACTCGTCGAGA"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": "ENSGACC00013",
+    "gene": "ENSGACC00013",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "GTAGCCTCATCT"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": "ENSGACC00014",
+    "gene": "ENSGACC00014",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "CCTTACGCTAAT"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": "ENSGACC00011",
+    "gene": "ENSGACC00011",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CAGTGCACCTAC"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": "ENSGACC00007",
+    "gene": "ENSGACC00007",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GACCCTTACATT"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": "ENSGACC00008",
+    "gene": "ENSGACC00008",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GGTCGGGCGGGG"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": "ENSGACC00005",
+    "gene": "ENSGACC00005",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00009",
+    "umi": "TTAACATTGAGA"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00001",
+    "umi": "CAGATTTCGGGC"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": null,
+    "gene": "ENSGACC00005",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "GCGTCCAAGCGT"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": null,
+    "gene": "ENSGACC00005",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "GGGACATCACCA"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": null,
+    "gene": "ENSGACC00002",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "GCCCCATTGTGC"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "GGTCACGTCCGC"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "CCTTGGATGGGG"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "CCGTAGTGATAT"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "TATCATGAGCAA"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "TCTCGGATAGGG"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CTAATTCTTTAG"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CTATGGGGTTTC"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "ACATTGCAACTA"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TGTTGACCAGTT"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ACTTCTACACGG"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TTTTGTGGAAAT"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CTCACTGGAAGA"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CGTAAAACGAGG"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GCCCCAATTAGC"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GCGTCCCTGGAC"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TTGTGACGTAGT"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CAGACGATAAAA"
+   },
+   {
+    "cb": "GAAGTGTTAGATCTCA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GGCTCCGCAGAT"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "GCGAGGGGTGTT"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": "ENSGACC00006",
+    "gene": "ENSGACC00006",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "GTGCTGTTGACT"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": "ENSGACC00007",
+    "gene": "ENSGACC00007",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "TGGCTATACCCG"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GCTACCCCGAGC"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": "ENSGACC00001",
+    "gene": "ENSGACC00001",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "ATGAACACAACC"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GCGGGCCACGCC"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00003",
+    "umi": "CTGGAGTCCGAA"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": "ENSGACC00012",
+    "gene": "ENSGACC00012",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00005",
+    "umi": "TATCTGATGTGC"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": null,
+    "gene": "ENSGACC00001",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "ATGCCCAAGGCA"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": null,
+    "gene": "ENSGACC00004",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "ATTAGCATCTGT"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": null,
+    "gene": "ENSGACC00002",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "TGCTCAGCACCC"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "GCAGTCAGCGTA"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "AGAGGTTTTTTA"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "GCTGGATGGCCC"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "TAGGGCGCCAGC"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "GGGGCGTTTGGT"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "GTTTCCTTTTAT"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "AGCCGTCTGAGC"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CGCTTTGCGCAT"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TAAGACACGTTT"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ACGTCCGGCCAA"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GAGCGCTAGACG"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CGAGGATGACAG"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CCAAAGGTCCTG"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TACTTCCGTATT"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GACGGCACTCTA"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "ACATATCCTGAT"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "ACCGACCTCCGA"
+   },
+   {
+    "cb": "AGGTGCATCCGCATGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CACGATCCCCGC"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "ATCTGGCACTGG"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": "ENSGACC00011",
+    "gene": "ENSGACC00011",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "AACCCTGGTCCC"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": "ENSGACC00001",
+    "gene": "ENSGACC00001",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "TATGTAAATTAG"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": "ENSGACC00008",
+    "gene": "ENSGACC00008",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CGAGAGTAGTAA"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": "ENSGACC00006",
+    "gene": "ENSGACC00006",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "TGCGTGAGCAGC"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": "ENSGACC00006",
+    "gene": "ENSGACC00006",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "AGCTTCTCCCTA"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00005",
+    "umi": "TGTACAATGGAG"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": "ENSGACC00008",
+    "gene": "ENSGACC00008",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00011",
+    "umi": "GATATCTAGTGC"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": null,
+    "gene": "ENSGACC00001",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "CATGATGGGATG"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": null,
+    "gene": "ENSGACC00002",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "TATAATTCGTTG"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": null,
+    "gene": "ENSGACC00003",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "CTTTGATAGCCT"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "GTGGGCTTAAAG"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "TCAGCCAGGGTA"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "CGAGGTAAGTAC"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "GGTTGGGTCGAA"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "ATACGGTTCTGT"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TGATGGGTTAAG"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TAAACAAAGGCA"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CATTTTCACGAC"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TTGGACATATAT"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CAAAACTGGAAA"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "AAGGGATTGCTA"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TTATAACTAGGG"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CACCCCCCAGAG"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GGCCAGAGGATC"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "ATCGATTATGGA"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CATTTATGTCCT"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "AGCAAGCATAAC"
+   },
+   {
+    "cb": "GCATCCCATTTTAGAG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GTCCCGGCTGTA"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": "ENSGACC00012",
+    "gene": "ENSGACC00012",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "CTGGATCGCGGT"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": "ENSGACC00014",
+    "gene": "ENSGACC00014",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "ACGGTCTGGATG"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "AGGCGAACTTGT"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": "ENSGACC00004",
+    "gene": "ENSGACC00004",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GTGGCCTTGCAA"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": "ENSGACC00004",
+    "gene": "ENSGACC00004",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CTTTATTGGCGG"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": "ENSGACC00014",
+    "gene": "ENSGACC00014",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GGTGTCTATCTG"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": "ENSGACC00012",
+    "gene": "ENSGACC00012",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00001",
+    "umi": "ACTCGACAACAT"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00006",
+    "umi": "TTTCGGCTACTA"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": null,
+    "gene": "ENSGACC00006",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "GTACGGCAGTTT"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": null,
+    "gene": "ENSGACC00004",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "ACTTCGAAACCG"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": null,
+    "gene": "ENSGACC00001",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "TTAGACTCCGTT"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "ATGTTCGTTGAA"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "GAGTCTCATAAG"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "ACTAGCGTCGGA"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "CCCGTGGCTTGC"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "ACAACAATGAAA"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TACATGCGTAGG"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TCTAACTATTCT"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TGTCCTTACGTG"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TGTCAGTCACAG"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "AATTTTGAAACC"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CGGGGTAGGTCA"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ATAATCCGTTTC"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TCCTAGACCGCA"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ATCCTCGTGTGA"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GTGAGGGCATTC"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CACACCTTGCAA"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TCGCGTAAGGTG"
+   },
+   {
+    "cb": "TGCGGGGGAGTACGGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TTGCTTGTACCA"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "TTCGAGAGTACA"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": "ENSGACC00011",
+    "gene": "ENSGACC00011",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "CAGCGTTCACCA"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "AATGTTATTCAG"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GATTCCTGCCCC"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": "ENSGACC00011",
+    "gene": "ENSGACC00011",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "TGTTAGCCCTGA"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": "ENSGACC00005",
+    "gene": "ENSGACC00005",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "AGGGACCTTTTC"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": "ENSGACC00012",
+    "gene": "ENSGACC00012",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00009",
+    "umi": "AATGTAAAAAGC"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": "ENSGACC00004",
+    "gene": "ENSGACC00004",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00001",
+    "umi": "TATCGTCACATG"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": null,
+    "gene": "ENSGACC00002",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "TCGGACCCGTTC"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": null,
+    "gene": "ENSGACC00003",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "TTGATCGTCCGC"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": null,
+    "gene": "ENSGACC00005",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "ATACGACACCAG"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "TATAGGCAGCAA"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "CGAGTCATAGGG"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "TGAGTTACAGCA"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "GGCAATGCTTTT"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "ACTGTTGCAGCG"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TGTCACACACAC"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "GGCAATGGGGCC"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CCGTGTCTAGCT"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TTTGTACGTTTA"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TGGTGCTAGAAG"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CTAGGGATTTGC"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TTATAAGCCCCG"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CCCTCGATATAT"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CTACGGACAGCG"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CTAGCCCGTCTG"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "AGAAGCCCTACG"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TTTACGCCATCA"
+   },
+   {
+    "cb": "CGCGTGGGTTTTGACC",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CTAGTTGCCGGA"
+   }
+  ]
+ },
+ "accB": {
+  "cdna_read": "R3",
+  "cells": [
+   "ATCCCCACGCTGCATG",
+   "CAAGAGTACGATGTGG",
+   "GCACGCGGTTCCACGA",
+   "TCAATCGCTACTCTTA",
+   "TGAGATCCCACGGATA",
+   "CATGCCCCCTCTTGTG",
+   "CATTACTTTATCAGGC",
+   "GGGCGACCCAGCGACT",
+   "CCAGTTACTCGTAATG",
+   "TCCCGGTCGCAGCACA",
+   "ACAAAAACAGTGTGAT",
+   "GGAAACTTCAAGCCGG"
+  ],
+  "chemistry": "v2",
+  "expected": {
+   "ACAAAAACAGTGTGAT": {
+    "ENSGACC00001": 12,
+    "ENSGACC00002": 18,
+    "ENSGACC00003": 12,
+    "ENSGACC00004": 14,
+    "ENSGACC00005": 14,
+    "ENSGACC00006": 9,
+    "ENSGACC00007": 14,
+    "ENSGACC00008": 10,
+    "ENSGACC00009": 15,
+    "ENSGACC00010": 19,
+    "ENSGACC00011": 17,
+    "ENSGACC00012": 9,
+    "ENSGACC00013": 5,
+    "ENSGACC00014": 7
+   },
+   "AGTGCGGGGCGGGGTT": {
+    "ENSGACC00007": 1,
+    "ENSGACC00010": 1
+   },
+   "ATCCCCACGCTGCATG": {
+    "ENSGACC00001": 7,
+    "ENSGACC00002": 13,
+    "ENSGACC00003": 9,
+    "ENSGACC00004": 13,
+    "ENSGACC00005": 8,
+    "ENSGACC00006": 13,
+    "ENSGACC00007": 13,
+    "ENSGACC00008": 13,
+    "ENSGACC00009": 25,
+    "ENSGACC00010": 12,
+    "ENSGACC00011": 15,
+    "ENSGACC00012": 12,
+    "ENSGACC00013": 5,
+    "ENSGACC00014": 5
+   },
+   "CAAGAGTACGATGTGG": {
+    "ENSGACC00001": 4,
+    "ENSGACC00002": 5,
+    "ENSGACC00003": 12,
+    "ENSGACC00004": 8,
+    "ENSGACC00005": 14,
+    "ENSGACC00006": 10,
+    "ENSGACC00007": 10,
+    "ENSGACC00008": 6,
+    "ENSGACC00009": 17,
+    "ENSGACC00010": 18,
+    "ENSGACC00011": 19,
+    "ENSGACC00012": 9,
+    "ENSGACC00013": 3,
+    "ENSGACC00014": 5
+   },
+   "CATGCCCCCTCTTGTG": {
+    "ENSGACC00001": 22,
+    "ENSGACC00002": 18,
+    "ENSGACC00003": 17,
+    "ENSGACC00004": 25,
+    "ENSGACC00005": 9,
+    "ENSGACC00006": 18,
+    "ENSGACC00007": 18,
+    "ENSGACC00008": 12,
+    "ENSGACC00009": 18,
+    "ENSGACC00010": 13,
+    "ENSGACC00011": 17,
+    "ENSGACC00012": 13,
+    "ENSGACC00013": 4,
+    "ENSGACC00014": 8
+   },
+   "CATTACTTTATCAGGC": {
+    "ENSGACC00001": 10,
+    "ENSGACC00002": 10,
+    "ENSGACC00003": 12,
+    "ENSGACC00004": 15,
+    "ENSGACC00005": 14,
+    "ENSGACC00006": 12,
+    "ENSGACC00007": 9,
+    "ENSGACC00008": 17,
+    "ENSGACC00009": 19,
+    "ENSGACC00010": 16,
+    "ENSGACC00011": 19,
+    "ENSGACC00012": 10,
+    "ENSGACC00013": 6,
+    "ENSGACC00014": 3
+   },
+   "CCAGTTACTCGTAATG": {
+    "ENSGACC00001": 17,
+    "ENSGACC00002": 14,
+    "ENSGACC00003": 4,
+    "ENSGACC00004": 12,
+    "ENSGACC00005": 16,
+    "ENSGACC00006": 11,
+    "ENSGACC00007": 9,
+    "ENSGACC00008": 16,
+    "ENSGACC00009": 14,
+    "ENSGACC00010": 13,
+    "ENSGACC00011": 9,
+    "ENSGACC00012": 11,
+    "ENSGACC00013": 2,
+    "ENSGACC00014": 6
+   },
+   "CCGGGAACGCACCACG": {
+    "ENSGACC00006": 1,
+    "ENSGACC00014": 1
+   },
+   "CTTTTAAGAGAATATG": {
+    "ENSGACC00002": 2,
+    "ENSGACC00003": 1,
+    "ENSGACC00008": 1,
+    "ENSGACC00010": 1
+   },
+   "GACGTGTACCAGAACT": {
+    "ENSGACC00005": 1,
+    "ENSGACC00007": 1,
+    "ENSGACC00012": 1,
+    "ENSGACC00013": 2
+   },
+   "GCAAGGGTCACAGTCT": {
+    "ENSGACC00004": 2,
+    "ENSGACC00009": 1
+   },
+   "GCACGCGGTTCCACGA": {
+    "ENSGACC00001": 13,
+    "ENSGACC00002": 14,
+    "ENSGACC00003": 23,
+    "ENSGACC00004": 22,
+    "ENSGACC00005": 7,
+    "ENSGACC00006": 11,
+    "ENSGACC00007": 15,
+    "ENSGACC00008": 11,
+    "ENSGACC00009": 28,
+    "ENSGACC00010": 12,
+    "ENSGACC00011": 11,
+    "ENSGACC00012": 15,
+    "ENSGACC00013": 5,
+    "ENSGACC00014": 4
+   },
+   "GGAAACTTCAAGCCGG": {
+    "ENSGACC00001": 21,
+    "ENSGACC00002": 17,
+    "ENSGACC00003": 9,
+    "ENSGACC00004": 15,
+    "ENSGACC00005": 20,
+    "ENSGACC00006": 14,
+    "ENSGACC00007": 22,
+    "ENSGACC00008": 17,
+    "ENSGACC00009": 23,
+    "ENSGACC00010": 16,
+    "ENSGACC00011": 19,
+    "ENSGACC00012": 14,
+    "ENSGACC00013": 1,
+    "ENSGACC00014": 3
+   },
+   "GGCATACTTTATACCA": {
+    "ENSGACC00001": 1,
+    "ENSGACC00002": 1
+   },
+   "GGGCGACCCAGCGACT": {
+    "ENSGACC00001": 9,
+    "ENSGACC00002": 15,
+    "ENSGACC00003": 13,
+    "ENSGACC00004": 12,
+    "ENSGACC00005": 18,
+    "ENSGACC00006": 22,
+    "ENSGACC00007": 13,
+    "ENSGACC00008": 9,
+    "ENSGACC00009": 19,
+    "ENSGACC00010": 21,
+    "ENSGACC00011": 15,
+    "ENSGACC00012": 16,
+    "ENSGACC00013": 2,
+    "ENSGACC00014": 3
+   },
+   "GGTTCGAGAAGGCCCA": {
+    "ENSGACC00001": 1,
+    "ENSGACC00003": 2
+   },
+   "GTGGCCGGCTCCCTCG": {
+    "ENSGACC00002": 1,
+    "ENSGACC00003": 1,
+    "ENSGACC00007": 1,
+    "ENSGACC00008": 1,
+    "ENSGACC00011": 1
+   },
+   "TCAATCGCTACTCTTA": {
+    "ENSGACC00001": 19,
+    "ENSGACC00002": 24,
+    "ENSGACC00003": 12,
+    "ENSGACC00004": 12,
+    "ENSGACC00005": 9,
+    "ENSGACC00006": 7,
+    "ENSGACC00007": 10,
+    "ENSGACC00008": 17,
+    "ENSGACC00009": 19,
+    "ENSGACC00010": 17,
+    "ENSGACC00011": 13,
+    "ENSGACC00012": 11,
+    "ENSGACC00013": 3,
+    "ENSGACC00014": 8
+   },
+   "TCCCGGTCGCAGCACA": {
+    "ENSGACC00001": 11,
+    "ENSGACC00002": 13,
+    "ENSGACC00003": 6,
+    "ENSGACC00004": 14,
+    "ENSGACC00005": 11,
+    "ENSGACC00006": 10,
+    "ENSGACC00007": 15,
+    "ENSGACC00008": 8,
+    "ENSGACC00009": 21,
+    "ENSGACC00010": 10,
+    "ENSGACC00011": 14,
+    "ENSGACC00012": 18,
+    "ENSGACC00013": 2,
+    "ENSGACC00014": 3
+   },
+   "TGAGATCCCACGGATA": {
+    "ENSGACC00001": 14,
+    "ENSGACC00002": 13,
+    "ENSGACC00003": 16,
+    "ENSGACC00004": 11,
+    "ENSGACC00005": 9,
+    "ENSGACC00006": 15,
+    "ENSGACC00007": 20,
+    "ENSGACC00008": 16,
+    "ENSGACC00009": 19,
+    "ENSGACC00010": 17,
+    "ENSGACC00011": 13,
+    "ENSGACC00012": 8,
+    "ENSGACC00013": 6,
+    "ENSGACC00014": 5
+   }
+  },
+  "n_reads": 5793,
+  "published_label": "ACC2",
+  "special_molecules": [
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": "ENSGACC00003",
+    "gene": "ENSGACC00003",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "GGCAAGATGC"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": "ENSGACC00007",
+    "gene": "ENSGACC00007",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "TATAGCATTC"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "ATGCCAATCA"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "AGGTGCCGCC"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": "ENSGACC00007",
+    "gene": "ENSGACC00007",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GTGGGCTGTT"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "ACATGATCAT"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": "ENSGACC00011",
+    "gene": "ENSGACC00011",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00005",
+    "umi": "GATTAGTCCC"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": "ENSGACC00008",
+    "gene": "ENSGACC00008",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00001",
+    "umi": "AACCTCAGAC"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": null,
+    "gene": "ENSGACC00002",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "GCGAACTGAA"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": null,
+    "gene": "ENSGACC00003",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "GTAACGGTAT"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": null,
+    "gene": "ENSGACC00003",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "ATGGGTGGAC"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "AGCAATGGAC"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "AGTGCCAGGT"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "TAGGTGATGT"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "GCGAACATGC"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "GAAGGAAAAT"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TTTGGGCATT"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TTGTGTTCTC"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TTCACTTGCC"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GGATCTTCTT"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ATTGTTGTAC"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GGCCAAAACT"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GCCTATAGAA"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "AGGACCCGCA"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TCTTCCCCCG"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TCCGGCAGGT"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TGGTTTTTAT"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CCACACCAAT"
+   },
+   {
+    "cb": "ATCCCCACGCTGCATG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "AACCGCCCGT"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": "ENSGACC00004",
+    "gene": "ENSGACC00004",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "TCAACAGCAC"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": "ENSGACC00005",
+    "gene": "ENSGACC00005",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "ACTGTCGTTG"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": "ENSGACC00007",
+    "gene": "ENSGACC00007",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "GTACACAGTG"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": "ENSGACC00007",
+    "gene": "ENSGACC00007",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CAAAAGTACA"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": "ENSGACC00006",
+    "gene": "ENSGACC00006",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GGGCCCCCTA"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": "ENSGACC00001",
+    "gene": "ENSGACC00001",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CTACATTCTC"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": "ENSGACC00005",
+    "gene": "ENSGACC00005",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00006",
+    "umi": "TCGCAGTCAT"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00009",
+    "umi": "AGAGACTCTC"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": null,
+    "gene": "ENSGACC00005",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "CAACCAGAGC"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": null,
+    "gene": "ENSGACC00002",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "TTGTCAGTAA"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": null,
+    "gene": "ENSGACC00006",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "AGCGCTCTAG"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "CAGGTAGGGT"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "TGATCTCATA"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "GAGGCCGTTC"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "AATGCGTAAT"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "TAAATCGTGA"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "GTCTGCCATC"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TGGAAAATTC"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CGCACTGTAC"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TTGCTCTCCA"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ATCACCGAGT"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TGTCTCCGTA"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GTTTGTGCCT"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ACCACGGGGA"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TTCCAGCGGT"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CCCGAAGCAA"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GCTCGGGATG"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GGTACGGTTT"
+   },
+   {
+    "cb": "CAAGAGTACGATGTGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GTCGTGTACT"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": "ENSGACC00004",
+    "gene": "ENSGACC00004",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "AGTCGCTACC"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": "ENSGACC00002",
+    "gene": "ENSGACC00002",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "CGACTGGAGT"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": "ENSGACC00004",
+    "gene": "ENSGACC00004",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "AAGGCAGGCC"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": "ENSGACC00003",
+    "gene": "ENSGACC00003",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "AACTCTTAGA"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": "ENSGACC00003",
+    "gene": "ENSGACC00003",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "ATAGTTGTTC"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": "ENSGACC00011",
+    "gene": "ENSGACC00011",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CCATCTCTTG"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00002",
+    "umi": "AAGTAACGGA"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": "ENSGACC00002",
+    "gene": "ENSGACC00002",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00010",
+    "umi": "CCCAAATCCC"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": null,
+    "gene": "ENSGACC00001",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "ACTCAATTAT"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": null,
+    "gene": "ENSGACC00004",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "AGGCTCGTCC"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": null,
+    "gene": "ENSGACC00004",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "CGTGGGCCCA"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "AGATTATACA"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "CGTATTCTGC"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "ACCACTGATC"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "GCCTCTTCAA"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "CTCAGTCTTA"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CAGGAACGCT"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CACAAGAGGC"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CACTTGATGG"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ATCAACGCGT"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GGGCGAGCGT"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "AACATTCCAA"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GTCGGCTGAT"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CGTCGACACA"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TATATCATAT"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TGGTCACATC"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GGCCCAATTT"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TAGCTAGCTG"
+   },
+   {
+    "cb": "GCACGCGGTTCCACGA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CTCGCGGTGG"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": "ENSGACC00007",
+    "gene": "ENSGACC00007",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "ATCTATAACC"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": "ENSGACC00002",
+    "gene": "ENSGACC00002",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "TATCGTTTAT"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": "ENSGACC00008",
+    "gene": "ENSGACC00008",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "AGAGGCGGTT"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": "ENSGACC00004",
+    "gene": "ENSGACC00004",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "AGATTGCTTC"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": "ENSGACC00007",
+    "gene": "ENSGACC00007",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CACAGAACAC"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": "ENSGACC00008",
+    "gene": "ENSGACC00008",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GGTCCTTCGG"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": "ENSGACC00011",
+    "gene": "ENSGACC00011",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00009",
+    "umi": "GATCCTGAAA"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": "ENSGACC00002",
+    "gene": "ENSGACC00002",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00009",
+    "umi": "AAGCTGTCGT"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": null,
+    "gene": "ENSGACC00005",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "ACTGTGGCGA"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": null,
+    "gene": "ENSGACC00006",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "GTTTCGTTAC"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": null,
+    "gene": "ENSGACC00005",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "GGCGTGTGAA"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "TCCCGGAGCA"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "GGAGCCACTC"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "CTCCGCAGTA"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "TTACAGGTCA"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "GGTATAGTAG"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CCTGCAGTTG"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "ACCGCTGTCC"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "AAAGTTGCTT"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CAAGATTTCC"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CGGACTTAGC"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CAAGTTGAGA"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GTTTCCACGT"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GGAATACTGG"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GACCTCAGTC"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TCGAGTGTTT"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "AGATGAGAAT"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GTTATCGGGA"
+   },
+   {
+    "cb": "TCAATCGCTACTCTTA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GTCGTAGGTT"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": "ENSGACC00002",
+    "gene": "ENSGACC00002",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "CGGCGTGAAT"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": "ENSGACC00008",
+    "gene": "ENSGACC00008",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "AGAATCTACC"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": "ENSGACC00001",
+    "gene": "ENSGACC00001",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "GGACAATACG"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CAAGAGGCCC"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": "ENSGACC00002",
+    "gene": "ENSGACC00002",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "TAACGCTATC"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "ACACCTCCAT"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": "ENSGACC00008",
+    "gene": "ENSGACC00008",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00004",
+    "umi": "TCGTGGATGA"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": "ENSGACC00007",
+    "gene": "ENSGACC00007",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00006",
+    "umi": "CGTCAAATTC"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": null,
+    "gene": "ENSGACC00002",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "GGTGAAAGCT"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": null,
+    "gene": "ENSGACC00004",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "TCGTGGGGTA"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": null,
+    "gene": "ENSGACC00002",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "CCTCAGGCAA"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "CTCGCGAGAT"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "TCATCGCTGC"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "GTGGATAGCG"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "AAAACACTTA"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "CTTGCCTGAG"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "ACTTGCCGAG"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CATAGACGGG"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TCAGCATCAC"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TTGAGACATA"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TAGGGGCTAC"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "AGACCAGCTT"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ACCGGATCTA"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GGGACAGGAC"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TGCCCACACC"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CGAGTTTAGA"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CTAAGAGCAT"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CATGACTGCC"
+   },
+   {
+    "cb": "TGAGATCCCACGGATA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TAAAAATGCA"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": "ENSGACC00008",
+    "gene": "ENSGACC00008",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "ACCGCCCACG"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": "ENSGACC00002",
+    "gene": "ENSGACC00002",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "TAACTTTACA"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": "ENSGACC00001",
+    "gene": "ENSGACC00001",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "CCCCTGCGCC"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": "ENSGACC00008",
+    "gene": "ENSGACC00008",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "TGCCTACCAT"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": "ENSGACC00001",
+    "gene": "ENSGACC00001",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CTTGGTCAGA"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CTACCAGACG"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": "ENSGACC00012",
+    "gene": "ENSGACC00012",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00001",
+    "umi": "ACTCTGGTAG"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": "ENSGACC00002",
+    "gene": "ENSGACC00002",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00007",
+    "umi": "TTTTCGGAGT"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": null,
+    "gene": "ENSGACC00002",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "CTCTGCCAGC"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": null,
+    "gene": "ENSGACC00005",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "AGTATGAAAC"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": null,
+    "gene": "ENSGACC00002",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "CCGGCCATCT"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "TAGAGAATCG"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "ACAGCTGCGC"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "AGTACATAAC"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "TGAGTATCGC"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "GTGCGGGGGC"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "GGGGAGCGGC"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TCGCCGTGTC"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CCCTCCGCTT"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CAAGGCTGGT"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TTGTCGGGCT"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GAAAGCATCT"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CAGAAAGTCA"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "AGCCTAGATG"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CTTTTACTGG"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GCTGAATCGT"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GTCCGTACCA"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CTGGAGTTGT"
+   },
+   {
+    "cb": "CATGCCCCCTCTTGTG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CGCTTGTCCT"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": "ENSGACC00008",
+    "gene": "ENSGACC00008",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "CGGCCCCACG"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "ATTACTTTGT"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": "ENSGACC00007",
+    "gene": "ENSGACC00007",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "TTTGTTTACG"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": "ENSGACC00012",
+    "gene": "ENSGACC00012",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "ACCAGGCAAA"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": "ENSGACC00013",
+    "gene": "ENSGACC00013",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CTGCTGGCAC"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": "ENSGACC00003",
+    "gene": "ENSGACC00003",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GGTCCTCAAG"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": "ENSGACC00012",
+    "gene": "ENSGACC00012",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00010",
+    "umi": "GACCCCTTCG"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": "ENSGACC00012",
+    "gene": "ENSGACC00012",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00008",
+    "umi": "TACCTTGGAA"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": null,
+    "gene": "ENSGACC00004",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "GTTATCTAAG"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": null,
+    "gene": "ENSGACC00002",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "ACTGCGGTGT"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": null,
+    "gene": "ENSGACC00004",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "ACTTATCTAG"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "TAATTAGATC"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "CATCCATCGA"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "CATCATTCTG"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "ACATCTCAAT"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "TAGATTCATG"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CGAGTGAGAT"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "AAGGTTGCGC"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CCTCAGTGTT"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CTCCGGAATC"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CGCTCGGCAC"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CTGAGCCGAT"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GATACACCGC"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CCCCATGTGG"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TAATTTAATT"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CCGGGTGTCG"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TCTTGGCTGG"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CGCTTGACCG"
+   },
+   {
+    "cb": "CATTACTTTATCAGGC",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GACGTCCCCA"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "CGGTACCTGG"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": "ENSGACC00007",
+    "gene": "ENSGACC00007",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "CATCTTCCAA"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": "ENSGACC00011",
+    "gene": "ENSGACC00011",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "TCCAATGGAA"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CCTGGCAGCA"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": "ENSGACC00012",
+    "gene": "ENSGACC00012",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "TTTGAAACTA"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "AACGGAAAGC"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": "ENSGACC00011",
+    "gene": "ENSGACC00011",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00010",
+    "umi": "TTATCCGTGT"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": "ENSGACC00004",
+    "gene": "ENSGACC00004",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00002",
+    "umi": "CGCTGTGTAC"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": null,
+    "gene": "ENSGACC00003",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "GGCAGATCGG"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": null,
+    "gene": "ENSGACC00004",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "GGTCGCGCTG"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": null,
+    "gene": "ENSGACC00005",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "AGTATATGAT"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "ACCTTCCTAT"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "CAAGCAACCG"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "AAGCCTTACG"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "ACGCATATAT"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "TAGAATTCTA"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CTTTTCTGAT"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CCTCCATTGT"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "AGACTGCATA"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "AATGTAGGGC"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ATAATTTTCT"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GGGTGGCGTC"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GGGCCGGGCC"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ACGGGGTGGC"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CGGGATTGAG"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GTACTACGCT"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TCTCACGCGC"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CTTAAAGGCC"
+   },
+   {
+    "cb": "GGGCGACCCAGCGACT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CGATACCGAG"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": "ENSGACC00012",
+    "gene": "ENSGACC00012",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "CGAGAGAAAG"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": "ENSGACC00007",
+    "gene": "ENSGACC00007",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "ACACGCCGGC"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": "ENSGACC00006",
+    "gene": "ENSGACC00006",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "CGAAATCATC"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": "ENSGACC00001",
+    "gene": "ENSGACC00001",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GAAGTCCGTC"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GCTGTTCACC"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": "ENSGACC00002",
+    "gene": "ENSGACC00002",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GGGTTAGTAG"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00002",
+    "umi": "ACAACATCAA"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": "ENSGACC00014",
+    "gene": "ENSGACC00014",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00012",
+    "umi": "CGTACCGTAA"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": null,
+    "gene": "ENSGACC00003",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "ACGCTCGCCA"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": null,
+    "gene": "ENSGACC00006",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "GCGCTCCATG"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": null,
+    "gene": "ENSGACC00001",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "AGGATTCTAA"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "GTCTTAGTTA"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "AGCCCTGGAG"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "AACTTACAGT"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "CGAGAGCACC"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "GAGATTTCCG"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CGTCGAGGGC"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "GATGCCGTAT"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "GTGCGAGCCA"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CATTTCTCGG"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CCCCTTCAGA"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GCCTGGATGA"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CTGGTTCGCC"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TACGTCCCCA"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ATTAATGGGT"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TGCTAAAGAC"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "AGTGAGTTTG"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "AATATGCGGC"
+   },
+   {
+    "cb": "CCAGTTACTCGTAATG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "TTCACAGGTA"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "GTACTCTCTA"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": "ENSGACC00006",
+    "gene": "ENSGACC00006",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "CAAAGACGTA"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "CCGGGTTGTA"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": "ENSGACC00008",
+    "gene": "ENSGACC00008",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CTCTACGTGA"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": "ENSGACC00001",
+    "gene": "ENSGACC00001",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "TACAAGCAGA"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": "ENSGACC00004",
+    "gene": "ENSGACC00004",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CATCGTGCCA"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": "ENSGACC00001",
+    "gene": "ENSGACC00001",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00005",
+    "umi": "CTACTAATGG"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": "ENSGACC00005",
+    "gene": "ENSGACC00005",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00003",
+    "umi": "AAGAAGCACG"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": null,
+    "gene": "ENSGACC00006",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "CTGGTCCTAC"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": null,
+    "gene": "ENSGACC00004",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "ATCATTCCCG"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": null,
+    "gene": "ENSGACC00001",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "GGGTCTTACC"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "CGCGTCTTGA"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "CGACGCACTA"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "CGCGGTCTTG"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "TTTGAGCAGA"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "CCTACGACTG"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "AAACGAAGTA"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "TTCCGTTGTT"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "GAGCCGGCTG"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "AGTCCCAACT"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ATCGATTGTG"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CGTCCTGTAC"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TAGCTACAGT"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GAGATGTATT"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TTTAATTTAC"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CTTGGGAGGA"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "ATGAGGAGAC"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CATAAGCATA"
+   },
+   {
+    "cb": "TCCCGGTCGCAGCACA",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GCATAATGCT"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": "ENSGACC00003",
+    "gene": "ENSGACC00003",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "GTGTGTACTC"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": "ENSGACC00002",
+    "gene": "ENSGACC00002",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "TCACGCACCC"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": "ENSGACC00003",
+    "gene": "ENSGACC00003",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "TGACGTGGGG"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": "ENSGACC00011",
+    "gene": "ENSGACC00011",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CACTGTCGGA"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CGATAGGGAT"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": "ENSGACC00003",
+    "gene": "ENSGACC00003",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "TATCGATTTC"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": "ENSGACC00002",
+    "gene": "ENSGACC00002",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00003",
+    "umi": "GTGGTCTGAA"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": "ENSGACC00011",
+    "gene": "ENSGACC00011",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00012",
+    "umi": "CGTGCTACCT"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": null,
+    "gene": "ENSGACC00005",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "AATCGTGCGT"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": null,
+    "gene": "ENSGACC00006",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "TCAGAAACTT"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": null,
+    "gene": "ENSGACC00005",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "CTCAAGGGAC"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "ACAGAGCCTA"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "CGATTGTGCG"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "AGTAGGAAGA"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "CCGTGGCCAA"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "AAATTGTGTC"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CTCGATCTAA"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CCCATGACAG"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "AATGTCCAGG"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CTCCCGATAA"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TATTAGTTCG"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CGGAGCAGAA"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CCGGCGCAAA"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GCCAGGTAGC"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ACAGTGGTAT"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "AATGGGGGTT"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GGGCAGATCT"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "CCTCCGAGAC"
+   },
+   {
+    "cb": "ACAAAAACAGTGTGAT",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GATCTATAGG"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "CCTTGTATGA"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": "ENSGACC00014",
+    "gene": "ENSGACC00014",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "ATGTGATCCT"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": "ENSGACC00012",
+    "gene": "ENSGACC00012",
+    "kind": "cb_error",
+    "other_gene": null,
+    "umi": "TGGAAAGTAG"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": "ENSGACC00007",
+    "gene": "ENSGACC00007",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "TCCCATGTGA"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": "ENSGACC00005",
+    "gene": "ENSGACC00005",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "CGTCTTGATA"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": "ENSGACC00004",
+    "gene": "ENSGACC00004",
+    "kind": "umi_error",
+    "other_gene": null,
+    "umi": "GTATTCATAT"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": "ENSGACC00003",
+    "gene": "ENSGACC00003",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00005",
+    "umi": "GAGAGTAGAA"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": "ENSGACC00004",
+    "gene": "ENSGACC00004",
+    "kind": "multigene",
+    "other_gene": "ENSGACC00008",
+    "umi": "GATACGGATT"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": null,
+    "gene": "ENSGACC00003",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "ATCCGCCGCG"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": null,
+    "gene": "ENSGACC00004",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "CGGGTTAGGC"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": null,
+    "gene": "ENSGACC00006",
+    "kind": "antisense",
+    "other_gene": null,
+    "umi": "ATCACTATGA"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "TAATATCTCC"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "TGGTGTATTT"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intronic",
+    "other_gene": null,
+    "umi": "GGGCAACCCC"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "GCTTTTTATC"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": null,
+    "gene": null,
+    "kind": "intergenic",
+    "other_gene": null,
+    "umi": "AAATCAGTCC"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "AACGAAACGT"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CCACTAATGA"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": null,
+    "gene": null,
+    "kind": "multimapper",
+    "other_gene": null,
+    "umi": "CTTCGCTCAC"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "TTTTACCCCT"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ACTTAGGGGC"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "CCTTGCGGAA"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GCAAGGCGCG"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "ACGGCGGGCT"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": "ENSGACC00009",
+    "gene": "ENSGACC00009",
+    "kind": "spliced",
+    "other_gene": null,
+    "umi": "GCGGAATTCA"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "AACGCGTCAC"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "AGTTTCGTGA"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "ATCTTGGTAC"
+   },
+   {
+    "cb": "GGAAACTTCAAGCCGG",
+    "counted": "ENSGACC00010",
+    "gene": "ENSGACC00010",
+    "kind": "minus_strand",
+    "other_gene": null,
+    "umi": "GGGAGACACC"
+   }
+  ]
+ }
+}

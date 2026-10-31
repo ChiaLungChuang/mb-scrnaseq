@@ -1,0 +1,74 @@
+nextflow_pipeline {
+
+    name "mb-scrnaseq accuracy: exact counts where the right answer is known"
+    script "../main.nf"
+    config "../conf/test_accuracy.config"
+
+    test("every cell x gene count follows Cell Ranger's rules, for v3 and v2 chemistry") {
+        when {
+            params {
+                outdir = "$outputDir"
+            }
+        }
+        then {
+            assert workflow.success
+            def slurp = new groovy.json.JsonSlurper()
+            def truth = slurp.parse(file("${projectDir}/tests/data/accuracy/truth.json"))
+
+            // A STARsolo Matrix Market folder as [barcode: [gene_id: count]].
+            def readMex = { String dir ->
+                def genes = new File("${dir}/features.tsv").readLines().collect { l -> l.split('\t')[0] }
+                def bcs = new File("${dir}/barcodes.tsv").readLines()
+                def m = [:]
+                new File("${dir}/matrix.mtx").readLines().findAll { l -> !l.startsWith('%') }.drop(1).each { l ->
+                    def f = l.trim().split(/\s+/).collect { v -> v as long }
+                    def bc = bcs[(int) f[1] - 1]
+                    if (!m.containsKey(bc)) { m[bc] = [:] }
+                    m[bc][genes[(int) f[0] - 1]] = f[2]
+                }
+                return m
+            }
+
+            truth.each { sample, t ->
+                def solo = "$outputDir/starsolo/${sample}/${sample}.Solo.out/Gene"
+                def raw = readMex("${solo}/raw")
+
+                // 1. Every barcode x gene count, including empty droplets.
+                def diffs = []
+                ((raw.keySet() + t.expected.keySet()) as Set).each { bc ->
+                    def got = raw[bc] ?: [:]
+                    def want = t.expected[bc] ?: [:]
+                    ((got.keySet() + want.keySet()) as Set).each { g ->
+                        def a = (got[g] ?: 0) as long
+                        def b = (want[g] ?: 0) as long
+                        if (a != b) {
+                            def kinds = t.special_molecules.findAll { m -> m.cb == bc && (m.gene == g || m.counted == g || m.other_gene == g) }
+                                .collect { m -> m.kind }.unique()
+                            diffs << "${bc} ${g}: expected ${b}, got ${a} (special molecules here: ${kinds ?: 'none'})"
+                        }
+                    }
+                }
+                assert diffs.isEmpty() : "${sample}: ${diffs.size()} cell x gene counts differ from the truth:\n  " + diffs.take(20).join('\n  ')
+
+                // 2. Cell calling keeps exactly the true cells.
+                def called = new File("${solo}/filtered/barcodes.tsv").readLines() as Set
+                assert called == (t.cells as Set)
+
+                // 3. Chemistry and read layout detected correctly.
+                def log = new File("$outputDir/reads_check/${sample}.check_reads.log").text
+                assert log.contains("chemistry ${t.chemistry} confirmed")
+                assert log.contains("cDNA read is ${t.cdna_read}")
+
+                // 4. Concordance with a published matrix equal to the truth is exact,
+                //    including the two genes that share a symbol (TWIN, TWIN.1).
+                def c = slurp.parse(file("$outputDir/concordance/${sample}.concordance.json"))
+                assert c.passed
+                assert c.metrics.duplicate_symbols == 'make_unique'
+                assert c.metrics.n_shared_genes == 14
+                ['barcode_recovery', 'umi_total_spearman', 'umi_total_median_ratio', 'pseudobulk_pearson', 'per_cell_pearson_median'].each { k ->
+                    assert Math.abs((c.metrics[k] as double) - 1d) < 1e-12 : "${sample}: ${k} = ${c.metrics[k]}, expected exactly 1"
+                }
+            }
+        }
+    }
+}

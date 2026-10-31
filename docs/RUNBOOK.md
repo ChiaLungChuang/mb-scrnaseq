@@ -70,12 +70,15 @@ needs (25.10 or newer), which is why it is installed with micromamba.
 cd <project-dir>/mb-scrnaseq
 tmux new -s mbtest
 micromamba activate nf
-nextflow run . -profile test,stjude
+nf-test test --profile +stjude
 ```
 
-This runs the synthetic test through LSF and Singularity. It takes minutes
-of compute but may sit in the queue first. It proves the scheduler, the
-containers and the paths work before any real data is involved. Detach with
+This runs both synthetic test suites through LSF and Singularity with the
+same checks as CI, including the exact-count accuracy test. It takes
+minutes of compute but may sit in the queue first. It proves the
+scheduler, the containers and the paths work, and give the same numbers,
+before any real data is involved. (`nextflow run . -profile test,stjude`
+runs the pipeline alone, without the checks.) Detach with
 `Ctrl-b d`; reattach with `tmux attach -t mbtest`. Watch jobs with `bjobs`.
 
 ## 4. Fetch the inputs
