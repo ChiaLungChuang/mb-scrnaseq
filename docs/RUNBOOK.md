@@ -85,50 +85,73 @@ module load singularity/4.1.1
 D=<project-dir>/gse155446
 scripts/fetch_inputs.sh geo        $D/geo
 scripts/fetch_inputs.sh whitelists $D/whitelists
-scripts/fetch_inputs.sh reference  $D/reference <version>   # see step 6
+scripts/fetch_inputs.sh reference  $D/reference GRCh38-3.0.0    # see step 6
 ```
 
-## 5. Choose the samples **(you)**
+`geo` also writes `$D/geo/published_labels.tsv`: every sample label in the
+published matrix with its number of cells, taken from the column names
+(the file's first line) only. No count values are read.
+
+## 5. Choose and download the samples **(you)**
 
 Open the SRA Run Selector for project **PRJNA649773** and download the
 metadata table. Pick 8 human tumors that span the subgroups (the cohort has
 1 WNT, 9 SHH, 7 Group 3 and 11 Group 4). Put their SRR accessions in
-`runs.txt`, one per line, then:
+`runs.txt`, one per line. Check sizes first (BAMs are 6-25 GB each), then
+download:
 
 ```bash
+DRY_RUN=1 scripts/fetch_inputs.sh bams $D/bams runs.txt   # lists file names, sizes, MD5s
 scripts/fetch_inputs.sh bams $D/bams runs.txt
 ```
 
-Each BAM is checked for the 10x header lines before it is accepted.
+BAMs come from ENA, which keeps the files as submitted. Each one is checked
+against ENA's size and MD5, with `samtools quickcheck` (truncation) and for
+the 10x header lines bamtofastq needs. `$D/bams/bams_summary.tsv` lists, per
+BAM, the read-group sample name, the Cell Ranger reference and the STAR
+version from its header.
 
-## 6. Match the reference to the paper **(you)**
+To test the whole chain cheaply first, start with SRR12354589 (6.4 GB).
 
-On the GSE155446 GEO page, read the samples' *data processing* field for the
-Cell Ranger version and reference used. Use `GRCh38-3.0.0` if it names
-Cell Ranger 3.x with the 3.0.0 reference, `GRCh38-2020-A` if it names
-2020-A. A different gene annotation than the authors' lowers gene matching
-and is a confound, not a pipeline result.
+## 6. Match the reference and Cell Ranger version
+
+Read the `reference` and `star_version` columns of `bams_summary.tsv`. The
+two BAMs checked so far say `refdata-cellranger-GRCh38-3.0.0` and
+`STAR_2.5.1b`, which is Cell Ranger 3.x. Then use reference `GRCh38-3.0.0`
+(step 4) and `cellranger_compat: cr3` (step 9). If any BAM says otherwise,
+stop and work out why before going on. A different gene annotation from the
+authors' lowers gene matching and is a confound, not a pipeline result.
 
 ## 7. Fill the samplesheet, looking only at names
 
-Copy `assets/samplesheet_gse155446.csv`, add one row per BAM. For
-`published_label`, look at the published matrix's **column names only**:
+Copy `assets/samplesheet_gse155446.csv` and add one row per BAM.
 
-```bash
-zcat $D/geo/GSE155446_human_raw_counts.csv.gz | head -n 1 | tr ',' '\n' | sed -n '2,6p'
-```
+- `published_label`: the label in `$D/geo/published_labels.tsv` that
+  matches the BAM's read-group sample or file name in `bams_summary.tsv`
+  (e.g. file `1_943_possorted_genome_bam.bam` → label `943`). Do **not**
+  use the SRA run title: SRR12354571 is titled "934-repeat" but its BAM is
+  tumor 943, and both 934 and 943 are in the published matrix. A wrong
+  label fails C1 (barcode recovery), but it costs a run.
+- `chemistry`: v2 or v3. Expect v3 for all but label `1355` (SRR12354589),
+  whose barcodes all lie in the v2 whitelist and whose UMIs are 10 nt. If
+  unsure, enter your best guess: the pipeline stops with the right answer
+  from the read lengths.
 
-Do not open the counts themselves before step 8. `chemistry` is v2 or v3;
-if unsure, enter your best guess and the pipeline will stop with the right
-answer from the read lengths.
+Do not open the published counts themselves before step 8.
 
 ## 8. Lock the acceptance criteria **(you)**
 
 Read `preregistration/acceptance_criteria.yaml`. Change any threshold you
 disagree with now, with the reason in the commit message. Then set
-`status: locked`, commit and push. The pipeline will not run the
-concordance step on real data until this is done, and every run records the
-file's hash and commit.
+`status: locked`, commit and **push**. Optionally tag the commit and make a
+GitHub release from it (e.g. `prereg-phase1`): that gives the lock a
+timestamp you did not set yourself.
+
+On real data the pipeline refuses the concordance step unless the criteria
+are locked, committed, unmodified and pushed, and the pipeline code has no
+uncommitted changes (untracked files such as your params file and
+samplesheet are fine). Every run records the criteria file's hash and
+commit, and the verdict says whether the run was pre-registered.
 
 ## 9. Real run
 
@@ -140,19 +163,24 @@ nextflow run . -profile stjude -params-file my_params.yaml -w <project-dir>/work
 ```
 
 The first run also builds the STAR index (about 32 GB of RAM and roughly an
-hour). It is published to `<outdir>/reference/star_index`; for later runs,
-set `star_index` to that path and remove `genome_fasta`/`genome_gtf`.
+hour). It is copied to `<outdir>/reference/star_index` (about 30 GB); for
+later runs, set `star_index` to that path and remove
+`genome_fasta`/`genome_gtf`.
 
 ## 10. Read the result
 
-- `concordance/concordance_summary.verdict.json`: overall pass/fail.
+- `concordance/concordance_summary.verdict.json`: overall pass/fail, and
+  `preregistered` (must be `true` for a reportable result).
 - `concordance/concordance_summary.tsv`: each sample × criterion, with the
   observed value and the rule.
-- `pipeline_info/run_provenance.json`: commit, parameters, container engine,
-  and the criteria file's hash and lock state.
+- `pipeline_info/run_provenance.json`: commit, code hash, parameters,
+  container engine, and the criteria file's hash and lock state.
 - `qc/*.qc_thresholds.json`: per-sample QC thresholds actually applied.
-- `pipeline_info/report.html` and `timeline.html`: resources used per step,
-  which is what you quote when someone asks what the run cost.
+- `starsolo/<sample>/`: the count matrices and STARsolo's `Summary.csv`.
+- `pipeline_info/report.html`, `timeline.html` and `trace.tsv`: resources
+  used per step, which is what you quote when someone asks what the run
+  cost. Check `peak_rss` for `CONCORDANCE`; it has not been measured on
+  full-size data.
 
 If a criterion fails, do not edit the threshold. Find out why: wrong
 reference version (low `gene_match_fraction`), wrong sample-to-label
@@ -168,5 +196,8 @@ explanation together.
 | Singularity pull times out | First pull of a large image; re-run with `-resume` |
 | `ghcr.io ... unauthorized` | The R image package is still private (step 3 in section 0) |
 | `CHECK_READS` stops: chemistry needs 26/28 | Samplesheet chemistry is wrong for that sample; fix and `-resume` |
-| `label '...' not found` | `published_label` does not match the published cell IDs |
-| Job killed, exit 137/140 | Out of memory or time; it retries with more automatically, twice |
+| `label '...' not found` | `published_label` does not match `published_labels.tsv` |
+| `Refusing to run the concordance check` | The message lists what is missing: lock, commit, push, or uncommitted code |
+| Job killed, exit 130-145 | Out of memory or time; retried automatically with more, twice. Confirm with `bhist -l <job id>` |
+| One sample fails, others keep going | Expected: no new jobs start, running ones finish, then the run stops. Fix the cause and `-resume` |
+| A step re-runs after `-resume` | You changed code in `lib/R` or `bin/`, or the criteria: those steps re-run by design |

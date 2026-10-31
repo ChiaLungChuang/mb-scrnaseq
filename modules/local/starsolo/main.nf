@@ -1,7 +1,12 @@
 // Quantify with STARsolo using the options STAR's documentation gives for
-// matching Cell Ranger >= 4: CellRanger4 adapter clipping, 1MM_CR UMI
-// collapsing, MultiGeneUMI_CR filtering, pseudocount barcode correction and
-// EmptyDrops_CR cell calling. No BAM is written (--outSAMtype None).
+// matching Cell Ranger: 1MM_CR UMI collapsing, MultiGeneUMI_CR filtering,
+// pseudocount barcode correction and EmptyDrops_CR cell calling.
+// --cellranger_compat picks the Cell Ranger major version to match:
+//   cr3  Cell Ranger 3.x: no read clipping
+//   cr4  Cell Ranger >= 4: also TSO/polyA clipping (--clipAdapterType
+//        CellRanger4 --outFilterScoreMin 30)
+// The BAM header (@PG/@CO lines) names the version that made the data.
+// No BAM is written (--outSAMtype None).
 process STARSOLO {
     tag "${meta.id}"
     label 'process_high'
@@ -19,6 +24,7 @@ process STARSOLO {
 
     script:
     def umi_len = meta.chemistry == 'v2' ? 10 : 12
+    def clip = params.cellranger_compat == 'cr4' ? '--clipAdapterType CellRanger4 --outFilterScoreMin 30' : ''
     """
     # Comma-separated lane lists, cDNA first then barcode read, in matching order.
     r1=\$(cut -f1 ${reads_tsv} | paste -sd, -)
@@ -38,8 +44,7 @@ process STARSOLO {
         --soloCBstart 1 --soloCBlen 16 \\
         --soloUMIstart 17 --soloUMIlen ${umi_len} \\
         --soloFeatures Gene \\
-        --clipAdapterType CellRanger4 \\
-        --outFilterScoreMin 30 \\
+        ${clip} \\
         --soloCBmatchWLtype 1MM_multi_Nbase_pseudocounts \\
         --soloUMIfiltering MultiGeneUMI_CR \\
         --soloUMIdedup 1MM_CR \\

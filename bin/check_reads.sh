@@ -39,7 +39,10 @@ fi
 
 : > "$out"
 while IFS= read -r r1; do
-  cdna=${r1/_R1_/_${cdna_tag}_}
+  # Substitute in the file name only: the folder name comes from the BAM's
+  # read group and may itself contain "_R1_".
+  r1_name=${r1##*/}
+  cdna="${r1%/*}/${r1_name/_R1_/_${cdna_tag}_}"
   if [ ! -s "$cdna" ]; then
     echo "ERROR: no ${cdna_tag} partner for $r1" >&2
     exit 1

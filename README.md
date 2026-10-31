@@ -4,13 +4,15 @@ Re-quantification of childhood medulloblastoma single-cell RNA-seq
 (GEO [GSE155446](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE155446):
 28 tumors, 10x Genomics 3') from the deposited Cell Ranger BAMs, with a
 pre-registered test of whether the result reproduces the published count
-matrix. Built with Nextflow, containerised, and run on the St. Jude HPC
-cluster (LSF + Singularity).
+matrix. Built with Nextflow and containers, with an execution profile for
+the St. Jude HPC cluster (LSF + Singularity).
 
 **Status:** phase 1 (reads to counts, QC, concordance) is built and passes
-its tests on a synthetic dataset with known ground truth. It has not yet
-been run on the real data. Phase 2 (integration, annotation, copy-number
-inference) is not started.
+its tests on a synthetic dataset with known ground truth. Those tests ran
+with locally installed tools; the containers, the CI workflow and the
+cluster profile have not been exercised yet, and nothing has been run on
+the real data. Phase 2 (integration, annotation, copy-number inference) is
+not started.
 
 ## Why re-quantify instead of using the published matrix
 
@@ -35,49 +37,88 @@ Cell Ranger BAM ─► bamtofastq ─► read check ─► STARsolo ─┬─►
 | `BAMTOFASTQ` | 10x bamtofastq 1.4.1 | Recovers the original reads from each BAM |
 | `CHECK_READS` | `bin/check_reads.sh` | Confirms v2/v3 chemistry from read lengths; handles both bamtofastq layouts (cDNA as R2 or R3) |
 | `STAR_GENOMEGENERATE` | STAR 2.7.11b | Built once; reusable via `--star_index` |
-| `STARSOLO` | STAR 2.7.11b | Options from STAR's docs for matching Cell Ranger ≥4 counting and EmptyDrops cell calling |
+| `STARSOLO` | STAR 2.7.11b | Options from STAR's docs for matching Cell Ranger 3.x or ≥4 (`--cellranger_compat`, required); EmptyDrops cell calling |
 | `SAMPLE_QC` | R, scuttle | Flags cells by median ± 3 MAD per sample; records thresholds; removes nothing |
 | `PREP_PUBLISHED` | R | Streams the dense GEO CSV into a sparse matrix in chunks; detects orientation |
 | `CONCORDANCE` | R | Per sample: barcode recovery, UMI totals, pseudobulk and per-cell correlation |
+
+The GSE155446 BAM headers checked so far (two tumors) name Cell Ranger's
+`refdata-cellranger-GRCh38-3.0.0` reference and STAR 2.5.1b, i.e. Cell
+Ranger 3.x, so this dataset is run with `--cellranger_compat cr3` and the
+GRCh38-3.0.0 reference. `scripts/fetch_inputs.sh bams` reports both for
+every BAM it downloads.
 
 ## Pre-registration
 
 The thresholds that decide whether the re-quantification reproduces the
 published data are in
 [`preregistration/acceptance_criteria.yaml`](preregistration/acceptance_criteria.yaml).
-The pipeline refuses to run the concordance step on real data unless that
-file is marked `status: locked`, tracked by git and unmodified, and every
-run records the file's SHA-256 and last commit in
-`pipeline_info/run_provenance.json`. The thresholds therefore demonstrably
-predate the results.
+On real data the pipeline refuses to run the concordance step unless:
+
+- the file has a top-level `status: locked`, is tracked by git and unmodified;
+- the commit that last changed it is on a remote branch or tag (pushed, not
+  only committed locally);
+- the pipeline code has no uncommitted changes.
+
+Every run records the criteria file's SHA-256, its last commit, a SHA-256 of
+the code (`lib/R`, `bin/`) and the git commit in
+`pipeline_info/run_provenance.json`, and the verdict file states whether the
+run was pre-registered. Test runs bypass the gate with
+`--allow_unlocked_criteria true` and are marked `preregistered: false`.
+
+This makes the order of events checkable, not tamper-proof: git commit dates
+are set by whoever commits. A tagged GitHub release of the locking commit,
+made before the run, gives an independent timestamp.
 
 ## Running
 
-Synthetic test (about a minute; needs Docker or Singularity):
+Synthetic test (about a minute):
 
 ```bash
-nextflow run . -profile test,docker
+nextflow run . -profile test,docker        # or test,singularity
 ```
+
+So far this has only been run with locally installed tools
+(`-profile test,local_tools`, tools on `PATH`).
 
 Real data on the St. Jude cluster: see [docs/RUNBOOK.md](docs/RUNBOOK.md).
 
-Outputs land in `--outdir`: `starsolo/`, `qc/`, `concordance/`, and
-`pipeline_info/` (provenance, software versions, Nextflow report, timeline
-and trace).
+Outputs land in `--outdir`: `starsolo/<sample>/` (raw and filtered count
+matrices, `Summary.csv`, STAR log), `qc/`, `concordance/`, `reads_check/`,
+`reference/` (the STAR index, when built) and `pipeline_info/` (provenance,
+software versions, Nextflow report, timeline and trace).
 
 ## Tests
 
 - `Rscript tests/run_tests.R`: unit tests for the R library (`lib/R`):
   argument parsing, cell-ID parsing, published-matrix import in both
-  orientations and any chunk size, concordance metrics (including the
-  failure modes they must catch), QC flagging.
+  orientations and any chunk size, Matrix Market reading, concordance
+  metrics (including the failure modes they must catch: a wrong sample,
+  missing barcodes, a systematic UMI deficit, shuffled cells), QC flagging.
 - `nf-test test --profile +docker`: the whole pipeline on synthetic data
   generated by `tests/data/make_test_data.py`. Checks that every cell's UMI
   total matches the generator's truth exactly, that QC flags exactly the
-  planted low-quality cells, that both read layouts are handled, and that
-  the pipeline refuses a wrong chemistry, unlocked criteria and duplicate
-  samples.
-- CI runs all of the above, plus `nextflow lint` and ShellCheck, on every push.
+  planted low-quality cells, that both read layouts are handled, that
+  swapped sample labels fail barcode recovery, and that the pipeline refuses
+  a wrong chemistry, unlocked criteria, a missing `--cellranger_compat` and
+  duplicate samples.
+- `.github/workflows/ci.yml` runs all of the above, plus `nextflow lint`,
+  ShellCheck and a check that the release tag, `manifest.version` and the R
+  image tag agree, on every push to GitHub.
+
+## Known limitations
+
+- STAR 2.7.11b is not the STAR 2.5.1b inside Cell Ranger 3.x, so alignments
+  can differ slightly. The acceptance criteria are set to tolerate that, not
+  to demand identical counts.
+- Genes are matched to the published matrix by symbol, because that is all
+  it has. Symbols that were made unique (`RGS5`, `RGS5.1`) are matched the
+  same way; this relies on STARsolo and Cell Ranger listing genes in the
+  same (GTF) order.
+- Containers are referenced by tag, not digest, and provenance records the
+  tags. Re-pushing a tag would change what a re-run uses.
+- Memory for `CONCORDANCE` on a full-size sample has not been measured;
+  check `peak_rss` in `pipeline_info/trace.tsv` after the first real run.
 
 ## Data
 

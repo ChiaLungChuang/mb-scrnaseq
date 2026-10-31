@@ -39,6 +39,30 @@ test_that("barcodes missing from our matrix lower recovery and fail C1", {
   expect_false(ev$pass[ev$criterion == "C1_barcode_recovery"])
 })
 
+test_that("whitelist columns with no UMI do not count as recovered", {
+  m <- make_counts(n_cells = 20)
+  ours <- as_mex(m)
+  ours$counts[, 1:4] <- 0                      # 4 published cells got no reads here
+  ours <- pad_whitelist(ours, random_barcodes(500))
+  res <- concordance_metrics(ours, published_from(m), "MB001")$metrics
+  expect_equal(res$barcode_recovery, 16 / 20)
+  expect_equal(res$n_matched_cells, 16)
+})
+
+test_that("the wrong sample fails C1 and is recorded, not crashed on", {
+  m1 <- make_counts(seed = 1); m2 <- make_counts(seed = 9)
+  pub <- cbind(published_from(m1, "MB001"), published_from(m2, "MB002"))
+  # Sample 1's reads; its raw matrix also has (empty) columns for sample 2's
+  # barcodes, because both are on the whitelist.
+  ours <- pad_whitelist(as_mex(m1), colnames(m2))
+  out <- concordance_metrics(ours, pub, "MB002")
+  expect_equal(out$metrics$barcode_recovery, 0)
+  expect_true(is.na(out$metrics$pseudobulk_pearson))
+  expect_equal(nrow(out$per_cell), 0)
+  ev <- evaluate_criteria(out$metrics, default_criteria)
+  expect_false(any(ev$pass))
+})
+
 test_that("a systematic UMI deficit is caught by the median ratio, not by correlation", {
   m <- make_counts(rate = 20)
   ours <- as_mex(round(m * 0.5))
@@ -90,7 +114,20 @@ test_that("genes sharing a symbol are summed before comparison", {
   pub <- published_from(m)[1:5, ]
   pub[5, ] <- m[5, ] + m[6, ]
   res <- concordance_metrics(ours, pub, "MB001")$metrics
+  expect_equal(res$duplicate_symbols, "sum")
   expect_equal(res$pseudobulk_pearson, 1)
+})
+
+test_that("symbols made unique Seurat-style (X, X.1) are matched gene by gene", {
+  m <- make_counts(n_genes = 6)
+  ours <- as_mex(m)
+  ours$features$gene_name[5:6] <- "DUP"
+  pub <- published_from(m)
+  rownames(pub)[5:6] <- c("DUP", "DUP.1")
+  res <- concordance_metrics(ours, pub, "MB001")$metrics
+  expect_equal(res$duplicate_symbols, "make_unique")
+  expect_equal(res$n_shared_genes, 6)
+  expect_equal(res$per_cell_pearson_median, 1)
 })
 
 test_that("STARsolo's own cell calls are reported when supplied", {

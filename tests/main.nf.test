@@ -15,6 +15,15 @@ nextflow_pipeline {
             def verdict = new groovy.json.JsonSlurper().parse(file("$outputDir/concordance/concordance_summary.verdict.json"))
             assert verdict.passed
             assert verdict.n_samples == 2
+            // Test runs are never marked as pre-registered.
+            assert verdict.preregistered == false
+            assert verdict.code_sha256 ==~ /[0-9a-f]{64}/
+
+            // The count matrices themselves are published, not only the logs.
+            ['raw', 'filtered'].each { d ->
+                assert file("$outputDir/starsolo/sampleA/sampleA.Solo.out/Gene/${d}/matrix.mtx").exists()
+            }
+            assert file("$outputDir/starsolo/sampleB/sampleB.Solo.out/Gene/Summary.csv").exists()
 
             // Both bamtofastq layouts were exercised.
             def logs = file("$outputDir/reads_check").listFiles().collect { f -> f.text }.join('\n')
@@ -39,6 +48,7 @@ nextflow_pipeline {
             def prov = new groovy.json.JsonSlurper().parse(file("$outputDir/pipeline_info/run_provenance.json"))
             assert prov.success
             assert prov.preregistration.sha256 ==~ /[0-9a-f]{64}/
+            assert prov.code_sha256 == verdict.code_sha256
             assert file("$outputDir/pipeline_info/software_versions.yml").text.count('STARSOLO') == 1
         }
     }
@@ -60,16 +70,59 @@ nextflow_pipeline {
         }
     }
 
-    test("concordance refuses to run against unlocked criteria") {
+    test("swapped sample labels fail barcode recovery instead of passing") {
         when {
+            new File("$outputDir").mkdirs()
+            new File("$outputDir/swapped.csv").text =
+                "sample,bam,chemistry,published_label\n" +
+                "sampleA,${projectDir}/tests/data/sampleA.bam,v3,MB002\n" +
+                "sampleB,${projectDir}/tests/data/sampleB.bam,v3,MB001\n"
             params {
                 outdir = "$outputDir"
+                input  = "$outputDir/swapped.csv"
+            }
+        }
+        then {
+            // A failed criterion is a result: the run succeeds and records the failure.
+            assert workflow.success
+            def verdict = new groovy.json.JsonSlurper().parse(file("$outputDir/concordance/concordance_summary.verdict.json"))
+            assert !verdict.passed
+            assert verdict.n_samples_passed == 0
+            assert 'C1_barcode_recovery' in verdict.failing_criteria
+            def a = new groovy.json.JsonSlurper().parse(file("$outputDir/concordance/sampleA.concordance.json"))
+            assert a.metrics.barcode_recovery == 0
+        }
+    }
+
+    test("concordance refuses to run against unlocked criteria") {
+        when {
+            // An unlocked, untracked copy, so this test does not depend on
+            // whether the real criteria file has been locked yet.
+            new File("$outputDir").mkdirs()
+            new File("$outputDir/criteria_unlocked.yaml").text =
+                new File("${projectDir}/preregistration/acceptance_criteria.yaml").text.replaceFirst(/(?m)^status:.*$/, 'status: proposed')
+            params {
+                outdir = "$outputDir"
+                criteria = "$outputDir/criteria_unlocked.yaml"
                 allow_unlocked_criteria = false
             }
         }
         then {
             assert workflow.failed
             assert (workflow.stdout + workflow.stderr).join('\n').contains('not pre-registered')
+        }
+    }
+
+    test("the Cell Ranger version to match must be stated") {
+        when {
+            params {
+                outdir = "$outputDir"
+                cellranger_compat = null
+            }
+        }
+        then {
+            assert workflow.failed
+            assert (workflow.stdout + workflow.stderr).join('\n').contains('--cellranger_compat must be cr3 or cr4')
         }
     }
 

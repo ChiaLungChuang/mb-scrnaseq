@@ -7,6 +7,7 @@ process SAMPLE_QC {
     input:
     tuple val(meta), path(filtered)
     path lib
+    val fingerprint   // SHA-256 of lib/R and bin/: re-run on -resume when the code changes
 
     output:
     tuple val(meta), path("${meta.id}.qc_cells.tsv.gz"), emit: cells
@@ -15,6 +16,7 @@ process SAMPLE_QC {
 
     script:
     """
+    # code fingerprint: ${fingerprint}
     sample_qc.R --lib ${lib} --sample ${meta.id} --filtered-dir ${filtered} \\
         --nmads ${params.qc_nmads} --out-prefix ${meta.id}
 

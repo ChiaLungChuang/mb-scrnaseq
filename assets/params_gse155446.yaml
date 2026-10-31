@@ -5,15 +5,20 @@
 input: <path>/samplesheet.csv
 outdir: <path>/results
 
+# Cell Ranger version the BAMs were made with (RUNBOOK step 6). The
+# GSE155446 BAM headers checked so far name Cell Ranger 3.x (STAR 2.5.1b,
+# refdata-cellranger-GRCh38-3.0.0).
+cellranger_compat: cr3
+
 # First run: build the index from FASTA + GTF. It is published to
 # <outdir>/reference/star_index; afterwards set star_index to that path and
 # remove genome_fasta / genome_gtf.
-genome_fasta: <path>/refdata-<version>/fasta/genome.fa
-genome_gtf: <path>/refdata-<version>/genes/genes.gtf
+genome_fasta: <path>/refdata-cellranger-GRCh38-3.0.0/fasta/genome.fa
+genome_gtf: <path>/refdata-cellranger-GRCh38-3.0.0/genes/genes.gtf
 # star_index: <outdir>/reference/star_index
 star_sjdb_overhang: 100
 
-whitelist_v2: <path>/737K-august-2016.txt
+whitelist_v2: <path>/737K-august-2016.txt.gz
 whitelist_v3: <path>/3M-february-2018.txt.gz
 
 published_counts: <path>/GSE155446_human_raw_counts.csv.gz

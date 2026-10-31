@@ -69,3 +69,29 @@ test_that("read_mex round-trips a STARsolo-style directory", {
   writeLines(colnames(m)[1:3], file.path(dir, "barcodes.tsv"))
   expect_error(read_mex(dir), "barcodes file has 3")
 })
+
+test_that("read_mtx reads STARsolo's header layout and agrees with readMM", {
+  dir <- withr::local_tempdir()
+  p <- file.path(dir, "matrix.mtx")
+  # STARsolo writes a bare '%' comment line, integer values, and many empty columns.
+  writeLines(c("%%MatrixMarket matrix coordinate integer general", "%", "3 1000 4",
+               "1 1 5", "3 1 1", "2 999 2", "1 1000 7"), p)
+  m <- read_mtx(p)
+  expect_equal(dim(m), c(3L, 1000L))
+  expect_equal(sum(m), 15)
+  expect_equal(m[2, 999], 2)
+  expect_equal(unname(as.matrix(m)), unname(as.matrix(Matrix::readMM(p))))
+  writeLines(c("%%MatrixMarket matrix coordinate integer general", "3 5 0"), p)
+  expect_equal(sum(read_mtx(p)), 0)
+  writeLines(c("%%MatrixMarket matrix coordinate integer general", "3 5 2", "1 1 1"), p)
+  expect_error(read_mtx(p), "declares 2 entries but has 1")
+  writeLines(c("%%MatrixMarket matrix array real general", "2 2"), p)
+  expect_error(read_mtx(p), "not a general coordinate")
+})
+
+test_that("write_json writes NA as null, not as the string \"NA\"", {
+  p <- withr::local_tempfile(fileext = ".json")
+  write_json(list(a = NA_real_, b = 1), p)
+  expect_null(jsonlite::read_json(p)$a)
+  expect_false(grepl('"NA"', paste(readLines(p), collapse = "")))
+})

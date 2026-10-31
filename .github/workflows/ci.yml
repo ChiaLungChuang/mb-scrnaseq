@@ -41,6 +41,16 @@ jobs:
         run: nextflow lint .
       - name: ShellCheck
         run: shellcheck bin/*.sh scripts/*.sh
+      - name: Versions agree (manifest, R image tag, git tag)
+        run: |
+          manifest=$(grep -oP "^\s*version\s*=\s*'\K[^']+" nextflow.config)
+          image_tag=$(grep -oP "r_container\s*=\s*'[^']+:\K[^']+" nextflow.config)
+          echo "manifest.version=${manifest} r_container tag=${image_tag}"
+          [ -n "$manifest" ] && [ "$manifest" = "$image_tag" ] \
+            || { echo "::error::manifest.version (${manifest}) and the r_container tag (${image_tag}) differ"; exit 1; }
+          if [[ "$GITHUB_REF" == refs/tags/v* ]] && [ "${GITHUB_REF_NAME#v}" != "$manifest" ]; then
+            echo "::error::git tag ${GITHUB_REF_NAME} does not match manifest.version ${manifest}"; exit 1
+          fi
 
   pipeline-test:
     runs-on: ubuntu-latest
@@ -82,11 +92,14 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Image name
+      - name: Image name (must be exactly what the pipeline pulls)
         id: img
         run: |
           owner=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          echo "name=ghcr.io/${owner}/mb-scrnaseq-r:${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+          name="ghcr.io/${owner}/mb-scrnaseq-r:${GITHUB_REF_NAME#v}"
+          expected=$(grep -oP "r_container\s*=\s*'\K[^']+" nextflow.config)
+          [ "$name" = "$expected" ] || { echo "::error::would publish ${name} but the pipeline pulls ${expected}"; exit 1; }
+          echo "name=${name}" >> "$GITHUB_OUTPUT"
       - uses: docker/build-push-action@v6
         with:
           context: containers/r-analysis

@@ -20,6 +20,20 @@ as_mex <- function(m, gene_ids = paste0("ENSG", sprintf("%011d", seq_len(nrow(m)
   list(counts = m2, features = feats, barcodes = colnames(m))
 }
 
+# Add all-zero columns, as STARsolo's raw matrix has for every whitelist
+# barcode that no read carried.
+pad_whitelist <- function(mex, extra_barcodes) {
+  z <- Matrix::Matrix(0, nrow(mex$counts), length(extra_barcodes), sparse = TRUE,
+                      dimnames = list(rownames(mex$counts), extra_barcodes))
+  mex$counts <- cbind(mex$counts, z)
+  mex$barcodes <- colnames(mex$counts)
+  mex
+}
+random_barcodes <- function(n, seed = 99) {
+  set.seed(seed)
+  vapply(seq_len(n), function(i) paste(sample(c("A", "C", "G", "T"), 16, TRUE), collapse = ""), "")
+}
+
 default_criteria <- list(
   barcode_recovery_min = 0.99, umi_total_spearman_min = 0.95,
   umi_total_median_ratio = list(0.85, 1.15), pseudobulk_pearson_min = 0.98,

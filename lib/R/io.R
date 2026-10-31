@@ -38,8 +38,7 @@ read_mex <- function(dir) {
     }
     stop("none of ", paste(stems, collapse = "/"), " found in ", dir)
   }
-  m <- Matrix::readMM(pick("matrix.mtx"))
-  m <- methods::as(m, "CsparseMatrix")
+  m <- read_mtx(pick("matrix.mtx"))
   barcodes <- data.table::fread(pick("barcodes.tsv"), header = FALSE)[[1]]
   feats <- data.table::fread(pick(c("features.tsv", "genes.tsv")), header = FALSE)
   feats <- as.data.frame(feats)
@@ -48,6 +47,36 @@ read_mex <- function(dir) {
   if (ncol(m) != length(barcodes)) stop("matrix has ", ncol(m), " columns but barcodes file has ", length(barcodes))
   dimnames(m) <- list(feats$gene_id, barcodes)
   list(counts = m, features = feats[, 1:2], barcodes = barcodes)
+}
+
+#' Read a coordinate MatrixMarket file as a dgCMatrix.
+#'
+#' Plain files are read with data.table::fread, which is much faster and
+#' leaner than Matrix::readMM on STARsolo's raw matrices (tens of millions
+#' of entries). Gzipped files fall back to readMM.
+read_mtx <- function(path) {
+  if (grepl("\\.gz$", path)) return(methods::as(Matrix::readMM(path), "CsparseMatrix"))
+  con <- file(path, "r")
+  on.exit(close(con))
+  first <- readLines(con, n = 1)
+  if (!length(first) || !grepl("^%%MatrixMarket matrix coordinate (integer|real) general", first)) {
+    stop("not a general coordinate MatrixMarket file: ", path)
+  }
+  n_skip <- 1L
+  repeat {
+    line <- readLines(con, n = 1)
+    if (!length(line)) stop("no size line in ", path)
+    n_skip <- n_skip + 1L
+    if (!startsWith(line, "%")) break
+  }
+  dims <- suppressWarnings(as.numeric(strsplit(trimws(line), "[[:space:]]+")[[1]]))
+  if (length(dims) != 3 || anyNA(dims)) stop("bad size line '", line, "' in ", path)
+  if (dims[3] == 0) {
+    return(Matrix::sparseMatrix(i = integer(), j = integer(), x = numeric(), dims = dims[1:2]))
+  }
+  tr <- data.table::fread(path, skip = n_skip, header = FALSE, select = 1:3, col.names = c("i", "j", "x"))
+  if (nrow(tr) != dims[3]) stop(path, " declares ", dims[3], " entries but has ", nrow(tr))
+  Matrix::sparseMatrix(i = tr$i, j = tr$j, x = as.numeric(tr$x), dims = dims[1:2])
 }
 
 #' Split published cell IDs into a sample label and a 16-nt barcode.
@@ -134,5 +163,5 @@ read_published_counts <- function(path, chunk_rows = 2000L) {
 
 #' Write a JSON file with stable formatting.
 write_json <- function(x, path) {
-  jsonlite::write_json(x, path, auto_unbox = TRUE, pretty = TRUE, digits = NA, null = "null")
+  jsonlite::write_json(x, path, auto_unbox = TRUE, pretty = TRUE, digits = NA, null = "null", na = "null")
 }

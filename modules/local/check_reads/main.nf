@@ -7,6 +7,7 @@ process CHECK_READS {
 
     input:
     tuple val(meta), path(fastq)
+    val fingerprint   // SHA-256 of lib/R and bin/: re-run on -resume when the code changes
 
     output:
     tuple val(meta), path(fastq), path("${meta.id}.reads.tsv"), emit: reads
@@ -14,6 +15,7 @@ process CHECK_READS {
 
     script:
     """
+    # code fingerprint: ${fingerprint}
     check_reads.sh ${fastq} ${meta.chemistry} ${meta.id}.reads.tsv | tee ${meta.id}.check_reads.log
     """
 

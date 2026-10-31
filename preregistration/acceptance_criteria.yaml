@@ -2,10 +2,11 @@
 #
 # These thresholds decide whether our re-quantification reproduces the
 # published GSE155446 counts. They must be fixed BEFORE the first real run:
-# review them, change `status` to `locked`, and commit this file. The
+# review them, change `status` to `locked`, commit and push this file. The
 # pipeline refuses to run the concordance step on real data until the file
-# is locked, tracked by git and has no uncommitted changes, and it records
-# this file's SHA-256 and last commit in every run's provenance.
+# is locked, committed, unmodified and pushed (and the pipeline code has no
+# uncommitted changes), and it records this file's SHA-256 and last commit
+# in every run's provenance.
 #
 # Once locked, do not edit thresholds to make a result pass. If a criterion
 # turns out to be wrong in principle, change it in a new commit with the
@@ -22,12 +23,17 @@ phase1_concordance:
   # published cells STARsolo's own filter also calls is reported but not
   # judged.
 
-  # C1. Same reads -> the authors' cell barcodes must be present in our raw
-  # matrix. A miss here means a wrong sample, chemistry or whitelist.
+  # C1. Same reads -> the authors' cell barcodes must carry reads in our
+  # data: the fraction of published barcodes with at least one UMI in our
+  # raw matrix. (The raw matrix has a column for every whitelist barcode,
+  # so presence alone would always pass.) Only a few percent of whitelist
+  # barcodes carry any UMI in one library, so a wrong sample, chemistry or
+  # whitelist gives a value far below this.
   barcode_recovery_min: 0.99
 
   # C2. Per-cell UMI totals: rank agreement, and no systematic deficit or
-  # excess (median ours/published). Totals use shared genes only.
+  # excess (median ours/published). Totals use shared genes only. C2-C4 use
+  # the recovered cells; with fewer than 3 they are missing and fail.
   umi_total_spearman_min: 0.95
   umi_total_median_ratio: [0.85, 1.15]
 

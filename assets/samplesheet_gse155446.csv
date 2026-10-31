@@ -1,8 +1,9 @@
-# Template: one row per re-quantified tumor. Fill in from the SRA Run Selector
-# (project PRJNA649773) and the published matrix's column names; see
-# docs/RUNBOOK.md, steps 7-8. Lines starting with # are ignored.
+# Template: one row per re-quantified tumor. Fill in from bams_summary.tsv and
+# published_labels.tsv (written by scripts/fetch_inputs.sh); see
+# docs/RUNBOOK.md, step 7. Lines starting with # are ignored.
 #   sample           your short ID for the run, e.g. the GSM accession
 #   bam              path to the BAM from scripts/fetch_inputs.sh bams (relative paths are read relative to this file)
 #   chemistry        v2 or v3; the pipeline checks it against the actual read lengths
-#   published_label  how this tumor is named in the published cell IDs
+#   published_label  how this tumor is named in the published cell IDs; match it by the BAM's
+#                    read-group sample / file name, not the SRA run title
 sample,bam,chemistry,published_label
