@@ -100,6 +100,13 @@ fails if committed data and generators disagree.
 - bamtofastq names the cDNA read R2 or R3 depending on the BAM header.
 - `samtools view -b` embeds the command line (with local paths) in @PG;
   generators use `--no-PG`.
+- data.table < 1.15 reads `fread(text = x)`, when `x` is one string without
+  a newline, as a file name, or as a shell command if it has a space. Parse
+  lines with `fread_lines()` (lib/R/io.R), which always adds the newline.
+- `r_container` is pinned as `name:tag@sha256:...`. `docker tag` cannot take
+  a digest, so CI tests the image built from the commit through the
+  `local_r_image` profile, and checks the pinned one in `pinned-r-image`.
+  Releases: bump without a digest, tag, then pin (docs/RUNBOOK.md, 0).
 
 ## Settled decisions (do not reopen without asking)
 

@@ -19,7 +19,7 @@ Claude Code updates this table at the end of every PR.
 | Milestone | State | Evidence |
 |---|---|---|
 | Pre-M0: phase 1 code and tests | done | tests pass locally (tools on `PATH`) and in CI |
-| M0: repository on GitHub, CI green, image published | in progress | CI green on `main` since 31 Oct 2026 (first green run: [41181173351](https://github.com/ChiaLungChuang/mb-scrnaseq/actions/runs/41181173351)): R, script, lint and pipeline tests, the pipeline in Docker with the R image built in CI, synthetic data only. Left: tag `v0.1.0` and make the package public **[you]**, pin the image by digest, repository visibility **[you]** |
+| M0: repository on GitHub, CI green, image published | done (step 7 open) | CI green on `main` (latest: [41280846749](https://github.com/ChiaLungChuang/mb-scrnaseq/actions/runs/41280846749)): R, script, lint and pipeline tests in Docker, synthetic data only. `v0.1.0` published `ghcr.io/chialungchuang/mb-scrnaseq-r:0.1.0` ([run 41257603921](https://github.com/ChiaLungChuang/mb-scrnaseq/actions/runs/41257603921)); `r_container` pins it by digest (`sha256:9ce6480a…`); the `pinned-r-image` job pulls it with no login and runs the R tests inside it. Step 7, making the repository public (it is private), is yours: **[you] [decide]** |
 | M1: cluster smoke test | not started | |
 | M2: real inputs and phase 1 pre-registration | not started | |
 | M3: phase 1 run on 8 tumors | not started | |
@@ -63,6 +63,10 @@ Mutation checks done so far (each made the tests fail):
 | no `samtools quickcheck`; index not excluded from the prefetch rename | `test_fetch_inputs.sh` |
 | STARsolo with Exact UMI dedup, no multi-gene filter, no barcode correction, or unstranded counting | `accuracy.nf.test` |
 | scuttle not loadable, so testthat skips the QC tests instead of failing them | `tests/run_tests.R` (any skip fails the run) |
+| `fread(text =)` given a bare line, which data.table < 1.15 reads as a file name or a command (header and chunks; chunks alone) | `test-io.R` (a strict `fread` stand-in, so it fails on any data.table version) |
+| version check reads the digest as the image tag; digest format unchecked; release tag ignored; an already pinned version published again; a profile override read as the pipeline's image | `test_check_versions.sh` |
+| a package fails to install but the install step passes (simulated: install functions that only warn) | `tests/install_r_packages.R` (loads every package) |
+| R tasks run in the published image instead of the commit's build, or not in the local image at all (simulated task scripts) | CI step "The R steps ran in the image built from this commit" |
 
 ## M0. Repository on GitHub, CI green, image published
 
