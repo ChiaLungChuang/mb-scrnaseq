@@ -108,6 +108,17 @@ looks_like_cell_ids <- function(ids, min_frac = 0.9) {
   mean(ok) >= min_frac
 }
 
+#' Parse lines of delimited text with data.table::fread.
+#'
+#' The text always ends with a newline. data.table < 1.15 reads
+#' fread(text = x), when x is a single string without a newline, as a file
+#' name, or as a shell command if it contains a space; a header line or a
+#' one-line chunk is exactly that. With the newline it is data on every
+#' version.
+fread_lines <- function(lines, ...) {
+  data.table::fread(text = paste0(paste(lines, collapse = "\n"), "\n"), ...)
+}
+
 #' Stream a published dense counts CSV (plain or .gz) into a sparse matrix.
 #'
 #' GEO supplementary matrices are often dense text far larger than memory
@@ -123,7 +134,7 @@ read_published_counts <- function(path, chunk_rows = 2000L) {
   on.exit(close(con))
   header_line <- readLines(con, n = 1)
   if (!length(header_line)) stop("empty file: ", path)
-  header <- data.table::fread(text = header_line, header = FALSE, colClasses = "character")
+  header <- fread_lines(header_line, header = FALSE, colClasses = "character")
   header <- unname(unlist(header))
   header[is.na(header)] <- ""
   col_ids <- header[-1]
@@ -133,7 +144,7 @@ read_published_counts <- function(path, chunk_rows = 2000L) {
   repeat {
     lines <- readLines(con, n = chunk_rows)
     if (!length(lines)) break
-    dt <- data.table::fread(text = lines, header = FALSE, colClasses = list(character = 1))
+    dt <- fread_lines(lines, header = FALSE, colClasses = list(character = 1))
     if (ncol(dt) != length(header)) {
       stop("row has ", ncol(dt), " fields but header has ", length(header), " (", path, ")")
     }

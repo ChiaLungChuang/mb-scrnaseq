@@ -42,6 +42,35 @@ test_that("read_published_counts detects orientation, handles gzip and any chunk
   }
 })
 
+test_that("read_published_counts never gives fread a one-line string without a newline", {
+  # data.table < 1.15 reads fread(text = x), when x is one string without a
+  # newline, as a file name, or as a shell command if it contains a space.
+  # The header line and one-line chunks are exactly that. This stand-in
+  # refuses such input on any data.table version, so the test fails if the
+  # reader hands fread a bare line again.
+  real_fread <- data.table::fread
+  strict_fread <- function(...) {
+    text <- list(...)$text
+    if (!is.null(text) && length(text) == 1L && !grepl("[\r\n]", text)) {
+      stop("fread(text =) got one line without a newline: a file name or command to data.table < 1.15")
+    }
+    real_fread(...)
+  }
+  local_mocked_bindings(fread = strict_fread, .package = "data.table")
+
+  m <- as.matrix(make_counts(n_genes = 7, n_cells = 5))
+  colnames(m) <- paste0("MB001_", colnames(m))
+  p <- file.path(withr::local_tempdir(), "gxc.csv")
+  utils::write.csv(m, p, quote = FALSE)
+  # 7 data rows: k = 1 gives seven one-line chunks, k = 2 and k = 3 end on a
+  # one-line chunk, k = 100 reads all rows at once.
+  for (k in c(1L, 2L, 3L, 100L)) {
+    a <- read_published_counts(p, chunk_rows = k)
+    expect_equal(unname(as.matrix(a)), unname(m), ignore_attr = TRUE)
+    expect_equal(dimnames(a), dimnames(m))
+  }
+})
+
 test_that("read_published_counts refuses a file with no recognisable cell IDs", {
   dir <- withr::local_tempdir()
   p <- file.path(dir, "x.csv")
