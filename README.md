@@ -128,6 +128,10 @@ Three layers, each checked by planting bugs and confirming the tests fail
     errors, UMIs shared between genes, spliced, minus-strand, antisense,
     intronic, intergenic and multi-mapping reads, and two genes sharing a
     symbol.
+- **Results report** (`bin/phase1_report.R`, for `docs/results/phase1/README.md`):
+  unit tests with worked-out compute in `tests/testthat/test-report.R`, and
+  `tests/check_phase1_report.R`, which CI runs on the synthetic runs'
+  outputs (passing and failing verdicts).
 - `.github/workflows/ci.yml` runs all of the above on every push to
   GitHub, with the pipeline tests on the R image built from that commit,
   plus `nextflow lint`, ShellCheck, `scripts/check_versions.sh` (release

@@ -132,6 +132,12 @@ jobs:
           echo "task scripts using mb-scrnaseq-r:local: $(grep -c . <<< "$local_runs" || true)"
           [ -n "$local_runs" ] || { echo "::error::no task ran in mb-scrnaseq-r:local"; exit 1; }
           [ -z "$published" ] || { echo "::error::tasks ran in the published image instead of this commit's build:"; echo "$published"; exit 1; }
+      # bin/phase1_report.R on the finished synthetic runs (a passing and a
+      # failing verdict), checked against each run's own outputs.
+      - name: Phase 1 report on the synthetic runs' outputs
+        run: >
+          docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":"$PWD" -w "$PWD" mb-scrnaseq-r:local
+          Rscript tests/check_phase1_report.R .nf-test/tests/*/output
 
   publish-image:
     # Version tags (v0.1.0) publish the R image as ghcr.io/<owner>/mb-scrnaseq-r:0.1.0

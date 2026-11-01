@@ -213,6 +213,25 @@ later runs, set `star_index` to that path and remove
   cost. Check `peak_rss` for `CONCORDANCE`; it has not been measured on
   full-size data.
 
+Then write the results report from the output directory, with the pinned
+R image (it has every package the script needs):
+
+```bash
+module load singularity/4.1.1
+IMG=docker://$(grep -oP "^\s*r_container\s*=\s*'\K[^']+" nextflow.config)
+singularity exec -B <project-dir> "$IMG" Rscript bin/phase1_report.R --lib lib/R \
+  --outdir <project-dir>/results --out docs/results/phase1/README.md
+```
+
+`docs/results/phase1/README.md` then holds the verdict per sample and
+criterion, whether the run was pre-registered (a run that was not is
+marked as not reportable), the commit and the criteria and code hashes,
+QC flags, and compute per process (CPU hours used and reserved, run time,
+peak memory) from the trace. It refuses an output directory whose files
+disagree (for example, a verdict from one run and provenance from
+another). Copy the small result files it summarises next to it (plan M3
+step 5).
+
 If a criterion fails, do not edit the threshold. Find out why: wrong
 reference version (low `gene_match_fraction`), wrong sample-to-label
 mapping (low `barcode_recovery`), different cell calling (compare
