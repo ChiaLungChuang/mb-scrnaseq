@@ -77,6 +77,23 @@ needs (25.10 or newer), which is why it is installed with micromamba.
 
 ## 3. Smoke test on the cluster
 
+First the preflight, on the login node. It only reads: it checks LSF and
+the queues `conf/stjude.config` sends jobs to, that the Singularity module
+loads, the git, Java, Nextflow and nf-test versions, the Singularity cache,
+free space and quota where `work/` will live, and that every container
+image the pipeline uses can be reached anonymously from this node. It
+writes no file, pulls no image and submits no job. Paste the whole report
+back; fix every FAIL before the smoke test (WARN lines are worth reading
+but do not block).
+
+```bash
+cd <project-dir>/mb-scrnaseq
+micromamba activate nf
+scripts/hpcf_preflight.sh <project-dir>     # the directory that will hold work/
+```
+
+Then the smoke test:
+
 ```bash
 cd <project-dir>/mb-scrnaseq
 tmux new -s mbtest

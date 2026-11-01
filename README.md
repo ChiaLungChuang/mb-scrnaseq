@@ -111,7 +111,9 @@ Three layers, each checked by planting bugs and confirming the tests fail
   `fetch_inputs.sh` with stand-in `curl` and `singularity` (MD5, size,
   truncation, missing 10x headers, dry run, SRA fallback, label parsing,
   whitelists, reference layout); `check_versions.sh` (version, image tag
-  and digest agreement); and a check that the committed test data is
+  and digest agreement); `hpcf_preflight.sh` (the read-only cluster
+  checks, with stand-in LSF, modules and registries, including that it
+  changes nothing); and a check that the committed test data is
   exactly what its generators produce.
 - **Pipeline** (`nf-test test --profile +docker`), on two synthetic
   datasets with known answers:
