@@ -12,8 +12,9 @@ its tests in CI (GitHub Actions), with the containers, on two synthetic
 datasets with known ground truth: the R unit and accuracy tests, the script
 tests, lint, and the whole pipeline under Docker
 (`nf-test test --profile +docker`, with the R image built from
-`containers/r-analysis` in the same run). The R image is not yet
-published, and nothing has been run on the St. Jude cluster (the
+`containers/r-analysis` in the same run). The R image is published on
+GHCR (`mb-scrnaseq-r:0.1.0`, pullable without a login) and the pipeline
+pins it by digest. Nothing has been run on the St. Jude cluster (the
 LSF/Singularity profile is untested) or on the real data. Phase 2 is
 planned, not started: the single-cell analysis
 of all 28 tumors in R (Seurat), plus a Python module that compares scVI
@@ -109,8 +110,9 @@ Three layers, each checked by planting bugs and confirming the tests fail
   FASTQ folders (both layouts, v2/v3, lanes and chunks, every refusal);
   `fetch_inputs.sh` with stand-in `curl` and `singularity` (MD5, size,
   truncation, missing 10x headers, dry run, SRA fallback, label parsing,
-  whitelists, reference layout); and a check that the committed test data
-  is exactly what its generators produce.
+  whitelists, reference layout); `check_versions.sh` (version, image tag
+  and digest agreement); and a check that the committed test data is
+  exactly what its generators produce.
 - **Pipeline** (`nf-test test --profile +docker`), on two synthetic
   datasets with known answers:
   - `tests/main.nf.test` (`make_test_data.py`): every cell's UMI total
@@ -124,9 +126,13 @@ Three layers, each checked by planting bugs and confirming the tests fail
     errors, UMIs shared between genes, spliced, minus-strand, antisense,
     intronic, intergenic and multi-mapping reads, and two genes sharing a
     symbol.
-- `.github/workflows/ci.yml` runs all of the above, plus `nextflow lint`,
-  ShellCheck and a check that the release tag, `manifest.version` and the R
-  image tag agree, on every push to GitHub.
+- `.github/workflows/ci.yml` runs all of the above on every push to
+  GitHub, with the pipeline tests on the R image built from that commit,
+  plus `nextflow lint`, ShellCheck, `scripts/check_versions.sh` (release
+  tag, `manifest.version` and the R image tag agree; the digest is well
+  formed), and a job that pulls the pinned R image without logging in,
+  checks that its tag still points to the pinned digest, and runs the R
+  tests inside it.
 
 ## Known limitations
 
@@ -137,8 +143,10 @@ Three layers, each checked by planting bugs and confirming the tests fail
   it has. Symbols that were made unique (`RGS5`, `RGS5.1`) are matched the
   same way; this relies on STARsolo and Cell Ranger listing genes in the
   same (GTF) order.
-- Containers are referenced by tag, not digest, and provenance records the
-  tags. Re-pushing a tag would change what a re-run uses.
+- The R image is pinned by digest, and provenance records the full
+  reference. The STAR and bamtofastq images (biocontainers) are still
+  referenced by tag only: a re-pushed biocontainers tag would change what a
+  re-run uses.
 - Memory for `CONCORDANCE` on a full-size sample has not been measured;
   check `peak_rss` in `pipeline_info/trace.tsv` after the first real run.
 

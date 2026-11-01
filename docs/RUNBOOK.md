@@ -33,6 +33,17 @@ details that are not public; everything else is a command to run.
 3. **(you)** On GitHub, open Packages → `mb-scrnaseq-r` → Package settings and
    set visibility to **Public**, so Singularity can pull it without a login.
 
+`r_container` in `nextflow.config` pins the R image by digest
+(`...:0.1.0@sha256:...`), so re-pushing a tag cannot change what a run uses.
+For a later release (e.g. `v0.2.0`): in one PR, set `manifest.version` and
+the `r_container` tag to the new version **without** a digest; when it is
+merged, tag and push (`git tag v0.2.0 && git push --tags`), and CI publishes
+the image; then pin the new digest (`docker buildx imagetools inspect
+ghcr.io/chialungchuang/mb-scrnaseq-r:0.2.0` prints it) in a follow-up PR.
+`scripts/check_versions.sh` (run by CI) refuses a tag that disagrees with
+`manifest.version`, a malformed digest, and publishing a version that is
+already pinned.
+
 ## 1. Account and storage
 
 4. **(you)** Request an HPCF account through IT, if you do not have one.
