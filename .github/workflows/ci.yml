@@ -50,16 +50,33 @@ jobs:
         run: nextflow lint .
       - name: ShellCheck
         run: shellcheck -x bin/*.sh scripts/*.sh tests/shell/*.sh
-      - name: Versions agree (manifest, R image tag, git tag)
+      - name: Versions agree (manifest, R image tag and digest, git tag)
+        run: bash scripts/check_versions.sh nextflow.config "$GITHUB_REF"
+
+  pinned-r-image:
+    # The cluster pulls r_container anonymously, by its digest. This job has
+    # no registry login: it pulls exactly that reference, checks that the tag
+    # still points to the pinned digest (a re-pushed tag fails here), and runs
+    # the R unit tests inside the pinned image.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Pull the pinned R image without logging in
         run: |
-          manifest=$(grep -oP "^\s*version\s*=\s*'\K[^']+" nextflow.config)
-          image_tag=$(grep -oP "r_container\s*=\s*'[^']+:\K[^']+" nextflow.config)
-          echo "manifest.version=${manifest} r_container tag=${image_tag}"
-          [ -n "$manifest" ] && [ "$manifest" = "$image_tag" ] \
-            || { echo "::error::manifest.version (${manifest}) and the r_container tag (${image_tag}) differ"; exit 1; }
-          if [[ "$GITHUB_REF" == refs/tags/v* ]] && [ "${GITHUB_REF_NAME#v}" != "$manifest" ]; then
-            echo "::error::git tag ${GITHUB_REF_NAME} does not match manifest.version ${manifest}"; exit 1
+          image=$(grep -oP "^\s*r_container\s*=\s*'\K[^']+" nextflow.config)
+          if [[ "$image" != *@sha256:* ]]; then
+            echo "::warning::r_container (${image}) is not pinned by digest; nothing to check"
+            exit 0
           fi
+          docker pull "$image"
+          resolved=$(docker buildx imagetools inspect "${image%@*}" | awk '/^Digest:/ { print $2; exit }')
+          echo "tag ${image%@*} -> ${resolved}; pinned ${image#*@}"
+          [ "$resolved" = "${image#*@}" ] \
+            || { echo "::error::tag ${image%@*} now points to ${resolved}, not the pinned ${image#*@}: was it re-pushed?"; exit 1; }
+          echo "PINNED_IMAGE=${image}" >> "$GITHUB_ENV"
+      - name: R unit tests inside the pinned image
+        if: env.PINNED_IMAGE != ''
+        run: docker run --rm -v "$PWD":/w -w /w "$PINNED_IMAGE" Rscript tests/run_tests.R
 
   pipeline-test:
     runs-on: ubuntu-latest
@@ -76,14 +93,22 @@ jobs:
       - uses: nf-core/setup-nf-test@v2
         with:
           version: ${{ env.NFT_VER }}
-      - name: Build the R image under the name the pipeline expects
-        run: |
-          docker build -t mb-scrnaseq-r:ci containers/r-analysis
-          docker tag mb-scrnaseq-r:ci "$(grep -oP "r_container\s*=\s*'\K[^']+" nextflow.config)"
+      # The pipeline tests run on the R image built from this commit (profile
+      # local_r_image), so a Dockerfile change is tested before it is
+      # released. The published, pinned image is checked by pinned-r-image.
+      - name: Build the R image from this commit
+        run: docker build -t mb-scrnaseq-r:local containers/r-analysis
       - name: Stub run (wiring only)
-        run: nextflow run . -profile test,docker -stub-run --outdir results_stub
+        run: nextflow run . -profile test,docker,local_r_image -stub-run --outdir results_stub
       - name: Pipeline tests on the synthetic dataset
-        run: nf-test test --profile +docker --verbose
+        run: nf-test test --profile +docker,local_r_image --verbose
+      - name: The R steps ran in the image built from this commit
+        run: |
+          local_runs=$(grep -rls --include=.command.run 'mb-scrnaseq-r:local' .nf-test work || true)
+          published=$(grep -rls --include=.command.run 'ghcr.io/chialungchuang/mb-scrnaseq-r' .nf-test work || true)
+          echo "task scripts using mb-scrnaseq-r:local: $(grep -c . <<< "$local_runs" || true)"
+          [ -n "$local_runs" ] || { echo "::error::no task ran in mb-scrnaseq-r:local"; exit 1; }
+          [ -z "$published" ] || { echo "::error::tasks ran in the published image instead of this commit's build:"; echo "$published"; exit 1; }
 
   publish-image:
     # Version tags (v0.1.0) publish the R image as ghcr.io/<owner>/mb-scrnaseq-r:0.1.0
@@ -106,7 +131,9 @@ jobs:
         run: |
           owner=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           name="ghcr.io/${owner}/mb-scrnaseq-r:${GITHUB_REF_NAME#v}"
-          expected=$(grep -oP "r_container\s*=\s*'\K[^']+" nextflow.config)
+          checked=$(bash scripts/check_versions.sh --publish nextflow.config "$GITHUB_REF")
+          echo "$checked"
+          expected=$(tail -n 1 <<< "$checked")
           [ "$name" = "$expected" ] || { echo "::error::would publish ${name} but the pipeline pulls ${expected}"; exit 1; }
           echo "name=${name}" >> "$GITHUB_OUTPUT"
       - uses: docker/build-push-action@v7
