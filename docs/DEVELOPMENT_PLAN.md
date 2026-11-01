@@ -20,11 +20,11 @@ Claude Code updates this table at the end of every PR.
 |---|---|---|
 | Pre-M0: phase 1 code and tests | done | tests pass locally (tools on `PATH`) and in CI |
 | M0: repository on GitHub, CI green, image published | done (step 7 open) | CI green on `main` (latest: [41280846749](https://github.com/ChiaLungChuang/mb-scrnaseq/actions/runs/41280846749)): R, script, lint and pipeline tests in Docker, synthetic data only. `v0.1.0` published `ghcr.io/chialungchuang/mb-scrnaseq-r:0.1.0` ([run 41257603921](https://github.com/ChiaLungChuang/mb-scrnaseq/actions/runs/41257603921)); `r_container` pins it by digest (`sha256:9ce6480a…`); the `pinned-r-image` job pulls it with no login and runs the R tests inside it. Step 7, making the repository public (it is private), is yours: **[you] [decide]** |
-| M1: cluster smoke test | not started | |
-| M2: real inputs and phase 1 pre-registration | not started | |
-| M3: phase 1 run on 8 tumors | not started | |
+| M1: cluster smoke test | prepared, not run | read-only `scripts/hpcf_preflight.sh` ([#11](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/11)); `conf/stjude.config` compared with nf-core's ([#9](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/9)). Nothing has run on the cluster. Next **[you]**: runbook section 3 (preflight, then `nf-test test --profile +stjude`) |
+| M2: real inputs and phase 1 pre-registration | in progress | sample proposal in [draft PR #10](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/10); nothing decided, no BAMs downloaded, criteria not locked |
+| M3: phase 1 run on 8 tumors | prepared, not run | results report `bin/phase1_report.R` ([#13](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/13)), tested on synthetic runs only; raw trace with CPU and memory fields. Not run on real data |
 | M4: phase 2 design and pre-registration | in progress | design drafted for decision in [draft PR #4](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/4); nothing decided, no criteria drafted |
-| M5: phase 2 implementation (R analysis + Python module) and run | not started | |
+| M5: phase 2 implementation (R analysis + Python module) and run | not started | known-answer data generator drafted ([draft PR #14](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/14)); waits on the M4 decisions |
 | M6: write-up | not started | |
 
 What exists before M0: the phase 1 pipeline (BAM → bamtofastq → read
@@ -67,6 +67,8 @@ Mutation checks done so far (each made the tests fail):
 | version check reads the digest as the image tag; digest format unchecked; release tag ignored; an already pinned version published again; a profile override read as the pipeline's image | `test_check_versions.sh` |
 | a package fails to install but the install step passes (simulated: install functions that only warn) | `tests/install_r_packages.R` (loads every package) |
 | R tasks run in the published image instead of the commit's build, or not in the local image at all (simulated task scripts) | CI step "The R steps ran in the image built from this commit" |
+| preflight: a missing queue only warns; versions compared as text; Java 11 accepted; a probe file written; queue list hard-coded; 1 GB floor; HTTP 401 counted as reachable; module load not checked | `test_hpcf_preflight.sh` (stand-ins under `env -i`, including a changes-nothing check) |
+| results report: %cpu not divided by 100; cached tasks counted; criteria refs unfiltered; hash consistency check removed; PASS/FAIL swapped; powers of 1000; "any" for "all"; human-formatted trace read as NA | `test-report.R`; PASS/FAIL swap and dropped tasks also by `check_phase1_report.R` on the synthetic runs |
 
 ## M0. Repository on GitHub, CI green, image published
 
