@@ -2,7 +2,8 @@
 work/
 .nextflow/
 .nextflow.log*
-results*/
+# Pipeline output directories at the root only: docs/results/ holds curated results
+/results*/
 .nf-test/
 .nf-test.log
 # R
