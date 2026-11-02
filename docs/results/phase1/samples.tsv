@@ -1,0 +1,9 @@
+sample	srr	published_label	chemistry	subgroup	run_order	bam_file	bam_md5	bam_gb
+GSM4704548	SRR12354589	1355	v2	Group 3	1	4_1355_possorted_genome_bam.bam	033f2ddacb2fea0e1bd6fbe59f6fa39d	6.4
+GSM4704543	SRR12354584	1195	v3	Group 4	2	1195_3_possorted_genome_bam.bam	01dc756c80fa3ae328f3ce63e84849b6	6.6
+GSM4704547	SRR12354588	1325	v3	SHH	3	1325_7_possorted_genome_bam.bam	271f9c2aff57dba9e3bb3c5f321a0d83	8.2
+GSM4704525	SRR12354566	831	v3	SHH	4	1_831_possorted_genome_bam.bam	2c5b41716b4a12f1747effa1cde8665f	12.0
+GSM4704528	SRR12354569	925	v3	Group 3	5	1_925_010819_possorted_genome_bam.bam	9630113924f89bf9c4b4945176663fd4	12.8
+GSM4704535	SRR12354576	1066	v3	Group 4	6	Foreman_1066_03142019_5_possorted_genome_bam.bam	8bdc0d30de1506cb76040e75e72a003e	15.5
+GSM4704538	SRR12354579	1128	v3	WNT	7	Foreman_1128_possorted_genome_bam.bam	89285dd421e45c643b6971727a04c402	26.2
+GSM4704533	SRR12354574	996	v3	Group 4	8	Foreman_3_possorted_genome_bam.bam	67245e4844008b7dd54796b93ac2adca	31.1

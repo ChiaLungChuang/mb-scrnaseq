@@ -1,7 +1,7 @@
 # Proposal: which 8 tumors to re-quantify in phase 1
 
-**Status: draft for Chia-Lung's decision (plan M2 step 2).** Nothing here
-is chosen until he says so.
+**Status: accepted by Chia-Lung on 2 Nov 2026: the 8 as proposed** (plan
+M2 step 2). Recorded in `docs/results/phase1/samples.tsv`.
 
 Made on 1 Nov 2026 from public metadata only:
 

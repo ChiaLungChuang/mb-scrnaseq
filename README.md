@@ -49,7 +49,7 @@ Cell Ranger BAM ─► bamtofastq ─► read check ─► STARsolo ─┬─►
 | `PREP_PUBLISHED` | R | Streams the dense GEO CSV into a sparse matrix in chunks; detects orientation |
 | `CONCORDANCE` | R | Per sample: barcode recovery, UMI totals, pseudobulk and per-cell correlation |
 
-The GSE155446 BAM headers checked so far (two tumors) name Cell Ranger's
+All 30 GSE155446 human BAM headers (read from their first 4 MB) name Cell Ranger's
 `refdata-cellranger-GRCh38-3.0.0` reference and STAR 2.5.1b, i.e. Cell
 Ranger 3.x, so this dataset is run with `--cellranger_compat cr3` and the
 GRCh38-3.0.0 reference. `scripts/fetch_inputs.sh bams` reports both for
@@ -113,7 +113,9 @@ Three layers, each checked by planting bugs and confirming the tests fail
   whitelists, reference layout); `check_versions.sh` (version, image tag
   and digest agreement); `hpcf_preflight.sh` (the read-only cluster
   checks, with stand-in LSF, modules and registries, including that it
-  changes nothing); and a check that the committed test data is
+  changes nothing); a check that the phase 1 sample record
+  (`docs/results/phase1/samples.tsv`) agrees with the barcode-verified run
+  table; and a check that the committed test data is
   exactly what its generators produce.
 - **Pipeline** (`nf-test test --profile +docker`), on two synthetic
   datasets with known answers:
