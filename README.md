@@ -111,9 +111,9 @@ Three layers, each checked by planting bugs and confirming the tests fail
   `fetch_inputs.sh` with stand-in `curl` and `singularity` (MD5, size,
   truncation, missing 10x headers, dry run, SRA fallback, label parsing,
   whitelists, reference layout); `check_versions.sh` (version, image tag
-  and digest agreement); `hpcf_preflight.sh` (the read-only cluster
-  checks, with stand-in LSF, modules and registries, including that it
-  changes nothing); the LSF directives the St. Jude profile writes
+  and digest agreement); `hpcf_preflight.sh` (the cluster checks,
+  with stand-in LSF, modules, registries and download hosts, including
+  that it changes nothing unless asked to submit its one test job); the LSF directives the St. Jude profile writes
   (Nextflow with a stand-in `bsub`: per-core memory, queue routing); a
   check that the phase 1 sample record
   (`docs/results/phase1/samples.tsv`) agrees with the barcode-verified run

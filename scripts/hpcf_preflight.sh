@@ -1,26 +1,50 @@
 #!/usr/bin/env bash
-# Read-only checks to run on an HPCF login node before the smoke test
-# (docs/RUNBOOK.md, section 3). Prints one report to paste back.
+# Checks to run before the smoke test (docs/RUNBOOK.md, section 3). Prints
+# one report to paste back.
 #
-# Usage: scripts/hpcf_preflight.sh [work_dir]
-#   work_dir  where Nextflow's work/ directory will live (default: the
-#             current directory)
+# Run it on a compute node, inside an interactive session: HPCF's login
+# nodes are only for changing directories and submitting jobs, and the
+# network checks must describe the nodes that will do the work.
+#   hpcf_interactive          (or: bsub -P interactive -q interactive -Is bash)
+#   scripts/hpcf_preflight.sh [--submit-test] [work_dir]
 #
-# Checks: LSF commands and the queues conf/stjude.config routes to; the
-# Singularity module it loads; git, Java, Nextflow and nf-test versions;
-# NXF_SINGULARITY_CACHEDIR; free space and quota for the work directory;
-# anonymous access to every container image the pipeline uses (manifest
-# requests to ghcr.io and quay.io only).
+#   --submit-test  also submit one job from this node (`true`, queue short,
+#                  1-minute limit, no output files) and wait for it to
+#                  finish: Nextflow's head process submits every task from
+#                  the node it runs on. Waits up to PREFLIGHT_SUBMIT_TIMEOUT
+#                  seconds (default 900), then kills the job.
+#   work_dir       where Nextflow's work/ directory will live (default: the
+#                  current directory)
 #
-# It changes nothing: no file is written, no image is pulled, no job is
-# submitted, and the module is loaded only inside a subshell. Queue names,
-# the module, the images and the versions are read from this repository's
-# own config, so the checks follow the config.
+# Checks: that it runs inside an LSF job; LSF commands and the queues
+# conf/stjude.config routes to; lsf.conf's memory settings (reported for
+# HPCF to interpret, not judged); the Singularity module the profile loads;
+# git, Java, Nextflow and nf-test versions; NXF_SINGULARITY_CACHEDIR; free
+# space and quota for the work directory; anonymous access to every
+# container image the pipeline uses (manifest requests to ghcr.io and
+# quay.io); the download hosts of scripts/fetch_inputs.sh (one ENA
+# filereport query for the pilot run, then HEAD requests for its BAM, the
+# GEO folder, the 10x reference and a whitelist; nothing is downloaded).
+# The SRA prefetch fallback's hosts are not checked.
 #
-# Exit status: 1 if any check FAILs, otherwise 0.
+# Without --submit-test it changes nothing: no file is written, no image is
+# pulled, no job is submitted, and the module is loaded only inside a
+# subshell. With it, the one job is the only change. Queue names, the
+# module, the images, the download URLs and the versions are read from this
+# repository's own files, so the checks follow them.
+#
+# Exit status: 1 if any check FAILs, 2 for a usage error, otherwise 0.
 set -uo pipefail
 
 REPO=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
+submit_test=0
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --submit-test) submit_test=1; shift ;;
+    -*) echo "unknown option: $1 (usage: $0 [--submit-test] [work_dir])" >&2; exit 2 ;;
+    *) break ;;
+  esac
+done
 work_dir=${1:-$PWD}
 
 npass=0 nwarn=0 nfail=0
@@ -54,8 +78,17 @@ info "host $(hostname 2>/dev/null || echo '?'), user ${USER:-?}, $(date -u +%Y-%
 info "repository $REPO at $(git -C "$REPO" rev-parse --short HEAD 2>/dev/null || echo '?')"
 info "work directory $work_dir"
 
+# --- Session -----------------------------------------------------------------
+section "Session"
+if [ -n "${LSB_JOBID:-}" ]; then
+  pass "inside LSF job $LSB_JOBID (queue ${LSB_QUEUE:-?}), not on a login node"
+else
+  warn "not inside an LSF job: HPCF's login nodes are only for cd and bsub. Run this inside hpcf_interactive (or bsub -P interactive -q interactive -Is bash); the network checks below describe this node only"
+fi
+
 # --- LSF ---------------------------------------------------------------------
 section "LSF"
+if command -v lsid >/dev/null; then info "$(lsid 2>&1 | head -n 1)"; fi
 for c in bsub bjobs bqueues; do
   if p=$(command -v "$c"); then pass "$c: $p"; else fail "$c: not on PATH"; fi
 done
@@ -71,6 +104,27 @@ if command -v bqueues >/dev/null; then
       warn "queue $q: $status (jobs may wait or be refused)"
     fi
   done
+fi
+
+# How LSF applies -M and rusage[mem] (conf/stjude.config, "Memory"). Shown,
+# not judged: what the values mean for a multi-threaded STAR is HPCF's call.
+mem_keys='LSB_JOB_MEMLIMIT|LSB_MEMLIMIT_ENFORCE|LSB_MEMLIMIT_ENF_CONTROL|LSB_RESOURCE_ENFORCE|LSF_UNIT_FOR_LIMITS|RESOURCE_RESERVE_PER_TASK|RESOURCE_RESERVE_PER_SLOT'
+mem_settings() { grep -E "^[[:space:]]*($mem_keys)[[:space:]]*=" | sed -E 's/^[[:space:]]+//; s/[[:space:]]*=[[:space:]]*/=/'; }
+lsf_conf=${LSF_ENVDIR:-/etc}/lsf.conf
+if [ -r "$lsf_conf" ]; then
+  found=$(mem_settings < "$lsf_conf")
+  if [ -n "$found" ]; then
+    info "memory settings in $lsf_conf:"
+    indent <<< "$found"
+  else
+    info "memory settings in $lsf_conf: none of ${mem_keys//|/, } set (LSF defaults)"
+  fi
+else
+  warn "lsf.conf not readable at $lsf_conf (LSF_ENVDIR=${LSF_ENVDIR:-unset}): ask HPCF how -M is enforced for a multi-threaded job"
+fi
+if command -v bparams >/dev/null; then
+  found=$(bparams -a 2>/dev/null | mem_settings)
+  if [ -n "$found" ]; then info "memory settings from bparams -a:"; indent <<< "$found"; fi
 fi
 
 # --- Singularity --------------------------------------------------------------
@@ -97,7 +151,7 @@ fi
 # --- Tools --------------------------------------------------------------------
 section "Tools"
 if command -v git >/dev/null; then pass "git: $(git --version)"; else fail "git: not on PATH (the pre-registration check needs it)"; fi
-if command -v tmux >/dev/null; then pass "tmux: present"; else warn "tmux: not on PATH (the runbook runs Nextflow inside tmux)"; fi
+if command -v tmux >/dev/null; then pass "tmux: present"; else warn "tmux: not on PATH (the runbook keeps the interactive session in tmux)"; fi
 
 if command -v java >/dev/null; then
   jv=$(java -version 2>&1 | awk -F'"' '/version/ { print $2; exit }')
@@ -176,7 +230,7 @@ else
 fi
 
 # --- Network: anonymous manifest requests, nothing is pulled -----------------
-section "Container registries (anonymous; from this login node)"
+section "Container registries (anonymous; from this node)"
 accept='application/vnd.oci.image.index.v1+json, application/vnd.docker.distribution.manifest.list.v2+json, application/vnd.oci.image.manifest.v1+json, application/vnd.docker.distribution.manifest.v2+json'
 for img in $images; do
   registry=${img%%/*}
@@ -197,6 +251,80 @@ for img in $images; do
     *) fail "$img: HTTP $code" ;;
   esac
 done
+
+# --- Download hosts: one ENA query, then HEAD requests; nothing is downloaded --
+section "Download hosts (scripts/fetch_inputs.sh; from this node)"
+fi_sh="$REPO/scripts/fetch_inputs.sh"
+# head_check <label> <url>: one HEAD request, following redirects.
+head_check() {
+  local code
+  if [ -z "$2" ]; then fail "$1: URL not found in scripts/fetch_inputs.sh"; return; fi
+  code=$(curl -sS -I -L -o /dev/null -w '%{http_code}' --max-time 30 "$2" 2>/dev/null)
+  case "$code" in
+    200) pass "$1: reachable ($2)" ;;
+    000|'') local h=${2#https://}; fail "$1: no connection to ${h%%/*} (outbound HTTPS blocked from this node?)" ;;
+    *) fail "$1: HTTP $code for $2" ;;
+  esac
+}
+ena_api=$(grep -oP '^ENA_API=\K\S+' "$fi_sh")
+pilot=$(awk -F'\t' 'NR == 1 { for (i = 1; i <= NF; i++) col[$i] = i; next }
+                    $col["run_order"] == 1 { print $col["srr"]; exit }' "$REPO/docs/results/phase1/samples.tsv")
+bam_url=''
+if [ -z "$ena_api" ] || [ -z "$pilot" ]; then
+  fail "ENA portal API: could not read ENA_API from scripts/fetch_inputs.sh or the pilot run from docs/results/phase1/samples.tsv"
+elif ! rec=$(curl -sS --max-time 30 "$ena_api?accession=$pilot&result=read_run&fields=run_accession,submitted_ftp,submitted_bytes&format=tsv" 2>&1); then
+  h=${ena_api#https://}
+  fail "ENA portal API: no connection to ${h%%/*} (outbound HTTPS blocked from this node?)"
+else
+  IFS=$'\t' read -r acc ftps _ <<< "$(sed -n 2p <<< "$rec")" || true
+  for f in ${ftps//;/ }; do case "$f" in *.bam) bam_url="https://$f" ;; esac; done
+  if [ "${acc:-}" = "$pilot" ] && [ -n "$bam_url" ]; then
+    pass "ENA portal API: lists the BAM of the pilot run $pilot"
+  else
+    fail "ENA portal API: no BAM listed for the pilot run $pilot; response: $(head -c 200 <<< "$rec" | tr '\n\t' '  ')"
+  fi
+fi
+# The ENA file server, through the pilot's own BAM when ENA named it.
+head_check "ENA file server" "${bam_url:-https://ftp.sra.ebi.ac.uk/vol1/}"
+head_check "GEO (published matrix folder)" "$(grep -oP '^\s*base=\Khttps://\S+' "$fi_sh")/"
+head_check "10x reference GRCh38-3.0.0" "$(grep -oP 'GRCh38-3\.0\.0\)\s+url=\K\S+' "$fi_sh")"
+wl=$(grep -oP '^\s*wl=\K\S+' "$fi_sh")
+# shellcheck disable=SC2016  # the literal text $wl in fetch_inputs.sh
+head_check "STARsolo whitelists" "${wl:+$wl/$(grep -oP 'fetch "\$wl/\K[^"]+' "$fi_sh" | head -n 1)}"
+
+# --- Job submission from this node (opt-in) ---------------------------------
+if [ "$submit_test" = 1 ]; then
+  section "Job submission from this node (--submit-test)"
+  timeout_s=${PREFLIGHT_SUBMIT_TIMEOUT:-900}
+  poll_s=${PREFLIGHT_POLL:-15}
+  if ! command -v bsub >/dev/null; then
+    fail "bsub: not on PATH, cannot submit"
+  else
+    out=$(bsub -q short -W 1 -n 1 -J mb_preflight -o /dev/null -e /dev/null true 2>&1)
+    jobid=$(grep -oP 'Job <\K[0-9]+(?=>)' <<< "$out" | head -n 1)
+    if [ -z "$jobid" ]; then
+      fail "bsub from this node failed:"
+      indent <<< "$out"
+    else
+      pass "bsub from this node: job $jobid submitted (queue short)"
+      waited=0
+      while :; do
+        state=$(bjobs "$jobid" 2>/dev/null | awk -v j="$jobid" '$1 == j { print $3 }')
+        case "$state" in
+          DONE) pass "job $jobid ran and exited 0 (seen after ${waited} s)"; break ;;
+          EXIT) fail "job $jobid exited with an error (see bjobs -l $jobid, bhist -l $jobid)"; break ;;
+        esac
+        if [ "$waited" -ge "$timeout_s" ]; then
+          bkill "$jobid" >/dev/null 2>&1 || true
+          warn "job $jobid still ${state:-not listed} after ${timeout_s} s, killed: submission works, but it did not run (queue busy? re-run later)"
+          break
+        fi
+        sleep "$poll_s"
+        waited=$((waited + poll_s))
+      done
+    fi
+  fi
+fi
 
 printf '\nsummary: %d pass, %d warn, %d fail\n' "$npass" "$nwarn" "$nfail"
 [ "$nfail" -eq 0 ]
