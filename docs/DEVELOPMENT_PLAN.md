@@ -20,7 +20,7 @@ Claude Code updates this table at the end of every PR.
 |---|---|---|
 | Pre-M0: phase 1 code and tests | done | tests pass locally (tools on `PATH`) and in CI |
 | M0: repository on GitHub, CI green, image published | done (step 7 open) | CI green on `main` (latest: [41280846749](https://github.com/ChiaLungChuang/mb-scrnaseq/actions/runs/41280846749)): R, script, lint and pipeline tests in Docker, synthetic data only. `v0.1.0` published `ghcr.io/chialungchuang/mb-scrnaseq-r:0.1.0` ([run 41257603921](https://github.com/ChiaLungChuang/mb-scrnaseq/actions/runs/41257603921)); `r_container` pins it by digest (`sha256:9ce6480a…`); the `pinned-r-image` job pulls it with no login and runs the R tests inside it. Step 7, making the repository public (it is private), is yours: **[you] [decide]** |
-| M1: cluster smoke test | prepared, not run | read-only `scripts/hpcf_preflight.sh` ([#11](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/11)); `conf/stjude.config` compared with nf-core's ([#9](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/9)). Nothing has run on the cluster. Next **[you]**: runbook section 3 (preflight, then `nf-test test --profile +stjude`) |
+| M1: cluster smoke test | prepared, not run | `scripts/hpcf_preflight.sh` ([#11](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/11); compute-node session, ENA and download hosts, lsf.conf memory settings and an opt-in job submission test in [#17](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/17)); `conf/stjude.config` compared with nf-core's ([#9](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/9)) and aligned with HPCF's policy, with its LSF directives tested against a stand-in `bsub` ([#16](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/16)); runbook follows HPCF's policy (nothing beyond `cd` and `bsub` on login nodes; two paths for the head process). Nothing has run on the cluster. Next **[you]**: HPCF's answers to the questions in runbook section 1 (item 6), then section 3 (preflight with `--submit-test` in an interactive session, then `nf-test test --profile +stjude`) |
 | M2: real inputs and phase 1 pre-registration | in progress | 8 tumors chosen (2 Nov 2026, [#10](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/10)) and recorded in `docs/results/phase1/samples.tsv` (steps 2 and the record of 5). Not done: inputs and BAMs downloaded **[you]**, `bams_summary.tsv` read, criteria locked **[you]** |
 | M3: phase 1 run on 8 tumors | prepared, not run | results report `bin/phase1_report.R` ([#13](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/13)), tested on synthetic runs only; raw trace with CPU and memory fields. Not run on real data |
 | M4: phase 2 design and pre-registration | in progress | design drafted for decision in [draft PR #4](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/4); nothing decided, no criteria drafted |
@@ -107,12 +107,16 @@ data), and still says nothing has run on real data or the cluster.
 
 Goal: the same tests pass on St. Jude HPCF (LSF + Singularity).
 
-1. **[you]** HPCF account, login host, a project or scratch path
-   (runbook section 1).
+1. **[you]** HPCF account (login host `hpc.stjude.org`), a project or
+   scratch path, and HPCF's answers to the questions in runbook section 1
+   (compute-node internet, job submission from jobs, `tmux` on login
+   nodes, a queue for the head job, how `-M` is enforced).
 2. **[you] [decide]** Whether Claude Code may run commands on the cluster.
    Check HPCF/IT policy first. Default: no; you run, paste logs back.
-3. **[you]** Runbook section 2 (micromamba, Nextflow 26.10.4, nf-test
-   0.9.5, Singularity cache, clone), then from the repository:
+3. **[you]** In an interactive session (login nodes are only for `cd`
+   and `bsub`): runbook section 2 (micromamba, Nextflow 26.10.4, nf-test
+   0.9.5, Singularity cache, clone), then section 3:
+   `scripts/hpcf_preflight.sh --submit-test`, then
    `nf-test test --profile +stjude`. This runs both synthetic test files
    through LSF and Singularity with the same assertions as CI, including
    the exact-count accuracy test.

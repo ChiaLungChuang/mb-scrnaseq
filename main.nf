@@ -21,7 +21,7 @@ include { SUMMARISE_CONCORDANCE } from './modules/local/summarise_concordance'
 
 /*
  * Read and validate the samplesheet before anything is submitted, so a typo
- * fails in seconds on the login node rather than hours into a run.
+ * fails in seconds, before any job is submitted, rather than hours into a run.
  * Columns: sample, bam, chemistry (v2|v3), published_label (needed only when
  * --published_counts is set).
  */
