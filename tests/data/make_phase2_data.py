@@ -9,6 +9,14 @@ so each phase 2 step can be tested on whether it recovers what was put in:
                  genes ten times higher than elsewhere
   patients       13 synthetic patients: 4 SHH, 4 Group 3, 4 Group 4, 1 WNT
                  (the real cohort's shape: WNT cannot be learned and tested)
+  libraries      14: patient P09 has a second library, labelled P14, as
+                 tumor 934 has library 943 and 966 has 966-2 in the real
+                 data. Both share P09's patient effect and copy number; the
+                 second adds its own library effect on 15 genes. Its label
+                 does not reveal the patient, so folds must come from the
+                 library -> patient table, and a classifier validated by
+                 library instead of patient leaks through the shared patient
+                 signal
   patient effect every patient shifts 30 background genes in all its cells
                  (a batch effect integration should remove)
   copy number    each patient's malignant cells carry 1-2 arm-level gains
@@ -16,7 +24,7 @@ so each phase 2 step can be tested on whether it recovers what was put in:
                  carries none
   subgroup       malignant cells of each subgroup express that subgroup's
                  genes five times higher (absent in the negative control)
-  low quality    two cells per patient with few counts and high mito
+  low quality    two cells per library with few counts and high mito
 
 The negative control (--null) is the same dataset with the subgroup signal
 removed. Every random number is drawn in the same order in both, and the
@@ -27,8 +35,9 @@ Outputs (in --outdir; tests/data/phase2 and tests/data/phase2_null):
   matrix.mtx.gz  genes x cells integer counts, Matrix Market coordinate
                  (gzip with mtime 0)
   genes.tsv      gene_id, gene_name, chrom, start, end, arm, role
-  cells.tsv      cell_id (<patient>_<barcode>, as in the published matrix),
-                 patient, subgroup, cell_type, malignant, low_quality
+  cells.tsv      cell_id (<library>_<barcode>, as in the published matrix),
+                 library, patient, subgroup, cell_type, malignant,
+                 low_quality
   truth.json     everything that was planted
 
 Usage: python3 make_phase2_data.py [--outdir DIR] [--null]
@@ -49,6 +58,8 @@ COMPOSITION = [("malignant", 40), ("myeloid", 8), ("lymphoid", 6), ("endothelial
 TYPE_SCALE = {"malignant": 1.3, "myeloid": 1.0, "lymphoid": 0.6, "endothelial": 0.8, "oligodendrocyte": 0.9}
 PATIENTS = [("P%02d" % (i + 1), sg) for i, sg in enumerate(["SHH"] * 4 + ["G3"] * 4 + ["G4"] * 4 + ["WNT"])]
 NO_CNV_PATIENT = "P12"
+SECOND_LIBRARY = {"P09": "P14"}          # patient -> its second library's label
+N_LIBRARY_GENES, LIBRARY_LFC = 15, 0.8   # the second library's own effect: +/-0.8 log fold
 N_LOW_QUALITY = 2
 
 # Marker symbols follow the proposals in docs/phase2_design.md (D3 lineage
@@ -77,7 +88,7 @@ GAIN, LOSS = 1.5, 0.5
 NOISE_SD = 0.25          # per cell x gene log-normal noise
 PATIENT_LFC_SD = 0.6     # patient effect: log fold change ~ N(0, 0.6)
 LAMBDA_CAP = 400.0
-LQ_SIZE, LQ_MITO = 0.1, 25.0  # low-quality cells: library size and mito expression
+LQ_SIZE, LQ_MITO = 0.1, 15.0  # low-quality cells: library size and mito expression
 
 
 class Rng:
@@ -151,15 +162,17 @@ def generate(null):
     base = []
     for g in genes:
         mu = math.exp(0.2 + rng.normal())
-        if g["role"].startswith("marker") or g["role"].startswith("subgroup") or g["role"] == "malignant_program":
+        if g["role"].startswith("marker") or g["role"] == "malignant_program":
             mu = 0.15
+        if g["role"].startswith("subgroup"):
+            mu = 0.45      # enough counts that the one WNT patient's genes are measurable
         if g["role"] == "mito":
             mu = 1.5
         base.append(min(max(mu, 0.05), 8.0))
     background = [i for i, g in enumerate(genes) if g["role"] == "background"]
     arms = [("chr%d" % (c + 1), a) for c in range(N_CHROM) for a in "pq"]
 
-    patients, cells = {}, []
+    patients, libraries, cells = {}, {}, []
     for pid, sg in PATIENTS:
         lfc = {genes[i]["name"]: round(PATIENT_LFC_SD * rng.normal(), 4) for i in rng.sample(background, N_PATIENT_GENES)}
         n_events = 0 if pid == NO_CNV_PATIENT else 1 + rng.below(2)
@@ -168,25 +181,35 @@ def generate(null):
             mult = GAIN if rng.u() < 0.5 else LOSS
             events.append(dict(chrom=chrom, arm=arm, multiplier=mult,
                                genes=[g["name"] for g in genes if g["chrom"] == chrom and g["arm"] == arm]))
-        patients[pid] = dict(subgroup=sg, cnv=events, patient_effect_log=lfc)
-        types = sum([[t] * n for t, n in COMPOSITION], [])
-        low = set(rng.sample(range(CELLS_PER_PATIENT), N_LOW_QUALITY))
-        used = set()
-        for k, t in enumerate(types):
-            while True:
-                bc = "".join("ACGT"[rng.below(4)] for _ in range(16))
-                if bc not in used:
-                    used.add(bc)
-                    break
-            cells.append(dict(id="%s_%s" % (pid, bc), patient=pid, subgroup=sg, type=t,
-                              malignant=t == "malignant", low_quality=k in low,
-                              size=math.exp(0.35 * rng.normal()) * TYPE_SCALE[t]))
+        libs = [pid] + ([SECOND_LIBRARY[pid]] if pid in SECOND_LIBRARY else [])
+        patients[pid] = dict(subgroup=sg, cnv=events, patient_effect_log=lfc, libraries=libs)
+        for li, lib in enumerate(libs):
+            lib_effect = {}
+            if li > 0:                                   # a second library: its own technical shift
+                pool = [i for i in background if genes[i]["name"] not in lfc]
+                lib_effect = {genes[i]["name"]: LIBRARY_LFC if rng.u() < 0.5 else -LIBRARY_LFC
+                              for i in rng.sample(pool, N_LIBRARY_GENES)}
+            libraries[lib] = dict(patient=pid, library_effect_log=lib_effect)
+            types = sum([[t] * n for t, n in COMPOSITION], [])
+            low = set(rng.sample(range(CELLS_PER_PATIENT), N_LOW_QUALITY))
+            used = set()
+            for k, t in enumerate(types):
+                while True:
+                    bc = "".join("ACGT"[rng.below(4)] for _ in range(16))
+                    if bc not in used:
+                        used.add(bc)
+                        break
+                cells.append(dict(id="%s_%s" % (lib, bc), library=lib, patient=pid, subgroup=sg, type=t,
+                                  malignant=t == "malignant", low_quality=k in low,
+                                  size=math.exp(0.35 * rng.normal()) * TYPE_SCALE[t]))
 
     entries = []                                   # (gene index, cell index, count)
     for j, c in enumerate(cells):
         p = patients[c["patient"]]
         mult = [1.0] * len(genes)
         for name, l in p["patient_effect_log"].items():
+            mult[idx[name]] *= math.exp(l)
+        for name, l in libraries[c["library"]]["library_effect_log"].items():
             mult[idx[name]] *= math.exp(l)
         if c["type"] in MARKERS:
             for name in MARKERS[c["type"]]:
@@ -216,7 +239,7 @@ def generate(null):
                    gain=GAIN, loss=LOSS, low_quality_size=LQ_SIZE, low_quality_mito=LQ_MITO),
         markers=dict(MARKERS, immune=IMMUNE),
         subgroup_genes={sg: SUBGROUP_MARKERS[sg] + extra[sg] for sg in SUBGROUP_MARKERS},
-        malignant_program=program, no_cnv_patient=NO_CNV_PATIENT, patients=patients,
+        malignant_program=program, no_cnv_patient=NO_CNV_PATIENT, patients=patients, libraries=libraries,
         low_quality_cells=[c["id"] for c in cells if c["low_quality"]],
         n_genes=len(genes), n_cells=len(cells))
     return genes, cells, entries, truth
@@ -235,9 +258,9 @@ def write(outdir, genes, cells, entries, truth):
         for g in genes:
             f.write("\t".join(str(g[k]) for k in ("id", "name", "chrom", "start", "end", "arm", "role")) + "\n")
     with open(outdir / "cells.tsv", "w") as f:
-        f.write("cell_id\tpatient\tsubgroup\tcell_type\tmalignant\tlow_quality\n")
+        f.write("cell_id\tlibrary\tpatient\tsubgroup\tcell_type\tmalignant\tlow_quality\n")
         for c in cells:
-            f.write("%s\t%s\t%s\t%s\t%s\t%s\n" % (c["id"], c["patient"], c["subgroup"], c["type"],
+            f.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (c["id"], c["library"], c["patient"], c["subgroup"], c["type"],
                                                   "TRUE" if c["malignant"] else "FALSE",
                                                   "TRUE" if c["low_quality"] else "FALSE"))
     with open(outdir / "truth.json", "w") as f:

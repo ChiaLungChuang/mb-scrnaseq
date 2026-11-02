@@ -4,11 +4,85 @@
  "folds": {
   "gain": 1.5,
   "loss": 0.5,
-  "low_quality_mito": 25.0,
+  "low_quality_mito": 15.0,
   "low_quality_size": 0.1,
   "malignant_program": 8.0,
   "marker": 10.0,
   "subgroup": 0.0
+ },
+ "libraries": {
+  "P01": {
+   "library_effect_log": {},
+   "patient": "P01"
+  },
+  "P02": {
+   "library_effect_log": {},
+   "patient": "P02"
+  },
+  "P03": {
+   "library_effect_log": {},
+   "patient": "P03"
+  },
+  "P04": {
+   "library_effect_log": {},
+   "patient": "P04"
+  },
+  "P05": {
+   "library_effect_log": {},
+   "patient": "P05"
+  },
+  "P06": {
+   "library_effect_log": {},
+   "patient": "P06"
+  },
+  "P07": {
+   "library_effect_log": {},
+   "patient": "P07"
+  },
+  "P08": {
+   "library_effect_log": {},
+   "patient": "P08"
+  },
+  "P09": {
+   "library_effect_log": {},
+   "patient": "P09"
+  },
+  "P10": {
+   "library_effect_log": {},
+   "patient": "P10"
+  },
+  "P11": {
+   "library_effect_log": {},
+   "patient": "P11"
+  },
+  "P12": {
+   "library_effect_log": {},
+   "patient": "P12"
+  },
+  "P13": {
+   "library_effect_log": {},
+   "patient": "P13"
+  },
+  "P14": {
+   "library_effect_log": {
+    "GENE024": -0.8,
+    "GENE032": -0.8,
+    "GENE042": -0.8,
+    "GENE071": -0.8,
+    "GENE078": 0.8,
+    "GENE086": -0.8,
+    "GENE099": 0.8,
+    "GENE106": -0.8,
+    "GENE115": -0.8,
+    "GENE118": -0.8,
+    "GENE125": 0.8,
+    "GENE141": -0.8,
+    "GENE153": 0.8,
+    "GENE162": 0.8,
+    "GENE165": 0.8
+   },
+   "patient": "P09"
+  }
  },
  "low_quality_cells": [
   "P01_GGCGCGATTCCAGCCC",
@@ -29,14 +103,16 @@
   "P08_TTCTTATGATGGAGCC",
   "P09_AGTGGGTGGTTCTGTC",
   "P09_TCTCTTTCGACCTTTA",
-  "P10_AATCTGTTCCCTTGGC",
-  "P10_CTTCTTTCTCGGCTCG",
-  "P11_AAATCTTGTCTCGGGA",
-  "P11_GGTCGATGTACCTACG",
-  "P12_TACGAGGTGTTGCGCG",
-  "P12_CAGGATCGCATCCAAC",
-  "P13_TAATAAAATAGTAGGT",
-  "P13_ACTCTACAGCACCATC"
+  "P14_GGTAGTGGGGTGATCG",
+  "P14_ATTGGCGGAGCATTAG",
+  "P10_TGAGCCTAGGCAGGCC",
+  "P10_GTCTCGGGATGTTGAC",
+  "P11_ACTATGGGGAGGCCGT",
+  "P11_ACGCCCCAGGATCGCA",
+  "P12_CGTCTTCTAAAGTCCC",
+  "P12_CACCATCTTAGAATAT",
+  "P13_AATTAAGTCTCCCGCA",
+  "P13_ACCGCCATTGAGTGGT"
  ],
  "malignant_program": [
   "MALIG01",
@@ -73,7 +149,7 @@
    "OLIG2"
   ]
  },
- "n_cells": 780,
+ "n_cells": 840,
  "n_genes": 246,
  "no_cnv_patient": "P12",
  "patients": {
@@ -154,6 +230,9 @@
      "multiplier": 1.5
     }
    ],
+   "libraries": [
+    "P01"
+   ],
    "patient_effect_log": {
     "GENE001": 0.1396,
     "GENE006": -0.8906,
@@ -227,6 +306,9 @@
      ],
      "multiplier": 0.5
     }
+   ],
+   "libraries": [
+    "P02"
    ],
    "patient_effect_log": {
     "GENE007": 0.085,
@@ -302,6 +384,9 @@
      "multiplier": 1.5
     }
    ],
+   "libraries": [
+    "P03"
+   ],
    "patient_effect_log": {
     "GENE008": -0.5816,
     "GENE009": 0.9474,
@@ -375,6 +460,9 @@
      ],
      "multiplier": 1.5
     }
+   ],
+   "libraries": [
+    "P04"
    ],
    "patient_effect_log": {
     "GENE003": -0.3329,
@@ -450,6 +538,9 @@
      "multiplier": 0.5
     }
    ],
+   "libraries": [
+    "P05"
+   ],
    "patient_effect_log": {
     "GENE001": 0.5578,
     "GENE004": 0.4589,
@@ -523,6 +614,9 @@
      ],
      "multiplier": 1.5
     }
+   ],
+   "libraries": [
+    "P06"
    ],
    "patient_effect_log": {
     "GENE004": -0.6706,
@@ -635,6 +729,9 @@
      "multiplier": 1.5
     }
    ],
+   "libraries": [
+    "P07"
+   ],
    "patient_effect_log": {
     "GENE003": -0.4546,
     "GENE005": 0.1202,
@@ -708,6 +805,9 @@
      ],
      "multiplier": 0.5
     }
+   ],
+   "libraries": [
+    "P08"
    ],
    "patient_effect_log": {
     "GENE001": -0.512,
@@ -783,6 +883,10 @@
      "multiplier": 1.5
     }
    ],
+   "libraries": [
+    "P09",
+    "P14"
+   ],
    "patient_effect_log": {
     "GENE005": 0.7113,
     "GENE007": 0.6767,
@@ -820,41 +924,118 @@
   "P10": {
    "cnv": [
     {
-     "arm": "p",
+     "arm": "q",
      "chrom": "chr2",
      "genes": [
-      "GENE104",
-      "GENE120",
-      "GENE078",
-      "WNT_SIG06",
-      "GENE131",
-      "GENE133",
-      "GENE122",
-      "GENE081",
-      "GENE165",
-      "GENE161",
-      "GENE107",
-      "GENE062",
-      "GENE022",
-      "GENE147",
-      "GENE162",
-      "GENE045",
-      "WNT_SIG08",
-      "GENE121",
-      "WNT_SIG04",
-      "MAB21L2",
-      "CD2",
-      "GABRA5",
-      "GENE047",
-      "GENE072",
-      "MALIG02",
-      "KHDRBS2",
-      "MALIG03",
-      "GENE002",
-      "GENE076",
-      "GENE108"
+      "SHH_SIG03",
+      "GENE029",
+      "GENE077",
+      "GENE001",
+      "LYZ",
+      "G4_SIG08",
+      "PDLIM3",
+      "GENE038",
+      "GENE148",
+      "GENE144",
+      "GENE112",
+      "WNT_SIG02",
+      "EOMES",
+      "GENE091",
+      "GENE066",
+      "GENE039",
+      "GENE053",
+      "MALIG05",
+      "GENE005",
+      "TNC",
+      "GENE006",
+      "SHH_SIG02",
+      "GENE099",
+      "RBM24",
+      "G4_SIG01",
+      "GENE023",
+      "GENE074",
+      "G4_SIG02",
+      "GENE128",
+      "SHH_SIG07"
      ],
      "multiplier": 1.5
+    }
+   ],
+   "libraries": [
+    "P10"
+   ],
+   "patient_effect_log": {
+    "GENE006": -0.1808,
+    "GENE013": -1.2076,
+    "GENE015": -0.7229,
+    "GENE016": 0.6355,
+    "GENE020": -0.5018,
+    "GENE021": -1.0425,
+    "GENE023": -0.3348,
+    "GENE024": 0.0762,
+    "GENE026": 0.7805,
+    "GENE029": 0.1455,
+    "GENE045": 0.088,
+    "GENE053": 0.6658,
+    "GENE055": 0.2279,
+    "GENE056": 0.9566,
+    "GENE057": -0.7391,
+    "GENE068": 0.3614,
+    "GENE069": 0.658,
+    "GENE073": 0.6724,
+    "GENE077": 0.4008,
+    "GENE079": 0.2961,
+    "GENE092": 0.2925,
+    "GENE099": -0.095,
+    "GENE110": 0.5665,
+    "GENE138": -0.5917,
+    "GENE145": -0.8132,
+    "GENE148": -0.2866,
+    "GENE150": -0.456,
+    "GENE153": 0.3242,
+    "GENE155": -0.3034,
+    "GENE159": 0.4729
+   },
+   "subgroup": "G4"
+  },
+  "P11": {
+   "cnv": [
+    {
+     "arm": "q",
+     "chrom": "chr1",
+     "genes": [
+      "WNT_SIG05",
+      "GENE069",
+      "GENE084",
+      "GENE030",
+      "GENE012",
+      "NKG7",
+      "SHH_SIG04",
+      "GENE018",
+      "GENE094",
+      "G3_SIG05",
+      "GAD1",
+      "G3_SIG07",
+      "GENE118",
+      "GENE025",
+      "G4_SIG06",
+      "GENE026",
+      "NRL",
+      "G4_SIG03",
+      "GENE073",
+      "GENE157",
+      "GENE068",
+      "GENE153",
+      "GENE064",
+      "CD3E",
+      "GENE151",
+      "GENE136",
+      "G4_SIG04",
+      "GENE123",
+      "GENE103",
+      "GENE059"
+     ],
+     "multiplier": 0.5
     },
     {
      "arm": "q",
@@ -894,41 +1075,83 @@
      "multiplier": 0.5
     }
    ],
+   "libraries": [
+    "P11"
+   ],
    "patient_effect_log": {
-    "GENE002": 0.93,
-    "GENE006": -0.777,
-    "GENE009": 0.5179,
-    "GENE011": 0.7068,
-    "GENE015": 1.3593,
-    "GENE019": 0.0447,
-    "GENE026": -0.6942,
-    "GENE027": -0.1334,
-    "GENE031": 0.3987,
-    "GENE050": 0.4315,
-    "GENE059": -0.147,
-    "GENE061": 0.0642,
-    "GENE071": -0.7695,
-    "GENE078": 0.3605,
-    "GENE080": 0.6401,
-    "GENE082": 0.2503,
-    "GENE083": 0.2134,
-    "GENE089": 0.4117,
-    "GENE096": -0.6309,
-    "GENE118": -0.1159,
-    "GENE125": -0.2015,
-    "GENE133": -0.3526,
-    "GENE141": -0.0565,
-    "GENE144": 0.1159,
-    "GENE146": -0.2962,
-    "GENE147": 0.5898,
-    "GENE152": -0.1358,
-    "GENE153": 0.545,
-    "GENE163": 0.2565,
-    "GENE165": 0.1431
+    "GENE005": -0.441,
+    "GENE010": -1.2141,
+    "GENE011": -0.0679,
+    "GENE017": 0.2043,
+    "GENE020": 0.5869,
+    "GENE022": 0.3423,
+    "GENE024": -0.109,
+    "GENE034": -1.3288,
+    "GENE037": -0.1471,
+    "GENE039": 0.0102,
+    "GENE044": 0.3366,
+    "GENE057": -0.3593,
+    "GENE059": 0.0897,
+    "GENE064": 0.4913,
+    "GENE065": 0.2576,
+    "GENE072": -0.3477,
+    "GENE077": 0.7399,
+    "GENE083": -1.0223,
+    "GENE101": -0.5151,
+    "GENE103": -0.1136,
+    "GENE110": -0.275,
+    "GENE118": 0.2635,
+    "GENE119": -0.1868,
+    "GENE126": -0.2714,
+    "GENE134": 0.8258,
+    "GENE141": 0.4671,
+    "GENE152": 0.3828,
+    "GENE157": -0.595,
+    "GENE161": -0.2857,
+    "GENE165": 0.5251
    },
    "subgroup": "G4"
   },
-  "P11": {
+  "P12": {
+   "cnv": [],
+   "libraries": [
+    "P12"
+   ],
+   "patient_effect_log": {
+    "GENE001": 0.2746,
+    "GENE004": 0.5637,
+    "GENE006": -0.0104,
+    "GENE009": 0.5585,
+    "GENE018": -1.284,
+    "GENE025": 0.6482,
+    "GENE034": -0.789,
+    "GENE045": 0.4013,
+    "GENE047": 0.026,
+    "GENE061": 0.8595,
+    "GENE066": -0.4084,
+    "GENE068": 0.4053,
+    "GENE072": 1.0259,
+    "GENE076": -0.2724,
+    "GENE082": 0.5369,
+    "GENE085": 0.2821,
+    "GENE086": -0.1797,
+    "GENE098": -1.3245,
+    "GENE119": 0.6049,
+    "GENE120": -1.7137,
+    "GENE124": 1.1784,
+    "GENE128": 0.1856,
+    "GENE133": 0.5585,
+    "GENE134": 0.1763,
+    "GENE136": -0.248,
+    "GENE140": 1.8027,
+    "GENE150": -0.2141,
+    "GENE157": -0.1411,
+    "GENE160": 0.287,
+    "GENE165": 0.5774
+   },
+   "subgroup": "G4"
+  },
+  "P13": {
    "cnv": [
     {
      "arm": "p",
@@ -966,149 +1189,79 @@
       "G3_SIG04"
      ],
      "multiplier": 1.5
-    }
-   ],
-   "patient_effect_log": {
-    "GENE003": 0.0321,
-    "GENE012": 0.2666,
-    "GENE015": 0.3301,
-    "GENE017": -0.3496,
-    "GENE023": -0.9578,
-    "GENE024": 0.8026,
-    "GENE028": 0.2771,
-    "GENE030": -0.6957,
-    "GENE048": -0.2099,
-    "GENE053": -0.0701,
-    "GENE057": -0.2867,
-    "GENE064": -0.1035,
-    "GENE066": -0.3872,
-    "GENE072": -0.3492,
-    "GENE073": 0.9112,
-    "GENE074": 1.1044,
-    "GENE079": -0.2418,
-    "GENE091": -0.1595,
-    "GENE094": -1.3652,
-    "GENE095": 0.1581,
-    "GENE105": 0.0288,
-    "GENE111": -0.031,
-    "GENE112": 0.6952,
-    "GENE117": 0.2408,
-    "GENE119": -0.5708,
-    "GENE123": -0.5444,
-    "GENE127": -0.0271,
-    "GENE132": -0.4229,
-    "GENE137": 0.7964,
-    "GENE147": 0.3109
-   },
-   "subgroup": "G4"
-  },
-  "P12": {
-   "cnv": [],
-   "patient_effect_log": {
-    "GENE003": -1.1835,
-    "GENE011": -0.9363,
-    "GENE012": 1.3189,
-    "GENE030": -0.3026,
-    "GENE033": 0.0522,
-    "GENE040": -0.4651,
-    "GENE043": -0.8051,
-    "GENE045": -0.463,
-    "GENE051": 0.9263,
-    "GENE055": 1.133,
-    "GENE056": 0.6071,
-    "GENE058": -0.046,
-    "GENE060": 0.7341,
-    "GENE063": -0.4245,
-    "GENE066": 0.2259,
-    "GENE068": 0.4924,
-    "GENE075": 0.8157,
-    "GENE092": -0.2585,
-    "GENE096": -0.0597,
-    "GENE100": 0.3776,
-    "GENE110": 0.2238,
-    "GENE116": -0.0142,
-    "GENE120": 0.1663,
-    "GENE133": -0.1685,
-    "GENE141": -0.0751,
-    "GENE142": -0.4471,
-    "GENE149": 0.4539,
-    "GENE157": -1.0504,
-    "GENE159": 0.3839,
-    "GENE162": 0.4035
-   },
-   "subgroup": "G4"
-  },
-  "P13": {
-   "cnv": [
+    },
     {
      "arm": "q",
-     "chrom": "chr3",
+     "chrom": "chr1",
      "genes": [
-      "GENE020",
-      "GENE100",
-      "GENE096",
-      "SHH_SIG08",
-      "GENE056",
-      "GENE015",
-      "DKK2",
-      "GENE043",
-      "GENE052",
-      "GENE057",
-      "GENE007",
-      "GENE082",
-      "ATOH1",
-      "GENE087",
-      "GENE126",
-      "GENE014",
-      "CSF1R",
-      "GENE049",
-      "GENE037",
-      "GENE102",
-      "G3_SIG02",
-      "GENE017",
-      "GENE143",
-      "GENE058",
-      "GENE033",
-      "GENE113",
-      "CD14",
-      "GENE146",
-      "GENE085",
-      "GENE050"
+      "WNT_SIG05",
+      "GENE069",
+      "GENE084",
+      "GENE030",
+      "GENE012",
+      "NKG7",
+      "SHH_SIG04",
+      "GENE018",
+      "GENE094",
+      "G3_SIG05",
+      "GAD1",
+      "G3_SIG07",
+      "GENE118",
+      "GENE025",
+      "G4_SIG06",
+      "GENE026",
+      "NRL",
+      "G4_SIG03",
+      "GENE073",
+      "GENE157",
+      "GENE068",
+      "GENE153",
+      "GENE064",
+      "CD3E",
+      "GENE151",
+      "GENE136",
+      "G4_SIG04",
+      "GENE123",
+      "GENE103",
+      "GENE059"
      ],
      "multiplier": 0.5
     }
    ],
+   "libraries": [
+    "P13"
+   ],
    "patient_effect_log": {
-    "GENE002": 0.2774,
-    "GENE006": -0.2739,
-    "GENE013": 0.1836,
-    "GENE014": 0.2426,
-    "GENE019": -0.1118,
-    "GENE022": 0.8467,
-    "GENE027": -0.1276,
-    "GENE028": -0.0513,
-    "GENE033": 1.1034,
-    "GENE041": 1.2858,
-    "GENE057": -0.2892,
-    "GENE059": 0.0778,
-    "GENE082": 0.871,
-    "GENE085": 0.2454,
-    "GENE090": 0.0988,
-    "GENE094": 0.4743,
-    "GENE095": -0.0682,
-    "GENE098": 0.3599,
-    "GENE106": -0.0318,
-    "GENE107": 0.5777,
-    "GENE108": -0.9596,
-    "GENE110": 1.0925,
-    "GENE118": 0.0715,
-    "GENE119": -0.7726,
-    "GENE124": -0.0901,
-    "GENE130": -0.0846,
-    "GENE146": -0.2559,
-    "GENE150": 0.0197,
-    "GENE151": -0.2128,
-    "GENE165": 0.5713
+    "GENE007": -0.4749,
+    "GENE010": -0.1209,
+    "GENE019": 0.7804,
+    "GENE025": 0.5605,
+    "GENE030": 0.7478,
+    "GENE032": 0.0025,
+    "GENE039": 1.3357,
+    "GENE040": 0.4981,
+    "GENE043": -1.1644,
+    "GENE055": -0.3015,
+    "GENE059": 0.6178,
+    "GENE060": -0.4862,
+    "GENE071": 0.2746,
+    "GENE072": -1.0735,
+    "GENE074": 0.0976,
+    "GENE076": 1.288,
+    "GENE086": 1.0158,
+    "GENE094": 0.5282,
+    "GENE095": 0.0616,
+    "GENE098": -0.9286,
+    "GENE109": 0.9262,
+    "GENE115": -0.0467,
+    "GENE122": -1.0127,
+    "GENE124": 0.2613,
+    "GENE149": -0.9026,
+    "GENE150": -0.2268,
+    "GENE153": 0.4216,
+    "GENE157": -0.272,
+    "GENE158": 0.4954,
+    "GENE162": 0.8843
    },
    "subgroup": "WNT"
   }
