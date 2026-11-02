@@ -113,7 +113,9 @@ Three layers, each checked by planting bugs and confirming the tests fail
   whitelists, reference layout); `check_versions.sh` (version, image tag
   and digest agreement); `hpcf_preflight.sh` (the read-only cluster
   checks, with stand-in LSF, modules and registries, including that it
-  changes nothing); a check that the phase 1 sample record
+  changes nothing); the LSF directives the St. Jude profile writes
+  (Nextflow with a stand-in `bsub`: per-core memory, queue routing); a
+  check that the phase 1 sample record
   (`docs/results/phase1/samples.tsv`) agrees with the barcode-verified run
   table; and a check that the committed test data is
   exactly what its generators produce.

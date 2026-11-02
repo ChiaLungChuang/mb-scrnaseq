@@ -20,7 +20,7 @@ Run all four before every push; CI runs the same.
 
 ```bash
 Rscript tests/run_tests.R                          # R unit + accuracy tests (lib/R)
-bash tests/shell/run.sh                            # script tests + test-data consistency (needs samtools, python3)
+bash tests/shell/run.sh                            # script tests + test-data consistency (needs samtools, python3, nextflow)
 nextflow lint . && shellcheck -x bin/*.sh scripts/*.sh tests/shell/*.sh
 nf-test test --profile +docker                     # pipeline on both synthetic datasets
 ```
