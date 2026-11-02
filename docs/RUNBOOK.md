@@ -123,15 +123,18 @@ scripts/fetch_inputs.sh reference  $D/reference GRCh38-3.0.0    # see step 6
 published matrix with its number of cells, taken from the column names
 (the file's first line) only. No count values are read.
 
-## 5. Choose and download the samples **(you)**
+## 5. Download the 8 samples **(you)**
 
-Open the SRA Run Selector for project **PRJNA649773** and download the
-metadata table. Pick 8 human tumors that span the subgroups (the cohort has
-1 WNT, 9 SHH, 7 Group 3 and 11 Group 4). Put their SRR accessions in
-`runs.txt`, one per line. Check sizes first (BAMs are 6-25 GB each), then
-download:
+The 8 tumors were chosen on 2 Nov 2026 (proposal:
+`docs/proposals/phase1_samples.md`) and are recorded, in run order, in
+`docs/results/phase1/samples.tsv`: label, SRR, chemistry, subgroup, BAM
+file name, MD5 and size, taken from the barcode-verified run table
+`docs/proposals/gse155446_runs.tsv` (all 30 human runs). Together about
+119 GB. Check sizes first, then download; the pilot (1355, SRR12354589,
+6.4 GB) can go alone first:
 
 ```bash
+awk -F'\t' 'NR > 1 { print $2 }' docs/results/phase1/samples.tsv > runs.txt
 DRY_RUN=1 scripts/fetch_inputs.sh bams $D/bams runs.txt   # lists file names, sizes, MD5s
 scripts/fetch_inputs.sh bams $D/bams runs.txt
 ```
@@ -142,31 +145,43 @@ the 10x header lines bamtofastq needs. `$D/bams/bams_summary.tsv` lists, per
 BAM, the read-group sample name, the Cell Ranger reference and the STAR
 version from its header.
 
-To test the whole chain cheaply first, start with SRR12354589 (6.4 GB).
+The file names and MD5s in `bams_summary.tsv` must match those in
+`samples.tsv`.
 
 ## 6. Match the reference and Cell Ranger version
 
-Read the `reference` and `star_version` columns of `bams_summary.tsv`. The
-two BAMs checked so far say `refdata-cellranger-GRCh38-3.0.0` and
-`STAR_2.5.1b`, which is Cell Ranger 3.x. Then use reference `GRCh38-3.0.0`
-(step 4) and `cellranger_compat: cr3` (step 9). If any BAM says otherwise,
-stop and work out why before going on. A different gene annotation from the
-authors' lowers gene matching and is a confound, not a pipeline result.
+Read the `reference` and `star_version` columns of `bams_summary.tsv`. All
+30 human BAM headers, read from their first 4 MB for the proposal, say
+`refdata-cellranger-GRCh38-3.0.0` and `STAR_2.5.1b`, which is Cell Ranger
+3.x. Then use reference `GRCh38-3.0.0` (step 4) and `cellranger_compat:
+cr3` (step 9). If any downloaded BAM says otherwise, stop and work out why
+before going on. A different gene annotation from the authors' lowers gene
+matching and is a confound, not a pipeline result.
+
+Also read `star/genomeParameters.txt` in the downloaded reference. The
+pipeline builds its index with `star_sjdb_overhang: 100` (the cDNA reads
+are 151 nt). If Cell Ranger's index says a different `sjdbOverhang`, stop:
+which to use is a decision for Chia-Lung, because it changes alignments
+slightly.
 
 ## 7. Fill the samplesheet, looking only at names
 
-Copy `assets/samplesheet_gse155446.csv` and add one row per BAM.
+Copy `assets/samplesheet_gse155446.csv` and add one row per BAM, in the run
+order of `docs/results/phase1/samples.tsv`.
 
-- `published_label`: the label in `$D/geo/published_labels.tsv` that
-  matches the BAM's read-group sample or file name in `bams_summary.tsv`
-  (e.g. file `1_943_possorted_genome_bam.bam` → label `943`). Do **not**
-  use the SRA run title: SRR12354571 is titled "934-repeat" but its BAM is
-  tumor 943, and both 934 and 943 are in the published matrix. A wrong
-  label fails C1 (barcode recovery), but it costs a run.
-- `chemistry`: v2 or v3. Expect v3 for all but label `1355` (SRR12354589),
-  whose barcodes all lie in the v2 whitelist and whose UMIs are 10 nt. If
-  unsure, enter your best guess: the pipeline stops with the right answer
-  from the read lengths.
+- `sample`: the `sample` column of `samples.tsv` (the GSM accession).
+- `published_label`: the `published_label` column of `samples.tsv`, which
+  comes from `docs/proposals/gse155446_runs.tsv`, where every run was mapped
+  to its label by barcode overlap. Check that the label is in
+  `$D/geo/published_labels.tsv`. Do **not** derive it from the SRA/GEO
+  title or from the read-group name alone: SRR12354571 (GEO "934-repeat")
+  is published label 943, most likely a second library of tumor 934 (both
+  934 and 943 are in the published matrix), and the read groups
+  `Foreman_1` to `Foreman_4` carry no label at all (tumors 801, 877, 996,
+  1070). A wrong label fails C1 (barcode recovery), but it costs a run.
+- `chemistry`: the `chemistry` column of `samples.tsv`: v3 for all but
+  label `1355` (SRR12354589), whose UMIs are 10 nt. The pipeline checks it
+  against the read lengths and stops if it is wrong.
 
 Do not open the published counts themselves before step 8.
 

@@ -126,7 +126,13 @@ fails if committed data and generators disagree.
   Cell Ranger 3.x (STAR 2.5.1b, refdata-cellranger-GRCh38-3.0.0).
 - BAMs come from ENA (size + MD5 verified); SRA prefetch is the fallback.
 - Criterion C1 counts a published barcode as recovered only with >= 1 UMI.
-- Samples are mapped to published labels by the BAM read group / file
-  name, never the SRA run title (SRR12354571 is titled "934-repeat" but is
-  tumor 943). Label 1355 (SRR12354589, 6.4 GB) is v2 chemistry; it is the
-  cheapest real sample to try first.
+- Samples are mapped to published labels by
+  `docs/proposals/gse155446_runs.tsv` (all 30 human runs, mapped by barcode
+  overlap), never by the SRA/GEO title or a read-group name alone:
+  SRR12354571 (GEO "934-repeat") is published label 943, most likely a
+  second library of tumor 934; "966-recurrence" is 966-2; read groups
+  `Foreman_1` to `Foreman_4` carry no label. 30 libraries, 28 tumors.
+- The 8 phase 1 tumors (accepted 2 Nov 2026) are in
+  `docs/results/phase1/samples.tsv`, checked against the run table by
+  `tests/shell/test_phase1_samples.sh`. Label 1355 (SRR12354589, 6.4 GB) is
+  the only v2 run and the pilot.

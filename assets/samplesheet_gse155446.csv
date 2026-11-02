@@ -1,9 +1,10 @@
-# Template: one row per re-quantified tumor. Fill in from bams_summary.tsv and
-# published_labels.tsv (written by scripts/fetch_inputs.sh); see
-# docs/RUNBOOK.md, step 7. Lines starting with # are ignored.
-#   sample           your short ID for the run, e.g. the GSM accession
+# Template: one row per re-quantified tumor. Fill in from
+# docs/results/phase1/samples.tsv (the 8 chosen tumors) and the BAM paths
+# written by scripts/fetch_inputs.sh; see docs/RUNBOOK.md, step 7. Lines
+# starting with # are ignored.
+#   sample           the sample column of samples.tsv (the GSM accession)
 #   bam              path to the BAM from scripts/fetch_inputs.sh bams (relative paths are read relative to this file)
-#   chemistry        v2 or v3; the pipeline checks it against the actual read lengths
-#   published_label  how this tumor is named in the published cell IDs; match it by the BAM's
-#                    read-group sample / file name, not the SRA run title
+#   chemistry        v2 or v3 from samples.tsv; the pipeline checks it against the actual read lengths
+#   published_label  from samples.tsv / docs/proposals/gse155446_runs.tsv (barcode-verified), never
+#                    from the SRA/GEO title or a read-group name (Foreman_1-4 carry no label)
 sample,bam,chemistry,published_label
