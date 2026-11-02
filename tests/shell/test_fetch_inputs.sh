@@ -140,4 +140,11 @@ expect_out "genome_gtf:   $TMP/out/refdata-cellranger-GRCh38-3.0.0/genes/genes.g
 run bash "$FI" reference "$TMP/out" GRCh37
 expect_fail "reference version must be" "unknown reference version: refused"
 
+# No arguments: the usage block from the header (it moves when the header grows).
+run bash "$FI"
+expect_rc 2 "no arguments: exit 2"
+if [ "$(head -n 1 <<< "$out")" = "# Usage:" ] && [ "$(grep -c '^#   scripts/fetch_inputs.sh ' <<< "$out")" -eq 4 ] \
+   && [ "$(wc -l <<< "$out")" -eq 5 ]; then ok "no arguments: prints the usage block, all four commands"
+else bad "no arguments: prints the usage block, all four commands" "got: $out"; fi
+
 finish
