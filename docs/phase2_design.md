@@ -13,6 +13,14 @@ questions, the scVI-versus-Harmony integration comparison and the subgroup
 classifier; phase 1 is not ported; phase 2 analyses all 28 tumors from the
 published matrix.
 
+Revised 2 Nov 2026 after the reference and fact check on PR #4: libraries
+are not patients (inputs, D6, D7), the two-axis malignancy rule is
+credited to Puram *et al.* 2017 (D4), the marker baseline gains the WNT
+genes and uses EYS (D7), scanpy's `target_sum` (D2), scib-metrics and
+numbat details, and checked references with DOIs. Two points from the
+check are open decisions for Chia-Lung: D3a (myeloid annotation) and D3b
+(OLIG2).
+
 Every compute figure in this document is an **estimate, not a
 measurement**. The M5 pilot on the cluster replaces them with `trace.tsv`
 numbers, as M3 does for phase 1.
@@ -23,11 +31,11 @@ numbers, as M3 does for phase 1.
 |---|---|---|---|
 | D1 | QC | no re-filter / re-filter with phase 1 MAD rules / flag only | flag only; sensitivity analysis without the flagged cells |
 | D2 | Normalisation | LogNormalize / SCTransform v2 | LogNormalize |
-| D3 | Annotation | markers / SingleR (which reference) / both | markers for lineage, SingleR + Monaco for immune subtypes |
+| D3 | Annotation | markers / SingleR (which reference) / both | markers for lineage; immune subtypes by reference, with two open sub-decisions: **D3a** myeloid annotation (Monaco has no microglia or macrophage labels) and **D3b** OLIG2 as a lineage marker |
 | D4 | Malignant cells | inferCNV / copykat / numbat; normal reference | inferCNV on all 28 with a pooled immune + endothelial reference; numbat on the 8 phase 1 tumors as an optional check |
 | D5 | Tumor programs | none / score published programs / de novo NMF | score published programs; NMF only as labelled exploration |
 | D6 | Integration comparison | cells, embeddings, metrics, decision rule shape, seeds | non-malignant cells only; none / Harmony / scVI; scib-metrics; 5 seeds |
-| D7 | Subgroup classifier | pseudobulk / cell-level; tuning | cell-level logistic regression, fixed hyperparameters, leave-one-patient-out |
+| D7 | Subgroup classifier | pseudobulk / cell-level; tuning; two-library patients grouped or one library dropped | cell-level logistic regression, fixed hyperparameters, leave-one-patient-out with both libraries of a patient held out together |
 | D8 | R to Python hand-off | Matrix Market + TSV / `.h5ad` | Matrix Market + TSV with a column schema |
 | D9 | Python layout and image | pip/uv lock / conda | `python/` package, uv lock, `python:3.12-slim` image |
 | D10 | Wiring | `--phase` switch in `main.nf` / separate entry script | separate subworkflows, selected by a required `--phase` |
@@ -39,16 +47,28 @@ but it does not need a decision.
 
 - **Counts:** `GSE155446_human_raw_counts.csv.gz`, read with the phase 1
   `PREP_PUBLISHED` step (already tested: streams the dense CSV into a sparse
-  matrix in chunks and detects its orientation). The plan's figure is about
-  40,000 cells; the exact dimensions come from the header in M5, which
-  blinding allows.
-- **Tumor of each cell:** from the cell-ID prefix (names are allowed), as
-  phase 1's `published_labels.tsv` does.
-- **Subgroup of each tumor:** from the paper's sample table (Riemondy *et
-  al.* 2022), not from the cell metadata file. The cohort is 1 WNT, 9 SHH,
-  7 Group 3, 11 Group 4. Before M5 the mapping is committed as
-  `docs/results/phase2/tumor_subgroups.tsv` with the paper table it came
-  from.
+  matrix in chunks and detects its orientation). The paper reports 39,946
+  cells; the exact dimensions come from the header in M5, which blinding
+  allows.
+- **Library and patient of each cell.** The cell-ID prefix (names are
+  allowed) gives the published label of the **library**, as phase 1's
+  `published_labels.tsv` does. There are 30 libraries for 28 tumors
+  (`docs/proposals/gse155446_runs.tsv`, PR #10, with the barcode-level
+  evidence):
+  - label **943** (SRR12354571, GEO title "934-repeat") is most likely a
+    second library of tumor **934**, according to GEO and the cohort count;
+  - label **966-2** (GEO "966-recurrence") is a matched recurrence of
+    patient **966**.
+
+  The **patient** is the unit of validation (D7) and of the subgroup; the
+  library is the batch (D6). Every table keyed by tumor carries both.
+- **Subgroup of each patient:** from the paper's sample table (Riemondy *et
+  al.* 2022), not from the cell metadata file. The cohort is 28 tumors:
+  1 WNT, 9 SHH, 7 Group 3, 11 Group 4. The preprint gives SHH as n = 10 in
+  some figures against 9 in the text, so the final paper's Table S1 is
+  checked before locking. Before M5 the mapping is committed as
+  `docs/results/phase2/tumor_subgroups.tsv` (columns: library label,
+  patient, subgroup, source table).
 - **Gene positions** (needed for copy-number inference): from the
   GRCh38-3.0.0 GTF that phase 1 uses, matched by symbol in GTF order, the
   same way phase 1 matches genes (symbols made unique as `RGS5.1` included).
@@ -88,7 +108,7 @@ added in the same flag-only way; I do not propose it as a filter.
 
 | Option | For | Against |
 |---|---|---|
-| a. `LogNormalize` (log1p of counts per 10,000) (**recommended**) | A closed formula: an independent implementation in base R and in Python gives the exact answer, so it can have an exact accuracy test like phase 1's. Identical to scanpy's `normalize_total` + `log1p`, so R and Python see the same values. Deterministic | Depth effects remain in highly expressed genes; variance not stabilised |
+| a. `LogNormalize` (log1p of counts per 10,000) (**recommended**) | A closed formula: an independent implementation in base R and in Python gives the exact answer, so it can have an exact accuracy test like phase 1's. Identical to scanpy's `normalize_total(target_sum=1e4)` + `log1p`, so R and Python see the same values (scanpy's default `target_sum` scales each cell to the median total count instead, so the Python module must set it). Deterministic | Depth effects remain in highly expressed genes; variance not stabilised |
 | b. `SCTransform` v2 (glmGamPoi) | Better variance stabilisation; usually cleaner clusters on cells with very different depths | Output depends on a fitted model, so there is no exact known answer to test against. Slower, more memory. Residuals are the wrong input for DE and for the Python classifier, so two representations would be in play |
 
 Recommendation (a). If clusters look depth-driven in M5, SCTransform v2 can
@@ -135,12 +155,37 @@ Recommendation (d):
    against the paper before locking: PTPRC; myeloid CD14, CD68, LYZ,
    CSF1R, C1QA; T/NK CD3E, CD2, NKG7; B CD79A, MS4A1; endothelial PECAM1,
    CLDN5, VWF; pericyte/fibroblast PDGFRB, RGS5, COL1A1; astrocyte GFAP,
-   AQP4; oligodendrocyte lineage MBP, PLP1, OLIG2. The rule: a cluster takes
-   the lineage whose mean score is highest by a margin set in the design;
-   otherwise "unresolved".
-2. **Immune subtypes** by SingleR with `celldex::MonacoImmuneData`, version
-   pinned and stored in the R image, run on immune cells only.
+   AQP4; oligodendrocyte lineage MBP, PLP1, and OLIG2 or not (**D3b**,
+   open). The myeloid list has no microglia markers yet (see D3a). The
+   rule: a cluster takes the lineage whose mean score is highest by a
+   margin set in the design; otherwise "unresolved".
+2. **Immune subtypes** by reference, how is open (**D3a**). The
+   reference is version-pinned and stored in the R image, and runs on
+   immune cells only.
 3. **Malignant or not** is decided by copy number (D4), not by annotation.
+
+**D3a, open: myeloid annotation.** `celldex::MonacoImmuneData` (Monaco *et
+al.* 2019) has no microglia or macrophage labels: all its main labels are
+blood cell types, so SingleR would force tumor-associated microglia and
+macrophages into monocyte or dendritic-cell labels. Riemondy *et al.*
+annotated microglia and macrophage subtypes, so agreement with the
+published labels needs at least that resolution.
+
+| Option | For | Against |
+|---|---|---|
+| i. Monaco on lymphoid cells only; myeloid cells by markers | Monaco is reliable where it has the cell types; no new reference | Myeloid subtypes then rest on a marker rule that has to be written down and tested |
+| ii. Add a brain-myeloid single-cell reference for myeloid cells (which one is part of the decision) | Reference-based for every immune cell; covers microglia and macrophage states | A further reference to choose, license-check, pin and store in the image; single-cell references carry their own batch effects |
+| iii. Score microglia markers (P2RY12, TMEM119, SALL1, CX3CR1) within myeloid cells to split microglia from macrophages | Simple, transparent, testable with planted markers | Only two classes; finer published subtypes are not reached |
+
+**D3b, open: OLIG2.** SHH-medulloblastoma tumor progenitors express OLIG2
+(Zhang *et al.* 2019), so an SHH tumor cluster could score as
+oligodendrocyte lineage.
+
+| Option | For | Against |
+|---|---|---|
+| i. Drop OLIG2; oligodendrocyte lineage from MBP and PLP1 | Removes the known confound with SHH progenitors | Oligodendrocyte precursors (low MBP/PLP1) may be missed |
+| ii. Keep OLIG2 but require MBP or PLP1 as well | Keeps some precursor sensitivity | A compound rule to specify and test |
+| iii. Keep the list as proposed | Simplest | SHH tumor clusters at risk of being labelled oligodendrocyte lineage; CNV (D4) would have to catch it |
 
 Agreement with the published labels (after the lock) is a phase 2
 criterion; its threshold is set in M4 step 3.
@@ -159,7 +204,7 @@ criterion; its threshold is set in M4 step 3.
 |---|---|---|
 | a. inferCNV (Bioconductor) | The most used method; per-tumor heatmaps are the standard figure; works from expression only, so on all 28 tumors | Needs a normal reference; many parameters (cutoff 0.1 for 10x, denoising, HMM model); the HMM step is slow and memory-hungry; malignant calls come from clustering the CNV profiles, which needs a rule |
 | b. copykat | Finds diploid cells itself; per-cell aneuploid/diploid call; cheaper than the inferCNV HMM | Weak on tumors with few copy-number changes, which some medulloblastomas are; GitHub-only package (pin a commit) |
-| c. numbat | Haplotype-aware (allele counts plus expression), much more specific than expression alone | Needs BAMs, so only the 8 phase 1 tumors; needs cellsnp-lite pileups and phasing against a 1000 Genomes hg38 panel (several GB); the most expensive by far |
+| c. numbat (CRAN) | Haplotype-aware (allele counts plus expression), much more specific than expression alone | Needs BAMs, so only the 8 phase 1 tumors; needs cellsnp-lite pileups, Eagle2 phasing with a genetic map, the 1000 Genomes SNP VCF and the hg38 reference panel (size not verified); the most expensive by far |
 
 **Normal reference.** Options: per-tumor normal cells (most faithful, but
 some tumors may have few); pooled normal cells from all tumors; or
@@ -169,19 +214,26 @@ myeloid and lymphoid kept as separate reference groups (inferCNV's
 `ref_group_names`). Glial cells are not in the reference, because
 annotation can confuse them with tumor cells.
 
-**Malignant call.** Per tumor: each cell's CNV score (mean squared
-deviation of the smoothed profile) and correlation with the tumor's mean
-profile, the two-axis rule of Tirosh *et al.* 2016 / Hovestadt *et al.*
-2019, with cut-offs set in the design and recorded per tumor. Cells that
-fall between the two clusters are "unresolved", not forced.
+**Malignant call.** Per tumor: each cell's CNV signal (mean of squares of
+the smoothed profile) and its CNV correlation with the tumor's average
+profile, the two-axis rule with an "unresolved" class of Puram *et al.*
+2017, with cut-offs set in the design and recorded per tumor. Cells that
+fall between the two clusters are "unresolved", not forced. Related
+variants, for reference: Hovestadt *et al.* 2019 clustered CNV profiles
+together with reference oligodendrocyte and immune profiles; Gavish *et
+al.* 2023 used the mean absolute CNA and the correlation with the top 25%
+of cells; Tirosh *et al.* 2016's main text says only that aneuploid cells
+were called malignant.
 
 Recommendation: (a) on all 28 tumors (without the HMM, which the malignant
 call does not need, unless arm-level calls are wanted for the write-up),
 plus (c) on the 8 phase 1 tumors as an **optional** orthogonal check,
 reported as agreement between the two methods' calls. Expected arm-level
 events from the literature (for example 17p loss / 17q gain in Groups 3
-and 4, chromosome 6 loss in WNT) are a sanity check only, never a
-criterion: the subgroup is what the classifier predicts.
+and 4, as isochromosome 17q far more common in Group 4, about 66%, than in
+Group 3, about 26%; monosomy 6 in WNT; Taylor *et al.* 2012) are a sanity
+check only, never a criterion: the subgroup is what the classifier
+predicts.
 
 - **Known-answer test:** generator with genes ordered along a few
   synthetic chromosomes; malignant cells in each tumor carry planted gains
@@ -226,9 +278,9 @@ needs. They are not integrated: they are analysed per tumor, and the
 classifier uses their unintegrated log-normalised expression (D7). Cells
 called "unresolved" in D4 are excluded and counted.
 
-**Batch key.** The sequencing library, which is the tumor except where a
-tumor has more than one library; the design records the mapping from
-names. **Label key** for biological conservation: the published cell-type
+**Batch key.** The sequencing library (30 published labels). It is the
+tumor except for patients 934 (libraries 934 and 943) and 966 (966 and the
+recurrence 966-2); the mapping is `docs/proposals/gse155446_runs.tsv`. **Label key** for biological conservation: the published cell-type
 labels (after the lock). Using our own annotation would be circular,
 because it was made from one of the embeddings being compared.
 
@@ -240,7 +292,10 @@ because it was made from one of the embeddings being compared.
 
 **Metrics:** scib-metrics. Batch mixing: iLISI, graph connectivity, kBET
 (if affordable), PCR comparison. Biological conservation: ARI and NMI of
-Leiden clusters against the labels, cLISI, label silhouette. Every metric
+Leiden clusters against the labels, cLISI, label silhouette. The
+`Benchmarker` computes NMI and ARI on k-means clusters by default; Leiden
+clustering has to be enabled explicitly, and the test checks which one
+ran. Every metric
 has an independent check on toy inputs (ARI and NMI from the contingency
 table by hand; LISI on a constructed neighbourhood with a known answer).
 
@@ -278,15 +333,23 @@ by δ_batch, report that integration is not needed for these cells.
 cells' expression, for a tumor the model has not seen?
 
 **Unit of validation: the patient.** Leave-one-patient-out (LOPO) over the
-27 SHH / Group 3 / Group 4 tumors. No patient's cells are ever split
-between training and test. WNT (one tumor) cannot be both learned and
-tested: it is excluded from training and evaluation, and its marker-rule
-scores and the 3-class model's prediction are reported separately,
-without a claim.
+27 SHH / Group 3 / Group 4 patients (29 libraries). No patient's cells are
+ever split between training and test, and a patient with two libraries is
+held out as a whole: 934 together with 943, 966 together with 966-2.
+Holding out one library while its twin stays in training would let the
+model recognise the patient, which is exactly the leakage the design
+guards against. WNT (one tumor) cannot be both learned and tested: it is
+excluded from training and evaluation, and its marker-rule scores and the
+3-class model's prediction are reported separately, without a claim.
+
+| Option for two-library patients | For | Against |
+|---|---|---|
+| Group both libraries as one patient (**recommended**) | Keeps every cell; the fold structure follows the biology | 966-2 is a recurrence and may differ from the primary; reported as a stated caveat |
+| Drop one library of each pair (943, 966-2) | One library per patient everywhere, like phase 1's choice of 8 | Discards cells; which one to drop is a choice of its own |
 
 | Option | For | Against |
 |---|---|---|
-| a. Pseudobulk: one mean profile per tumor, 27 rows | Simple; fast, so a large permutation null is cheap | Ignores within-tumor heterogeneity; 27 rows for 3 classes and thousands of genes |
+| a. Pseudobulk: one mean profile per patient (both libraries pooled), 27 rows | Simple; fast, so a large permutation null is cheap | Ignores within-tumor heterogeneity; 27 rows for 3 classes and thousands of genes |
 | b. Cell-level model, predictions averaged per patient (**recommended**) | Uses every malignant cell; the question as worded ("from its malignant cells"); same validation unit | Cells of a patient are correlated, so the effective n is still 27; patients with many cells dominate unless capped |
 
 Recommendation (b), with (a) reported as a secondary analysis.
@@ -299,8 +362,9 @@ Recommendation (b), with (a) reported as a secondary analysis.
 - **Features:** log-normalised expression of the 2,000 most variable genes
   **computed inside each training fold, on training patients only**, so the
   held-out patient never influences feature selection.
-- **Cells per patient:** at most 300 malignant cells per patient, sampled
-  with a fixed seed, so every patient weighs about the same. Patients with
+- **Cells per patient:** at most 300 malignant cells per patient (across
+  both libraries where there are two), sampled with a fixed seed, so every
+  patient weighs about the same. Patients with
   fewer cells contribute all of theirs; the minimum is reported.
 - **Patient prediction:** the class with the highest mean log-probability
   over the patient's cells.
@@ -309,12 +373,14 @@ Recommendation (b), with (a) reported as a secondary analysis.
   Group 4 (plan, "Known risks"); the point is a correctly validated
   estimate, not a high number.
 - **Baselines.** Majority class (Group 4; balanced accuracy 1/3). A
-  known-marker rule with no training: per tumor, mean z-score of each
+  known-marker rule with no training: per patient, mean z-score of each
   subgroup's marker genes in malignant cells, predicted subgroup = argmax.
-  Proposal: the Northcott *et al.* 2012 NanoString genes (SHH: PDLIM3,
-  EYA1, HHIP, ATOH1, SFRP1; Group 3: IMPG2, GABRA5, EGFL11/EYS, NRL,
-  MAB21L2, NPR3; Group 4: KCNA1, EOMES, KHDRBS2, RBM24, UNC5D, OAS1), to be
-  checked against that paper before locking.
+  The Northcott *et al.* 2012 NanoString genes, checked against that
+  paper: WNT: WIF1, TNC, GAD1, DKK2, EMX2 (for the WNT tumor's reported
+  score); SHH: PDLIM3, EYA1, HHIP, ATOH1, SFRP1; Group 3: IMPG2, GABRA5,
+  EYS, NRL, MAB21L2, NPR3; Group 4: KCNA1, EOMES, KHDRBS2, RBM24, UNC5D,
+  OAS1. EYS is the current symbol of the paper's EGFL11, and the one the
+  GTF uses.
 - **Chance level:** permute subgroup labels **across patients** (never
   across cells), rerun the whole LOPO procedure, 1,000 permutations; the
   p-value is (1 + number of permutations at or above the real score) /
@@ -339,7 +405,9 @@ Recommendation (b), with (a) reported as a secondary analysis.
   if the real pipeline's splitter were swapped for a random one, the
   negative-control test would fail;
 - a test that no patient ID occurs in both the training and test indices
-  of any fold, and that feature selection receives training patients only.
+  of any fold, and that feature selection receives training patients only;
+  the known-answer data plants a patient with two libraries, so the test
+  fails if folds are formed by library instead of patient.
 
 **Compute:** at 27 × 300 cells × 2,000 genes, one fit takes seconds, one
 LOPO run is 27 fits (about a minute), and 1,000 permutations are perhaps
@@ -417,8 +485,9 @@ LSF allocation; numbat dominates if chosen.
 
 One generator, `tests/data/make_phase2_data.py`, committed with its output
 and checked by `tests/shell/test_test_data.sh` like the phase 1
-generators. Proposal: 12 synthetic patients (4 per subgroup), about 200
-cells each, about 600 genes on 4 synthetic chromosomes, with:
+generators (drafted in PR #14: 13 synthetic patients, 4 SHH, 4 Group 3,
+4 Group 4 and 1 WNT, one of them with two libraries; 246 genes on 4
+synthetic chromosomes), with:
 
 - planted cell types (malignant plus 4 normal lineages) with known marker
   genes;
@@ -438,23 +507,60 @@ instead of per cell (exact normalisation test fails).
 
 ## References
 
-- Riemondy KA, *et al.* Neuro-Oncology 24(2):273–286, 2022 (the dataset).
+Checked against primary sources (DOI landing pages, PubMed/PMC, package
+documentation, GEO sample records) in a separate session, 1 Nov 2026.
+Not verified there: the size of numbat's phasing panel and Tirosh *et al.*
+2016's supplement.
+
+- Riemondy KA, *et al.* Neoplastic and immune single-cell transcriptomics
+  define subgroup-specific intra-tumoral heterogeneity of childhood
+  medulloblastoma. Neuro-Oncology 24(2):273–286, 2022.
+  doi:10.1093/neuonc/noab135 (the dataset).
 - Hovestadt V, *et al.* Resolving medulloblastoma cellular architecture by
-  single-cell genomics. Nature 572:74–79, 2019.
-- Tirosh I, *et al.* Science 352:189–196, 2016 (CNV-based malignant calls).
-- Gao R, *et al.* (copykat) Nature Biotechnology 39:599–608, 2021.
-- Gao T, *et al.* (numbat) Nature Biotechnology 41:417–426, 2023.
-- Gavish A, *et al.* Hallmarks of transcriptional intratumour
-  heterogeneity across a thousand tumours. Nature 618:598–606, 2023.
-- Aran D, *et al.* (SingleR) Nature Immunology 20:163–172, 2019.
-- Choudhary S, Satija R. (SCTransform v2) Genome Biology 23:27, 2022.
-- Korsunsky I, *et al.* (Harmony) Nature Methods 16:1289–1296, 2019.
-- Lopez R, *et al.* (scVI) Nature Methods 15:1053–1058, 2018.
-- Luecken MD, *et al.* (scIB) Nature Methods 19:41–50, 2022.
+  single-cell genomics. Nature 572(7767):74–79, 2019.
+  doi:10.1038/s41586-019-1434-6.
+- Tirosh I, *et al.* Dissecting the multicellular ecosystem of metastatic
+  melanoma by single-cell RNA-seq. Science 352(6282):189–196, 2016.
+  doi:10.1126/science.aad0501.
+- Puram SV, *et al.* Single-cell transcriptomic analysis of primary and
+  metastatic tumor ecosystems in head and neck cancer. Cell
+  171(7):1611–1624.e24, 2017. doi:10.1016/j.cell.2017.10.044 (two-axis
+  CNV signal / CNV correlation rule).
+- Gao R, *et al.* Delineating copy number and clonal substructure in human
+  tumors from single-cell transcriptomes. Nature Biotechnology
+  39(5):599–608, 2021. doi:10.1038/s41587-020-00795-2 (copykat).
+- Gao T, *et al.* Haplotype-aware analysis of somatic copy number variations
+  from single-cell transcriptomes. Nature Biotechnology 41(3):417–426, 2023.
+  doi:10.1038/s41587-022-01468-y (numbat).
+- Gavish A, *et al.* Hallmarks of transcriptional intratumour heterogeneity
+  across a thousand tumours. Nature 618(7965):598–606, 2023.
+  doi:10.1038/s41586-023-06130-4.
+- Aran D, *et al.* Reference-based analysis of lung single-cell sequencing
+  reveals a transitional profibrotic macrophage. Nature Immunology
+  20(2):163–172, 2019. doi:10.1038/s41590-018-0276-y (SingleR).
+- Monaco G, *et al.* RNA-Seq signatures normalized by mRNA abundance allow
+  absolute deconvolution of human immune cell types. Cell Reports
+  26(6):1627–1640.e7, 2019. doi:10.1016/j.celrep.2019.01.041
+  (MonacoImmuneData).
+- Choudhary S, Satija R. Comparison and evaluation of statistical error
+  models for scRNA-seq. Genome Biology 23:27, 2022.
+  doi:10.1186/s13059-021-02584-9 (SCTransform v2).
+- Korsunsky I, *et al.* Fast, sensitive and accurate integration of
+  single-cell data with Harmony. Nature Methods 16(12):1289–1296, 2019.
+  doi:10.1038/s41592-019-0619-0.
+- Lopez R, *et al.* Deep generative modeling for single-cell
+  transcriptomics. Nature Methods 15(12):1053–1058, 2018.
+  doi:10.1038/s41592-018-0229-2 (scVI).
+- Luecken MD, *et al.* Benchmarking atlas-level data integration in
+  single-cell genomics. Nature Methods 19(1):41–50, 2022.
+  doi:10.1038/s41592-021-01336-8 (scIB).
 - Northcott PA, *et al.* Rapid, reliable, and reproducible molecular
   sub-grouping of clinical medulloblastoma samples. Acta Neuropathologica
-  123:615–626, 2012.
-
-I wrote these references from memory, without network access to check
-them. Volume and page numbers in particular must be checked before this
-document is cited anywhere.
+  123(4):615–626, 2012. doi:10.1007/s00401-011-0899-7.
+- Taylor MD, *et al.* Molecular subgroups of medulloblastoma: the current
+  consensus. Acta Neuropathologica 123(4):465–472, 2012.
+  doi:10.1007/s00401-011-0922-z (subgroup cytogenetics).
+- Zhang L, *et al.* Single-cell transcriptomics in medulloblastoma reveals
+  tumor-initiating progenitors and oncogenic cascades during tumor
+  progression and therapy. Cancer Cell 36(3):302–318.e7, 2019.
+  doi:10.1016/j.ccell.2019.07.009 (OLIG2 in SHH progenitors).
