@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
-# Download and verify the inputs for a real run. Run on a login node (or a
-# data-transfer node if HPCF provides one); compute nodes may not have
-# internet access.
+# Download and verify the inputs for a real run. Not on a login node: HPCF's
+# login nodes are only for changing directories and submitting jobs. Run it
+# in an interactive session (hpcf_interactive) or a batch job if compute
+# nodes reach the download hosts (scripts/hpcf_preflight.sh checks them),
+# otherwise wherever HPCF says downloads should run (docs/RUNBOOK.md,
+# sections 1 and 4).
 #
 # Usage:
 #   scripts/fetch_inputs.sh geo        <dest_dir>
@@ -35,7 +38,7 @@ samtools_() { singularity exec "$SAMTOOLS_IMAGE" samtools "$@" </dev/null; }
 
 cmd=${1:-}
 dest=${2:-}
-[ -n "$cmd" ] && [ -n "$dest" ] || { sed -n '6,10p' "$0"; exit 2; }
+[ -n "$cmd" ] && [ -n "$dest" ] || { sed -n '/^# Usage:/,/^#$/p' "$0" | sed '$d'; exit 2; }
 mkdir -p "$dest"
 
 case "$cmd" in
