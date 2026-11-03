@@ -85,6 +85,73 @@ test_that("read_published_counts rejects non-numeric values", {
   expect_error(read_published_counts(p), "non-numeric")
 })
 
+test_that("read_published_counts refuses TRUE/FALSE and missing values, in any column of a chunk", {
+  # fread reads a column of TRUE/FALSE as logical, which as.matrix() used to
+  # turn into 1/0 without a word. A missing value must not become a zero.
+  dir <- withr::local_tempdir()
+  p <- file.path(dir, "x.csv")
+  hdr <- ",MB1_ACGTACGTACGTACGT,MB1_TTTTACGTACGTACGT"
+  for (body in list(c("GENE1,1,TRUE", "GENE2,0,FALSE"), c("GENE1,TRUE,2", "GENE2,FALSE,0"))) {
+    writeLines(c(hdr, body), p)
+    expect_error(read_published_counts(p), "non-numeric or missing", info = body[1])
+  }
+  for (body in list(c("GENE1,1,", "GENE2,0,3"), c("GENE1,,2", "GENE2,4,0"), c("GENE1,1,NA", "GENE2,0,3"))) {
+    writeLines(c(hdr, body), p)
+    for (k in c(1, 2)) expect_error(read_published_counts(p, chunk_rows = k), "non-numeric or missing", info = body[1])
+  }
+})
+
+test_that("rbind_csc stacks row blocks exactly as rbind does", {
+  set.seed(5)
+  blk <- function(r, n, density) Matrix::rsparsematrix(r, n, density, rand.x = function(k) sample(1:9, k, TRUE))
+  cases <- list(
+    list(blk(3, 6, 0.4), blk(5, 6, 0.3), blk(1, 6, 0.5)),
+    list(blk(4, 6, 0.4), blk(2, 6, 0), blk(3, 6, 0.6)),        # an all-zero block
+    list(blk(1, 1, 1), blk(1, 1, 0), blk(1, 1, 1)),            # one column
+    list(blk(7, 9, 0.2)),                                       # one block
+    list(blk(2, 5, 0), blk(3, 5, 0))                            # nothing at all
+  )
+  for (k in 1:30) cases[[length(cases) + 1]] <- lapply(sample(1:6, sample(1:8, 1), TRUE), blk, n = 12, density = runif(1, 0, 0.5))
+  for (b in cases) {
+    want <- methods::as(do.call(rbind, b), "CsparseMatrix")
+    got <- rbind_csc(b)
+    expect_s4_class(got, "dgCMatrix")
+    expect_true(methods::validObject(got))
+    expect_identical(got@Dim, want@Dim)
+    expect_identical(got@p, want@p)
+    expect_identical(got@i, want@i)
+    expect_identical(got@x, as.double(want@x))
+  }
+  expect_error(rbind_csc(list(blk(2, 3, 0.5), blk(2, 4, 0.5))), "number of columns")
+})
+
+test_that("read_published_counts works in a fresh R session, before Matrix is loaded", {
+  # bin/prep_published.R sources lib/R into a new session; nothing has
+  # loaded the Matrix namespace when the first chunk is converted.
+  dir <- withr::local_tempdir()
+  p <- file.path(dir, "x.csv")
+  writeLines(c(",MB1_ACGTACGTACGTACGT,MB1_TTTTACGTACGTACGT", "GENE1,1,0", "GENE2,0,2"), p)
+  code <- sprintf(paste0("stopifnot(!'Matrix' %%in%% loadedNamespaces()); ",
+                         "for (f in list.files('%s', full.names = TRUE)) source(f); ",
+                         "m <- read_published_counts('%s'); cat(class(m), sum(m), '\\n')"), lib_dir, p)
+  out <- suppressWarnings(system2(file.path(R.home("bin"), "Rscript"), c("--vanilla", "-e", shQuote(code)),
+                                  stdout = TRUE, stderr = TRUE))
+  expect_null(attr(out, "status"), info = paste(out, collapse = "\n"))
+  expect_match(paste(out, collapse = "\n"), "dgCMatrix 3")
+})
+
+test_that("read_published_counts keeps non-integer values exactly", {
+  dir <- withr::local_tempdir()
+  p <- file.path(dir, "x.csv")
+  writeLines(c(",MB1_ACGTACGTACGTACGT,MB1_TTTTACGTACGTACGT", "GENE1,1.5,0", "GENE2,0,2", "GENE3,1e3,0.25"), p)
+  for (k in c(1, 2, 3)) {
+    got <- read_published_counts(p, chunk_rows = k)
+    expect_identical(unname(as.matrix(got)), matrix(c(1.5, 0, 1000, 0, 2, 0.25), 3))
+    expect_s4_class(got, "dgCMatrix")
+    expect_identical(Matrix::nnzero(got), 4L)   # zeros are not stored
+  }
+})
+
 test_that("read_mex round-trips a STARsolo-style directory", {
   m <- make_counts(n_genes = 6, n_cells = 4)
   dir <- withr::local_tempdir()
