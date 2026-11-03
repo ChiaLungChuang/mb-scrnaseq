@@ -157,8 +157,9 @@ Three layers, each checked by planting bugs and confirming the tests fail
   reference. The STAR and bamtofastq images (biocontainers) are still
   referenced by tag only: a re-pushed biocontainers tag would change what a
   re-run uses.
-- Memory for `CONCORDANCE` on a full-size sample has not been measured;
-  check `peak_rss` in `pipeline_info/trace.tsv` after the first real run.
+- The R steps' memory and time were measured on synthetic inputs at the
+  real dimensions (`tests/scale/README.md`), not on the real data; compare
+  with `peak_rss` in `pipeline_info/trace.tsv` after the first real run.
 
 ## Data
 

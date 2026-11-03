@@ -48,8 +48,9 @@ step below.
   dies, re-run the same command with `-resume` and finished steps are
   skipped.
 - Intermediate files live in `work/`. Put it on project or scratch storage,
-  not your home directory: the FASTQs regenerated from 8 BAMs run to roughly
-  the size of the BAMs themselves.
+  not your home directory: the FASTQs regenerated from 8 BAMs run to 1 to
+  1.7 times the size of the BAMs. The whole 8-tumor run needs about
+  350-445 GB at its peak (section 9, "Disk space").
 - Downloads (setup, inputs, images) need outbound internet. Whether compute
   nodes have it is **pending HPCF's answer** (the preflight shows what one
   compute node can reach). If they do not, those steps run wherever HPCF
@@ -81,7 +82,8 @@ already pinned.
 4. **(you)** Request an HPCF account through IT, if you do not have one.
    The login host is `hpc.stjude.org`, with your AD credentials.
 5. **(you)** Find out from HPCF documentation or your lab which project or
-   scratch path you can use for large data. Below it is `<project-dir>`.
+   scratch path you can use for large data, with about 0.5 TB free (section
+   9, "Disk space"). Below it is `<project-dir>`.
 6. **(you)** Ask HPCF (or find in their documentation) the answers this
    runbook marks **pending HPCF's answer**:
    1. Do compute nodes have outbound HTTPS (GitHub, conda-forge and
@@ -363,6 +365,63 @@ hour). It is copied to `<outdir>/reference/star_index` (about 30 GB); for
 later runs, set `star_index` to that path and remove
 `genome_fasta`/`genome_gtf`.
 
+### Disk space
+
+Nextflow keeps every task's outputs in `work/` until you delete them, so
+at the end of the run everything below is on disk at once. "Measured" means
+measured in this repository on synthetic data; the rest are estimates.
+
+| What | Where | Size | Basis |
+|---|---|---|---|
+| 8 BAMs | `$D/bams` | 119 GB | ENA's sizes, `docs/results/phase1/samples.tsv` |
+| FASTQs from bamtofastq | `work/` | 119-202 GB | 1.0-1.7 times the BAMs (below) |
+| STAR index | `work/` | ~30 GB | estimate for a human STAR index |
+| its published copy | `<outdir>/reference/` | ~30 GB | `publishDir` copies it |
+| Cell Ranger reference, tarball and extracted | `$D/reference` | ~11 + ~30 GB | estimate; mostly Cell Ranger's own STAR index, which this pipeline does not use |
+| STARsolo matrices, in `work/` and `<outdir>` | both | 7-18 GB | measured: 0.4-1.2 GB per sample at real dimensions (`tests/scale/README.md`), twice |
+| Singularity images | the cache | ~1 GB | the R image is 472 MB (its registry manifest); the others are small |
+| GEO files, published matrix, QC and concordance outputs | | ~1-2 GB | measured at real dimensions: 0.1-0.3 GB each for the CSV.gz and the RDS |
+| **Peak, end of the run** | | **~350-445 GB** | |
+
+The FASTQ size is the uncertain part. bamtofastq on the two synthetic test
+BAMs wrote FASTQ.gz files 1.68 times the BAM size; with realistic base
+qualities and Cell Ranger's alignment tags added to the same reads, 1.01
+times. Real BAMs differ from both: they are sorted by position, which
+makes the BAM compress better (a higher ratio), and they carry more tags
+(a lower one). The pilot gives the real ratio: compare its BAM with
+`du -sh` of its `BAMTOFASTQ` task directory in `work/`, and redo the FASTQ
+line before the other 7.
+
+**Is 0.5 TB enough?** For one clean run, yes. At the top of the range only
+about 55 GB is left, and a failed task leaves its partial output in
+`work/` (up to ~53 GB for a retried bamtofastq of the largest BAM, 996).
+Before the 8-sample run:
+
+- After section 6, delete the reference tarball and the extracted
+  reference's `star/` folder (Cell Ranger's own index): about 36 GB, by
+  estimate. The pipeline reads only `fasta/` and `genes/`.
+- When a task was retried and the retry succeeded, delete the failed
+  attempt's directory (the path is in the error message); `-resume` uses
+  only the successful one.
+
+What does not lower the peak:
+
+- `cleanup = true` deletes `work/` only when the whole run has succeeded,
+  and `-resume` no longer works after it (Nextflow 26.10's documentation).
+  The pilot-then-all-samples plan relies on `-resume`.
+- Per-task scratch (`process.scratch`) runs each task on the node's local
+  disk, but the declared outputs (the FASTQs, the STARsolo matrices) are
+  still copied back to `work/` when the task ends. Only temporary files
+  move, and STAR deletes its own. It would also need local disks large
+  enough for the largest bamtofastq output (~53 GB; **pending HPCF's
+  answer**).
+- (`publishDir` with `mode: 'link'` would save the index's second copy,
+  ~30 GB, when `<outdir>` and `work/` are on the same file system, but
+  fails the run when they are not. Not changed.)
+
+Once the verdict is final and its small files are committed (plan M3), the
+FASTQs in `work/` can be deleted; the published index and matrices stay.
+
 ## 10. Read the result
 
 - `concordance/concordance_summary.verdict.json`: overall pass/fail, and
@@ -375,8 +434,9 @@ later runs, set `star_index` to that path and remove
 - `starsolo/<sample>/`: the count matrices and STARsolo's `Summary.csv`.
 - `pipeline_info/report.html`, `timeline.html` and `trace.tsv`: resources
   used per step, which is what you quote when someone asks what the run
-  cost. Check `peak_rss` for `CONCORDANCE`; it has not been measured on
-  full-size data.
+  cost. Compare `peak_rss` and `realtime` of the R steps with the
+  rehearsal on synthetic data at real dimensions (`tests/scale/README.md`:
+  at most 4.8 GB for `PREP_PUBLISHED` and 5.8 GB for `CONCORDANCE`).
 
 Then write the results report from the output directory, in an
 interactive session, with the pinned R image (it has every package the

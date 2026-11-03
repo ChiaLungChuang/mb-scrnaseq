@@ -69,7 +69,7 @@ jobs:
       - name: Nextflow lint
         run: nextflow lint .
       - name: ShellCheck
-        run: shellcheck -x bin/*.sh scripts/*.sh tests/shell/*.sh
+        run: shellcheck -x bin/*.sh scripts/*.sh tests/shell/*.sh tests/scale/*.sh
       - name: Versions agree (manifest, R image tag and digest, git tag)
         run: bash scripts/check_versions.sh nextflow.config "$GITHUB_REF"
 
