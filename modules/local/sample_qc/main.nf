@@ -1,7 +1,7 @@
 // Per-sample QC flags and recorded thresholds on STARsolo's called cells.
 process SAMPLE_QC {
     tag "${meta.id}"
-    label 'process_r'
+    label 'process_low'   // 0.8 GB for 5,000 cells, 1.9 GB for 10,000 dense ones (tests/scale/README.md)
     container "${params.r_container}"
 
     input:
