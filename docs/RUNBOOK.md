@@ -1,8 +1,23 @@
-# Runbook: first real run on the St. Jude cluster
+# Runbook: first real run on St. Jude compute
 
 This is the order to do things in, from no account to a concordance verdict.
 Steps marked **(you)** need your accounts, judgement or St. Jude-specific
 details that are not public; everything else is a command to run.
+
+## Two routes
+
+Phase 1 runs on St. Jude compute (decided 10 Nov 2026), by one of two
+routes. Nothing has run on either yet.
+
+| Route | Where | Sections | Waiting on |
+|---|---|---|---|
+| 1. The Research HPC cluster | LSF + Singularity, `hpc.stjude.org` (`-profile stjude`) | 0-10 | **(you)** the HPCF account request, and HPCF's answers to the questions in section 1 (meeting upcoming) |
+| 2. A department server | Developmental Neurobiology machines offered by the NeuroImage Analysis Lab, if they are standalone servers without a scheduler (`-profile server`) | "Route 2" at the end; it reuses 4-8 and 10 | **(you)** the lab's reply on what the machines are. A machine shared through a scheduler needs that scheduler's profile instead (not written yet) |
+
+Both routes share the inputs and samplesheet (sections 4-7), the locked
+criteria and the pre-registration gate (section 8), the disk estimate
+(section 9) and the results report (section 10). Google Cloud and Colab
+are not being pursued for now.
 
 ## How the cluster fits together (two minutes)
 
@@ -299,15 +314,16 @@ order of `docs/results/phase1/samples.tsv`.
 
 Do not open the published counts themselves before step 8.
 
-## 8. Lock the acceptance criteria **(you)**
+## 8. The locked acceptance criteria
 
-Read `preregistration/acceptance_criteria.yaml`. Change any threshold you
-disagree with now, with the reason in the commit message. Then set
-`status: locked`, commit and **push**. Optionally tag the commit and make a
-GitHub release from it (e.g. `prereg-phase1`): that gives the lock a
-timestamp you did not set yourself. If you lock it outside the cluster,
-`git pull` in the cluster clone afterwards, in an interactive session (it
-needs GitHub access from that node: **pending HPCF's answer**, question 1).
+Done on 10 Nov 2026: `preregistration/acceptance_criteria.yaml` is
+`status: locked`, thresholds unchanged from the proposal ([#22](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/22)).
+On a fresh clone the pre-registration gate passes (a stub run with
+`--allow_unlocked_criteria false`). **(you)** Make the GitHub release
+`prereg-phase1` from that commit: it gives the lock a timestamp you did
+not set yourself. Pull the clone you run from to get the locked file
+(GitHub access from that machine: **pending HPCF's answer**, question 1,
+on the cluster).
 
 On real data the pipeline refuses the concordance step unless the criteria
 are locked, committed, unmodified and pushed, and the pipeline code has no

@@ -10,8 +10,9 @@ and tests, against criteria written down before any result exists, whether
 the result reproduces the published count matrix.
 
 **Status: built and tested on synthetic data only.** CI runs the test
-suites on every push to `main` and every pull request. Nothing has run on
-the St. Jude cluster or on the real data yet. [Details](#status).
+suites on every push to `main` and every pull request. The acceptance
+criteria are locked. Nothing has run on St. Jude compute or on the real
+data yet. [Details](#status).
 
 ## What it shows
 
@@ -35,20 +36,22 @@ the St. Jude cluster or on the real data yet. [Details](#status).
   and pinned by digest. [CI](.github/workflows/ci.yml) runs the R, script,
   lint and whole-pipeline tests in Docker, and the R tests inside the
   published image.
-- **A cluster profile** for St. Jude's HPC (LSF + Singularity), with a
-  preflight script and a test of the LSF directives the profile writes.
-  Prepared, not yet run on the cluster.
+- **Two routes on St. Jude compute**: a cluster profile (LSF +
+  Singularity) with a test of the LSF directives it writes, and a
+  standalone-server profile (local executor) that caps every task at the
+  machine share it is given and refuses to start without enough memory or
+  disk. One preflight script serves both. Prepared, not yet run.
 
 ## Status
 
-As of 3 Nov 2026:
+As of 10 Nov 2026:
 
 | Part | State | Evidence |
 |---|---|---|
 | Phase 1 pipeline: BAM -> FASTQ -> STARsolo -> QC -> concordance | built; passes on synthetic data | [CI runs on `main`](https://github.com/ChiaLungChuang/mb-scrnaseq/actions/workflows/ci.yml?query=branch%3Amain) |
 | R image `ghcr.io/chialungchuang/mb-scrnaseq-r:0.1.0` | published, pullable without a login, pinned by digest | [release run](https://github.com/ChiaLungChuang/mb-scrnaseq/actions/runs/41257603921); the `pinned-r-image` CI job |
-| St. Jude cluster (LSF + Singularity) | prepared, not run | [runbook](docs/RUNBOOK.md); questions for HPCF in its section 1 |
-| Real data | 8 of the 28 tumors chosen; criteria proposed, not locked; inputs not yet downloaded | [`samples.tsv`](docs/results/phase1/samples.tsv), [proposal](docs/proposals/phase1_samples.md) |
+| St. Jude compute: the Research HPC cluster (LSF + Singularity) or a department server (no scheduler) | both prepared, not run; waiting on the HPCF account and answers, and on the department's reply about its machines | [runbook](docs/RUNBOOK.md#two-routes) |
+| Real data | 8 of the 28 tumors chosen; criteria locked (10 Nov 2026); inputs not yet downloaded | [`samples.tsv`](docs/results/phase1/samples.tsv), [proposal](docs/proposals/phase1_samples.md), [lock](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/22) |
 | Phase 2: all 28 tumors in R (Seurat), plus scVI vs Harmony and a subgroup classifier in Python | designed, not started | [draft PR #4](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/4) |
 
 The [development plan](docs/DEVELOPMENT_PLAN.md) keeps the full status
@@ -58,8 +61,9 @@ table and what comes next.
 
 - [`docs/DEVELOPMENT_PLAN.md`](docs/DEVELOPMENT_PLAN.md): milestones,
   status, testing rules and the planted-bug list.
-- [`docs/RUNBOOK.md`](docs/RUNBOOK.md): the real run on the St. Jude
-  cluster, step by step, with memory and disk estimates.
+- [`docs/RUNBOOK.md`](docs/RUNBOOK.md): the real run on St. Jude compute
+  (the cluster, or a department server), step by step, with memory and
+  disk estimates.
 - [`preregistration/`](preregistration/): the acceptance criteria.
 - [`docs/proposals/`](docs/proposals/): why these 8 tumors, and all 30
   sequencing runs mapped to the published sample labels by barcode overlap.
@@ -131,8 +135,9 @@ Synthetic test (about a minute; CI runs it through nf-test):
 nextflow run . -profile test,docker        # or test,singularity
 ```
 
-The `singularity` and `stjude` profiles have not been run yet. Real data on
-the St. Jude cluster: [docs/RUNBOOK.md](docs/RUNBOOK.md).
+The `singularity`, `apptainer` and `stjude` profiles have not been run yet;
+`server` runs in CI with Docker. Real data on St. Jude compute (the
+cluster, or a department server): [docs/RUNBOOK.md](docs/RUNBOOK.md).
 
 Outputs land in `--outdir`: `starsolo/<sample>/` (raw and filtered count
 matrices, `Summary.csv`, STAR log), `qc/`, `concordance/`, `reads_check/`,

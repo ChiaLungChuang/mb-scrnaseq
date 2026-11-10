@@ -20,8 +20,8 @@ Claude Code updates this table at the end of every PR.
 |---|---|---|
 | Pre-M0: phase 1 code and tests | done | tests pass locally (tools on `PATH`) and in CI |
 | M0: repository on GitHub, CI green, image published | done | Repository public (step 7; GitHub reports `visibility: public` on 3 Nov 2026), README written for visitors with the CI badge. CI green on `main` (latest checked: [41547964441](https://github.com/ChiaLungChuang/mb-scrnaseq/actions/runs/41547964441)): R, script, lint and pipeline tests in Docker, synthetic data only. `v0.1.0` published `ghcr.io/chialungchuang/mb-scrnaseq-r:0.1.0` ([run 41257603921](https://github.com/ChiaLungChuang/mb-scrnaseq/actions/runs/41257603921)); `r_container` pins it by digest (`sha256:9ce6480a…`); the `pinned-r-image` job pulls it with no login and runs the R tests inside it. |
-| M1: cluster smoke test | prepared, not run | `scripts/hpcf_preflight.sh` ([#11](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/11); compute-node session, ENA and download hosts, lsf.conf memory settings and an opt-in job submission test in [#17](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/17)); `conf/stjude.config` compared with nf-core's ([#9](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/9)) and aligned with HPCF's policy, with its LSF directives tested against a stand-in `bsub` ([#16](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/16)); runbook follows HPCF's policy (nothing beyond `cd` and `bsub` on login nodes; two paths for the head process). Nothing has run on the cluster. Next **[you]**: HPCF's answers to the questions in runbook section 1 (item 6), then section 3 (preflight with `--submit-test` in an interactive session, then `nf-test test --profile +stjude`) |
-| M2: real inputs and phase 1 pre-registration | in progress | 8 tumors chosen (2 Nov 2026, [#10](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/10)) and recorded in `docs/results/phase1/samples.tsv` (steps 2 and the record of 5). Not done: inputs and BAMs downloaded **[you]**, `bams_summary.tsv` read, criteria locked **[you]** |
+| M1: smoke test on St. Jude compute | prepared, not run | Phase 1 runs on St. Jude compute (decided 10 Nov 2026), by one of two routes. **Route 1, the Research HPC cluster (LSF + Singularity):** `scripts/hpcf_preflight.sh` ([#11](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/11), [#17](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/17)), `conf/stjude.config` aligned with HPCF's policy and its LSF directives tested ([#9](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/9), [#16](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/16)), runbook sections 0-10. Waits on **[you]**: the HPCF account request and HPCF's answers to runbook section 1 (meeting upcoming). **Route 2, a Developmental Neurobiology server (offered by the NeuroImage Analysis Lab):** `-profile server` with launch checks, the preflight's `--local` mode, runbook "Route 2" ([#23](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/23)). Waits on **[you]**: the lab's reply on what the machines are (route 2 fits a server without a scheduler; one with a scheduler needs that scheduler's profile). R steps keep within their requested CPUs on either route ([#24](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/24)). Nothing has run on either route. |
+| M2: real inputs and phase 1 pre-registration | in progress | 8 tumors chosen (2 Nov 2026, [#10](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/10)) and recorded in `docs/results/phase1/samples.tsv` (steps 2 and the record of 5). Acceptance criteria locked, thresholds unchanged (10 Nov 2026, [#22](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/22)); on a fresh clone the pre-registration gate passes (stub run with `--allow_unlocked_criteria false`). Not done: the `prereg-phase1` release **[you]**, inputs and BAMs downloaded **[you]** (on whichever route runs phase 1), `bams_summary.tsv` read |
 | M3: phase 1 run on 8 tumors | prepared, not run | results report `bin/phase1_report.R` ([#13](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/13)), tested on synthetic runs only; raw trace with CPU and memory fields. The R steps rehearsed on synthetic inputs at real dimensions (`tests/scale/README.md`): peaks of at most 4.8 GB (`PREP_PUBLISHED`, after removing two copies) and 5.8 GB (`CONCORDANCE`), requests resized; peak disk for the 8 tumors estimated at 350-445 GB (runbook section 9). Not run on real data |
 | M4: phase 2 design and pre-registration | in progress | design drafted for decision in [draft PR #4](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/4); nothing decided, no criteria drafted |
 | M5: phase 2 implementation (R analysis + Python module) and run | not started | known-answer data generator drafted ([draft PR #14](https://github.com/ChiaLungChuang/mb-scrnaseq/pull/14)); waits on the M4 decisions |
@@ -32,7 +32,7 @@ check → STARsolo → QC → concordance), the St. Jude LSF/Singularity
 profile, the R container recipe, CI configuration, the runbook, and the
 three test layers below. Before M0 none of it had run in CI or in a
 container. Since 31 Oct 2026 it has, on synthetic data; none of it has
-run on the cluster or on real data.
+run on St. Jude compute or on real data.
 
 ## Testing rules
 
@@ -110,9 +110,16 @@ Done when: every CI job is green on `main`, the image is public and
 pinned, and the README status says containers and CI pass (on synthetic
 data), and still says nothing has run on real data or the cluster.
 
-## M1. Cluster smoke test
+## M1. Smoke test on St. Jude compute
 
-Goal: the same tests pass on St. Jude HPCF (LSF + Singularity).
+Goal: the same tests pass on St. Jude compute, by one of two routes
+(decided 10 Nov 2026; runbook, "Two routes"): the Research HPC cluster
+(LSF + Singularity, steps 1-5 below), or a Developmental Neurobiology
+server without a scheduler (runbook "Route 2": `-profile server`, then
+`scripts/hpcf_preflight.sh --local` and
+`nf-test test --profile +server,singularity`, or `apptainer`/`docker`).
+Which route depends on the HPCF account and answers, and on the
+NeuroImage Analysis Lab's reply about its machines.
 
 1. **[you]** HPCF account (login host `hpc.stjude.org`), a project or
    scratch path, and HPCF's answers to the questions in runbook section 1
@@ -133,8 +140,9 @@ Goal: the same tests pass on St. Jude HPCF (LSF + Singularity).
    pull timeouts) with the reason in the PR.
 5. Commit `docs/results/m1/trace.tsv` from a passing run as evidence.
 
-Done when: `nf-test test --profile +stjude` passes on the cluster and the
-README says the cluster profile is tested on synthetic data.
+Done when: the synthetic test suites pass on the route used
+(`--profile +stjude`, or `+server,<runtime>`), the trace is committed, and
+the README says that profile is tested on synthetic data there.
 
 ## M2. Real inputs and phase 1 pre-registration
 
@@ -304,6 +312,9 @@ verdict are committed.
 - Re-quantifying all 28 tumors from the BAMs: revisit after M3, by cost.
 - Running Cell Ranger itself: not planned (STARsolo is the method).
 - Docker on the cluster: not available; Singularity only.
+- Google Cloud and Colab for phase 1: not pursued for now (10 Nov 2026).
+  St. Jude compute (the Research HPC cluster or the department's servers)
+  is available.
 
 ## Known risks
 
