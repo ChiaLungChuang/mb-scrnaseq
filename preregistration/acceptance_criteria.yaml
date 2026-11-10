@@ -13,7 +13,7 @@
 # reason in the commit message, and report both the original and the
 # revised verdict.
 
-status: proposed          # proposed -> locked
+status: locked          # proposed -> locked
 
 phase1_concordance:
   # Scope: each re-quantified sample, compared with the published matrix on
