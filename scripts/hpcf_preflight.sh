@@ -2,17 +2,24 @@
 # Checks to run before the smoke test (docs/RUNBOOK.md, section 3). Prints
 # one report to paste back.
 #
-# Run it on a compute node, inside an interactive session: HPCF's login
-# nodes are only for changing directories and submitting jobs, and the
-# network checks must describe the nodes that will do the work.
+# On the cluster, run it on a compute node, inside an interactive session:
+# HPCF's login nodes are only for changing directories and submitting jobs,
+# and the network checks must describe the nodes that will do the work.
 #   hpcf_interactive          (or: bsub -P interactive -q interactive -Is bash)
 #   scripts/hpcf_preflight.sh [--submit-test] [work_dir]
+# On one server without a scheduler (-profile server; runbook, "Route 2"):
+#   scripts/hpcf_preflight.sh --local [work_dir]
 #
+#   --local        a standalone server: skip the LSF and module checks;
+#                  check the machine's cores and memory (FAIL below
+#                  server_min_memory in nextflow.config, 48 GB) and that
+#                  Singularity, Apptainer or Docker is there
 #   --submit-test  also submit one job from this node (`true`, queue short,
 #                  1-minute limit, no output files) and wait for it to
 #                  finish: Nextflow's head process submits every task from
 #                  the node it runs on. Waits up to PREFLIGHT_SUBMIT_TIMEOUT
-#                  seconds (default 900), then kills the job.
+#                  seconds (default 900), then kills the job. Not with
+#                  --local.
 #   work_dir       where Nextflow's work/ directory will live (default: the
 #                  current directory)
 #
@@ -37,14 +44,18 @@
 set -uo pipefail
 
 REPO=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
-submit_test=0
+submit_test=0 local_mode=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --submit-test) submit_test=1; shift ;;
-    -*) echo "unknown option: $1 (usage: $0 [--submit-test] [work_dir])" >&2; exit 2 ;;
+    --local) local_mode=1; shift ;;
+    -*) echo "unknown option: $1 (usage: $0 [--local | --submit-test] [work_dir])" >&2; exit 2 ;;
     *) break ;;
   esac
 done
+if [ "$local_mode" = 1 ] && [ "$submit_test" = 1 ]; then
+  echo "--submit-test is for the cluster; a server without a scheduler has nothing to submit to" >&2; exit 2
+fi
 work_dir=${1:-$PWD}
 
 npass=0 nwarn=0 nfail=0
@@ -78,7 +89,8 @@ info "host $(hostname 2>/dev/null || echo '?'), user ${USER:-?}, $(date -u +%Y-%
 info "repository $REPO at $(git -C "$REPO" rev-parse --short HEAD 2>/dev/null || echo '?')"
 info "work directory $work_dir"
 
-# --- Session -----------------------------------------------------------------
+# --- The cluster: session, LSF, the Singularity module -------------------------
+cluster_checks() {
 section "Session"
 if [ -n "${LSB_JOBID:-}" ]; then
   pass "inside LSF job $LSB_JOBID (queue ${LSB_QUEUE:-?}), not on a login node"
@@ -147,6 +159,39 @@ else
     indent <<< "$out"
   fi
 fi
+}
+
+# --- One server without a scheduler (--local) ---------------------------------
+machine_checks() {
+  section "Machine (no scheduler: -profile server)"
+  local cores mem_kb mem_gb min_gb found=0
+  min_gb=$(grep -oP "^\s*server_min_memory\s*=\s*'\K[0-9]+" "$REPO/nextflow.config")
+  cores=$(nproc 2>/dev/null || true)
+  if [ -z "$cores" ]; then warn "cores: unknown (no nproc)"
+  elif [ "$cores" -lt 8 ]; then warn "cores: $cores (the STAR steps ask for 8; they will be capped to --server_cpus and run slower)"
+  else pass "cores: $cores (give the run its share with --server_cpus)"; fi
+  mem_kb=$(awk '/^MemTotal:/ { print $2 }' "${PREFLIGHT_MEMINFO:-/proc/meminfo}" 2>/dev/null)
+  if [ -z "$mem_kb" ]; then
+    warn "memory: unknown (no ${PREFLIGHT_MEMINFO:-/proc/meminfo})"
+  else
+    mem_gb=$((mem_kb / 1048576))
+    if [ "$mem_gb" -ge "${min_gb:-48}" ]; then pass "memory: $mem_gb GB (the STAR steps ask for ${min_gb:-48} GB; give the run its share with --server_memory)"
+    else fail "memory: $mem_gb GB, below the ${min_gb:-48} GB the STAR index build and STARsolo ask for"; fi
+  fi
+  for r in singularity apptainer; do
+    if command -v "$r" >/dev/null; then pass "$r: $("$r" --version 2>&1 | head -n 1) (-profile server,$r)"; found=1; fi
+  done
+  if command -v docker >/dev/null; then
+    if v=$(docker info --format '{{.ServerVersion}}' 2>/dev/null) && [ -n "$v" ]; then pass "docker: server $v (-profile server,docker)"; found=1
+    else warn "docker: installed, but the daemon is not reachable as $(id -un 2>/dev/null || echo this user)"; fi
+  fi
+  [ "$found" = 1 ] || fail "no container runtime: Singularity, Apptainer or a usable Docker is needed"
+  for s in bsub sbatch qsub; do
+    if command -v "$s" >/dev/null; then warn "$s is on PATH: if this machine is shared through a scheduler, use its profile rather than -profile server"; fi
+  done
+}
+
+if [ "$local_mode" = 1 ]; then machine_checks; else cluster_checks; fi
 
 # --- Tools --------------------------------------------------------------------
 section "Tools"
@@ -190,17 +235,26 @@ fi
 
 # --- Storage ------------------------------------------------------------------
 section "Storage"
-cache=${NXF_SINGULARITY_CACHEDIR:-}
-if [ -z "$cache" ]; then
-  fail "NXF_SINGULARITY_CACHEDIR: not set (runbook section 2)"
+# The image cache variable follows the container runtime: Singularity on
+# the cluster; on a server whichever of Singularity or Apptainer is there
+# (Docker keeps its own images).
+cache_var=NXF_SINGULARITY_CACHEDIR
+if [ "$local_mode" = 1 ] && ! command -v singularity >/dev/null; then
+  if command -v apptainer >/dev/null; then cache_var=NXF_APPTAINER_CACHEDIR; else cache_var=; fi
+fi
+cache=${cache_var:+${!cache_var:-}}
+if [ -z "$cache_var" ]; then
+  info "image cache: none needed (Docker keeps its own images)"
+elif [ -z "$cache" ]; then
+  fail "$cache_var: not set (runbook section 2)"
 elif [ ! -d "$cache" ]; then
-  fail "NXF_SINGULARITY_CACHEDIR=$cache: no such directory"
+  fail "$cache_var=$cache: no such directory"
 elif [ ! -w "$cache" ]; then
-  fail "NXF_SINGULARITY_CACHEDIR=$cache: not writable"
+  fail "$cache_var=$cache: not writable"
 else
   g=$(free_gb "$cache")
-  if [ -n "$g" ] && [ "$g" -lt 10 ]; then warn "NXF_SINGULARITY_CACHEDIR=$cache: writable, only ${g} GB free (the images need a few GB)"
-  else pass "NXF_SINGULARITY_CACHEDIR=$cache: writable, ${g:-?} GB free"; fi
+  if [ -n "$g" ] && [ "$g" -lt 10 ]; then warn "$cache_var=$cache: writable, only ${g} GB free (the images need a few GB)"
+  else pass "$cache_var=$cache: writable, ${g:-?} GB free"; fi
 fi
 
 if [ ! -d "$work_dir" ]; then
