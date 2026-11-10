@@ -56,12 +56,13 @@ workflow {
 EOF
 
 run_server() { # run_server [nextflow args...]: the tiny pipeline under the server profile's config
-  (cd "$TMP" && NXF_OFFLINE=true nextflow run main.nf -c "$REPO/conf/base.config" -c "$REPO/conf/server.config" "$@" 2>&1)
+  (cd "$TMP" && NXF_OFFLINE=true nextflow run main.nf -ansi-log false -c "$REPO/conf/base.config" -c "$REPO/conf/server.config" "$@" 2>&1)
 }
 line() { grep -m1 "^$1 " <<< "$out" || true; }
 one_after_other() { # one_after_other <name>: the two PAIR lines in $out do not overlap in time
   local s1 e1 s2 e2
-  read -r s1 e1 s2 e2 <<< "$(grep '^PAIR ' <<< "$out" | awk '{ print $2, $3 }' | sort -n | tr '\n' ' ')"
+  # Each task's line once (a console that refreshes its progress repeats them).
+  read -r s1 e1 s2 e2 <<< "$(grep '^PAIR ' <<< "$out" | sort -u | awk '{ print $2, $3 }' | sort -n | tr '\n' ' ')"
   if [ -n "${s2:-}" ] && awk -v e1="$e1" -v s2="$s2" 'BEGIN { exit !(s2 >= e1) }'; then ok "$1"
   else bad "$1" "starts/ends: ${s1:-?} ${e1:-?} ${s2:-?} ${e2:-?}; output: $out"; fi
 }
