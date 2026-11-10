@@ -18,6 +18,8 @@ process SUMMARISE_CONCORDANCE {
 
     script:
     """
+    # Threads limited to the task's CPUs (data.table, OpenMP, BLAS); each R script logs them.
+    export OMP_NUM_THREADS=${task.cpus} OMP_THREAD_LIMIT=${task.cpus} OPENBLAS_NUM_THREADS=${task.cpus} MKL_NUM_THREADS=${task.cpus} R_DATATABLE_NUM_THREADS=${task.cpus}
     summarise_concordance.R --lib ${lib} --out-prefix concordance_summary \\
         --preregistered ${preregistered} --criteria-sha256 ${criteria_sha256} --code-sha256 ${code_sha256} \\
         ${jsons}

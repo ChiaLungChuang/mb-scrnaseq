@@ -7,6 +7,7 @@
 argv <- commandArgs(trailingOnly = TRUE)
 lib <- argv[which(argv == "--lib") + 1]
 for (f in list.files(lib, pattern = "\\.R$", full.names = TRUE)) source(f)
+log_threads()
 a <- parse_args(argv, required = c("lib", "counts", "out_prefix"))
 chunk <- as.integer(if (is.null(a$chunk_rows)) 2000 else a$chunk_rows)
 

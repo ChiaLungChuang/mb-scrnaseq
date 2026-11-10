@@ -50,6 +50,21 @@ nextflow_pipeline {
             assert prov.preregistration.sha256 ==~ /[0-9a-f]{64}/
             assert prov.code_sha256 == verdict.code_sha256
             assert file("$outputDir/pipeline_info/software_versions.yml").text.count('STARSOLO') == 1
+
+            // Every R step stays within its CPUs: each logs the threads it
+            // may use, which must equal the task's cpus (1 here). Without
+            // the limits, data.table takes half the machine's cores and the
+            // BLAS/OpenMP variables are unset.
+            def trace = new File(new File("$outputDir").parentFile, 'meta/trace.csv').readLines()*.split('\t')
+            def col = trace[0] as List
+            def rTasks = trace.drop(1).findAll { r -> r[col.indexOf('process')] in ['PREP_PUBLISHED', 'SAMPLE_QC', 'CONCORDANCE', 'SUMMARISE_CONCORDANCE'] }
+            assert rTasks.collect { r -> r[col.indexOf('process')] }.toSet().size() == 4
+            rTasks.each { r ->
+                def n = r[col.indexOf('cpus')]
+                def log = new File(r[col.indexOf('workdir')], '.command.err').text
+                def want = "threads: data.table ${n}, OMP_NUM_THREADS=${n}, OMP_THREAD_LIMIT=${n}, OPENBLAS_NUM_THREADS=${n}, MKL_NUM_THREADS=${n}"
+                assert log.contains(want) : "${r[col.indexOf('process')]} (${n} CPUs): ${log.readLines().find { l -> l.startsWith('threads:') } ?: 'no threads line'}"
+            }
         }
     }
 
