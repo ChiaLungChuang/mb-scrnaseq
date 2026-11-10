@@ -114,8 +114,12 @@ def checkPreregistration(criteriaPath, codeDir, allowUnregistered) {
               "Review the thresholds, set 'status: locked', commit and push the file, commit any code changes, then re-run. " +
               "(--allow_unlocked_criteria true overrides this for test runs only; the verdict is then marked preregistered: false.)")
     }
-    if (problems) {
-        log.warn("This run is NOT pre-registered (${problems.join('; ')}); allowed by --allow_unlocked_criteria. Do not report these results.")
+    // With the gate switched off the run is never pre-registered, even when
+    // every check above passes (the real criteria may well be locked): a
+    // test run must not be mistaken for a reportable one.
+    if (allowUnregistered) {
+        problems << 'it was run with --allow_unlocked_criteria true (test runs only)'
+        log.warn("This run is NOT pre-registered (${problems.join('; ')}). Do not report these results.")
     }
     def sha = java.security.MessageDigest.getInstance('SHA-256').digest(f.bytes).encodeHex().toString()
     return [path: f.toString(), sha256: sha, locked: locked, tracked: tracked, uncommitted_changes: dirty as boolean,
