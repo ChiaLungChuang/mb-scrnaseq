@@ -1,0 +1,101 @@
+nextflow_pipeline {
+
+    name "standalone server: launch checks (-profile server)"
+    script "../main.nf"
+
+    // The checks run before any step does. They are switched on here with
+    // server_check, which -profile server sets; conf/test.config gives the
+    // test runs' share (2 cores, 6 GB) and a 4 GB minimum.
+
+    test("server: starts when the cores, memory and disk fit") {
+        when {
+            params {
+                outdir = "$outputDir"
+                server_check = true
+            }
+        }
+        then {
+            assert workflow.success
+            def check = new groovy.json.JsonSlurper().parse(file("$outputDir/pipeline_info/server_check.json"))
+            assert check.cpus == 2
+            assert check.memory == '6 GB'
+            assert check.one_tumor_needs
+        }
+    }
+
+    test("server: refuses to start without the memory it may use") {
+        when {
+            params {
+                outdir = "$outputDir"
+                server_check = true
+                server_memory = ''
+            }
+        }
+        then {
+            assert workflow.failed
+            assert (workflow.stdout + workflow.stderr).join('\n').contains('needs --server_cpus and --server_memory')
+            assert workflow.trace.tasks().size() == 0
+        }
+    }
+
+    test("server: refuses to start below 48 GB of memory") {
+        when {
+            params {
+                outdir = "$outputDir"
+                server_check = true
+                server_min_memory = '48.GB'
+                server_memory = '47.GB'
+            }
+        }
+        then {
+            assert workflow.failed
+            assert (workflow.stdout + workflow.stderr).join('\n').contains('--server_memory 47 GB is below 48 GB')
+            assert workflow.trace.tasks().size() == 0
+        }
+    }
+
+    test("server: refuses more memory than the machine has") {
+        when {
+            params {
+                outdir = "$outputDir"
+                server_check = true
+                server_memory = '100000.GB'
+            }
+        }
+        then {
+            assert workflow.failed
+            assert (workflow.stdout + workflow.stderr).join('\n').contains('is more than this machine has')
+            assert workflow.trace.tasks().size() == 0
+        }
+    }
+
+    test("server: refuses more cores than the machine has") {
+        when {
+            params {
+                outdir = "$outputDir"
+                server_check = true
+                server_cpus = 100000
+            }
+        }
+        then {
+            assert workflow.failed
+            assert (workflow.stdout + workflow.stderr).join('\n').contains("--server_cpus 100000 is not between 1 and this machine's")
+            assert workflow.trace.tasks().size() == 0
+        }
+    }
+
+    test("server: refuses to start without disk for one tumor") {
+        when {
+            params {
+                outdir = "$outputDir"
+                server_check = true
+                server_disk_margin = '1000000.GB'
+            }
+        }
+        then {
+            assert workflow.failed
+            assert (workflow.stdout + workflow.stderr).join('\n').contains('one tumor needs about')
+            assert workflow.trace.tasks().size() == 0
+        }
+    }
+}

@@ -128,6 +128,80 @@ def checkPreregistration(criteriaPath, codeDir, allowUnregistered) {
 }
 
 /*
+ * Launch checks for one server without a scheduler (-profile server,
+ * conf/server.config). Refuses to start, before anything runs, when the
+ * cores or memory this run may use are missing or more than the machine
+ * has, when the memory is below what the largest steps ask for, or when the
+ * work directory's file system cannot hold one tumor: the FASTQs of the
+ * largest BAM (1.7 times it, the upper end measured in tests/scale), a STAR
+ * index built here and its published copy (about 10 times the genome FASTA
+ * each), and a margin.
+ */
+def checkServer(samples, workDir) {
+    if (!params.server_cpus || !params.server_memory) {
+        error("-profile server needs --server_cpus and --server_memory: the cores and memory this run may use " +
+              "on this machine (docs/RUNBOOK.md, \"Route 2: a standalone server\").")
+    }
+    def cpus = params.server_cpus as int
+    def mem = nextflow.util.MemoryUnit.of(params.server_memory as String)
+    def minMem = nextflow.util.MemoryUnit.of(params.server_min_memory as String)
+    def machineCpus = Runtime.getRuntime().availableProcessors()
+    def machineMem = machineMemory()
+    def problems = []
+    if (cpus < 1 || cpus > machineCpus) {
+        problems << "--server_cpus ${cpus} is not between 1 and this machine's ${machineCpus} cores"
+    }
+    if (mem < minMem) {
+        problems << "--server_memory ${mem} is below ${minMem}, what the STAR index build and STARsolo ask for"
+    }
+    if (machineMem != null && mem > machineMem) {
+        problems << "--server_memory ${mem} is more than this machine has (${machineMem})"
+    }
+    def bamMax = samples.collect { s -> s[1].size() }.max() ?: 0L
+    def fastqBytes = (1.7 * bamMax) as long
+    def indexBytes = params.star_index ? 0L : 2L * 10L * file(params.genome_fasta).size()
+    def marginBytes = nextflow.util.MemoryUnit.of(params.server_disk_margin as String).toBytes()
+    def needBytes = fastqBytes + indexBytes + marginBytes
+    def freeBytes = usableSpace(workDir)
+    if (freeBytes < needBytes) {
+        problems << "the work directory's file system has ${sizeText(freeBytes)} free, and one tumor needs about ${sizeText(needBytes)} " +
+                    "(FASTQs ${sizeText(fastqBytes)}, STAR index and its copy ${sizeText(indexBytes)}, margin ${sizeText(marginBytes)})"
+    }
+    if (problems) {
+        error("Refusing to start on this server: ${problems.join('; ')}. See docs/RUNBOOK.md, \"Route 2: a standalone server\".")
+    }
+    log.info("server: using ${cpus} of ${machineCpus} cores and ${mem} of ${machineMem ?: 'unknown'} memory; " +
+             "${sizeText(freeBytes)} free for work/, one tumor needs about ${sizeText(needBytes)}")
+    return [cpus: cpus, memory: mem.toString(), machine_cpus: machineCpus, machine_memory: machineMem?.toString(),
+            work_free: sizeText(freeBytes), one_tumor_needs: sizeText(needBytes),
+            needs: [fastq: sizeText(fastqBytes), star_index_and_copy: sizeText(indexBytes), margin: sizeText(marginBytes)]]
+}
+
+def sizeText(bytes) {
+    return new nextflow.util.MemoryUnit(bytes as long).toString()
+}
+
+// Total memory from /proc/meminfo (Linux), or null where there is none.
+def machineMemory() {
+    def f = new java.io.File('/proc/meminfo')
+    if (!f.exists()) {
+        return null
+    }
+    def m = (f.text =~ /MemTotal:\s+(\d+) kB/)
+    return m.find() ? new nextflow.util.MemoryUnit((m.group(1) as long) * 1024L) : null
+}
+
+// Free space on the file system that holds `path`, or on its nearest
+// existing parent (the work directory may not exist yet at launch).
+def usableSpace(path) {
+    def f = new java.io.File(path.toString()).getAbsoluteFile()
+    if (f.exists()) {
+        return f.getUsableSpace()
+    }
+    return f.getParentFile() ? usableSpace(f.getParentFile()) : 0L
+}
+
+/*
  * SHA-256 over the files matching `globs` under `dir` (names and contents).
  * Passed as an input to the steps that run that code, so -resume re-runs
  * them after a code change: Nextflow hashes neither bin/ nor the contents
@@ -152,6 +226,9 @@ workflow {
               "(see the @PG/@CO lines of a BAM header). Got '${params.cellranger_compat}'.")
     }
     def samples = readSamplesheet(params.input, doConcordance)
+    if (boolParam('server_check', params.server_check)) {
+        writeJson("${params.outdir}/pipeline_info/server_check.json", checkServer(samples, workflow.workDir))
+    }
     def chemistries = samples.collect { s -> s[0].chemistry }.unique()
     chemistries.each { c ->
         if (!params["whitelist_${c}"]) {
