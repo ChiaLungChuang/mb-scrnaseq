@@ -464,10 +464,118 @@ mapping (low `barcode_recovery`), different cell calling (compare
 `published_cells_called_by_starsolo`). Then report the failure and the
 explanation together.
 
+## Route 2: a standalone server (no scheduler)
+
+For one Linux server or workstation with no job scheduler, such as a
+departmental machine. Nextflow then runs every step on that machine with
+its local executor (`-profile server`, `conf/server.config`), in
+Singularity, Apptainer or Docker. Steps 4 to 8 and 10 above are the same;
+what changes is setup, the preflight, the smoke test and how the run is
+started.
+
+What the machine needs:
+
+- **Memory: more than 48 GB.** The STAR index build and STARsolo ask for
+  48 GB (`conf/base.config`). The pipeline refuses to start when
+  `--server_memory` is below 48 GB or above what the machine has, so a
+  machine with exactly 48 GB (about 47 GB usable) is not enough; 64 GB is.
+- **Cores: 8 or more** for the STAR steps to run at their requested
+  speed. With fewer, every task is capped to `--server_cpus` and runs
+  slower.
+- **Disk**: the same as the cluster run (section 9, "Disk space": about
+  350-445 GB at the peak for 8 tumors). The pipeline refuses to start when
+  the work directory's file system cannot hold one tumor: the FASTQs of
+  the largest BAM (1.7 times it), a STAR index built there and its copy,
+  and `--server_disk_margin` (20 GB).
+- **A container runtime**: Singularity or Apptainer (no root needed to
+  run), or Docker with your user in the `docker` group.
+
+`--server_cpus` and `--server_memory` are the share of the machine the run
+may use. On a shared machine, agree it with the people who run it, and
+leave memory for them and the system. Every task is capped at that share
+(`process.resourceLimits`), and the local executor starts a task only when
+its cores and memory fit in the share.
+
+### Setup
+
+As in section 2, without `hpcf_interactive`: micromamba with Nextflow
+26.10.4 and nf-test 0.9.5, the clone, a log folder, and an image cache:
+
+```bash
+mkdir -p <project-dir>/singularity_cache <project-dir>/logs
+echo 'export NXF_SINGULARITY_CACHEDIR=<project-dir>/singularity_cache' >> ~/.bashrc   # Singularity
+echo 'export NXF_APPTAINER_CACHEDIR=<project-dir>/singularity_cache' >> ~/.bashrc     # or Apptainer
+echo "export NXF_OPTS='-Xms1g -Xmx4g'" >> ~/.bashrc
+```
+
+Docker needs no cache variable.
+
+### Preflight and smoke test
+
+```bash
+cd <project-dir>/mb-scrnaseq
+micromamba activate nf
+scripts/hpcf_preflight.sh --local <project-dir>     # the directory that will hold work/
+```
+
+`--local` skips the LSF and module checks. It reports the cores, FAILs
+below 48 GB of memory and without Singularity, Apptainer or a usable
+Docker, and warns if a scheduler is on the `PATH`, in which case its
+profile is the better route. The tools, cache, storage, registries and
+download hosts are checked as on the cluster. Paste the report back.
+
+Then the synthetic test suites on this machine (2 cores and 6 GB, set by
+the test profile; replace `singularity` with `apptainer` or `docker`):
+
+```bash
+tmux new -s mbtest
+nf-test test --profile +server,singularity
+```
+
+### Inputs and the lock
+
+Sections 4 to 8 unchanged: `scripts/fetch_inputs.sh` for GEO, the
+whitelists, the reference and the BAMs; the reference check; the
+samplesheet; the locked criteria (the pre-registration gate works the
+same way here). Downloads need outbound HTTPS from this machine; the
+preflight's network checks show whether it has it.
+
+### Real run
+
+```bash
+cd <project-dir>/mb-scrnaseq
+cp assets/params_gse155446.yaml my_params.yaml    # once; fill in the paths
+tmux new -s mbreal
+micromamba activate nf
+nextflow run . -profile server,singularity -params-file my_params.yaml \
+  --server_cpus 16 --server_memory '96.GB' -w <project-dir>/work -resume
+```
+
+(16 cores and 96 GB are an example: use your share.) At launch the
+pipeline writes `pipeline_info/server_check.json` with the share, the
+machine's cores and memory, the free space and one tumor's needs, or
+refuses to start and says which check failed. Detach with `Ctrl-b d`; if
+the run stops, re-run the same command and finished steps are skipped.
+
+### The report
+
+Section 10 unchanged, with the container runtime you use:
+
+```bash
+IMG=$(grep -oP "^\s*r_container\s*=\s*'\K[^']+" nextflow.config)
+singularity exec -B <project-dir> "docker://$IMG" Rscript bin/phase1_report.R --lib lib/R \
+  --outdir <project-dir>/results --out docs/results/phase1/README.md
+# or: apptainer exec ... (same arguments), or
+docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":"$PWD" -v <project-dir>:<project-dir> -w "$PWD" \
+  "$IMG" Rscript bin/phase1_report.R --lib lib/R \
+  --outdir <project-dir>/results --out docs/results/phase1/README.md
+```
+
 ## When something breaks
 
 | Symptom | Likely cause |
 |---|---|
+| `Refusing to start on this server: ...` | Route 2: the share (`--server_cpus`, `--server_memory`) is missing, below 48 GB or more than the machine has, or the work directory's disk cannot hold one tumor; the message names the check |
 | `bsub: command not found` | LSF is not set up in this shell; on a compute node, start from `hpcf_interactive` or a batch job, which carry LSF's environment |
 | The preflight's submit test fails, or Nextflow's jobs are refused | This compute node may not submit jobs: ask HPCF (section 1, question 2) |
 | The run stops after 16 hours in an interactive session | The interactive queue's run limit: `-resume` in a new session, or use the batch job (section 9, path B) |

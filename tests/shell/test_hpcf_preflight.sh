@@ -86,6 +86,8 @@ EOF
 # pf [VAR=value ...]: run the preflight with good defaults (inside an LSF
 # job), overridden by the arguments. PF_OPTS=--submit-test pf ... adds the option.
 pf() {
+  local opts=()
+  read -r -a opts <<< "${PF_OPTS:-}"
   rm -f "$CALLS.bjobs"
   run env -i PATH="$SBX" HOME="$TMP/home" USER=tester CALLS="$CALLS" \
     MODULES_INIT="$TMP/modinit.sh" NXF_SINGULARITY_CACHEDIR="$TMP/cache" \
@@ -93,7 +95,7 @@ pf() {
     STUB_QUEUES="short=Open:Active standard=Open:Active large_mem=Open:Active" \
     STUB_JAVA=21.0.5 STUB_NXF=26.10.4 STUB_NFT=0.9.5 STUB_DF_KB=2000000000 STUB_NET=ok \
     STUB_JOBSTATE=DONE PREFLIGHT_POLL=1 \
-    "$@" bash "$PF" ${PF_OPTS:+"$PF_OPTS"} "$WORK"
+    "$@" bash "$PF" ${opts[@]+"${opts[@]}"} "$WORK"
 }
 line() { grep -F -- "$1" <<< "$out" | head -n 1 || true; }   # the report line mentioning $1 (empty if none)
 expect_line() { # expect_line <PASS|WARN|FAIL> <fragment> <name>
@@ -235,5 +237,48 @@ expect_line FAIL "bsub from this node failed" "bsub refused: FAIL"
 expect_out "User permission denied" "bsub refused: LSF's message is shown"
 PF_OPTS=--bogus pf
 expect_rc 2 "unknown option: exit 2"
+
+echo "hpcf_preflight.sh --local (a server without a scheduler)"
+stub "$SBX" nproc 'echo "${STUB_NPROC:-32}"'
+printf 'MemTotal:       263868372 kB\nMemFree:        1000 kB\n' > "$TMP/meminfo_256"
+printf 'MemTotal:        32775532 kB\n' > "$TMP/meminfo_32"
+mkdir -p "$TMP/rt_sing" "$TMP/rt_app" "$TMP/rt_docker" "$TMP/rt_docker_down" "$TMP/rt_none"
+stub "$TMP/rt_sing" singularity 'echo "singularity-ce version 4.1.1"'
+stub "$TMP/rt_app" apptainer 'echo "apptainer version 1.3.4"'
+stub "$TMP/rt_docker" docker '[ "$1" = info ] && echo "27.3.1"'
+stub "$TMP/rt_docker_down" docker '[ "$1" = info ] && { echo "Cannot connect to the Docker daemon" >&2; exit 1; }'
+lpf() { PF_OPTS=--local pf PATH="$SBX:$TMP/$1" LSB_JOBID= PREFLIGHT_MEMINFO="$TMP/meminfo_256" "${@:2}"; }
+
+: > "$CALLS"
+lpf rt_sing
+expect_rc 0 "local, everything in place: exit 0"
+expect_line PASS "memory: 251 GB" "memory read from /proc/meminfo: 251 GB passes"
+expect_line PASS "cores: 32" "cores reported"
+expect_line PASS "singularity: singularity-ce version 4.1.1" "Singularity found"
+if ! grep -qE '^(Session|LSF|Singularity)$' <<< "$out" && ! grep -q 'not inside an LSF job' <<< "$out"; then
+  ok "local: no session, LSF or module checks"
+else bad "local: no session, LSF or module checks" "$out"; fi
+if ! grep -qE '^(module|bsub|bjobs|bqueues|bparams|lsid) ' "$CALLS"; then ok "local: runs no LSF or module command"
+else bad "local: runs no LSF or module command" "$(cat "$CALLS")"; fi
+expect_line WARN "bsub is on PATH" "a scheduler on PATH: WARN (use its profile instead)"
+expect_line PASS "ghcr.io/chialungchuang/mb-scrnaseq-r:" "local: registries still checked"
+lpf rt_sing PREFLIGHT_MEMINFO="$TMP/meminfo_32"
+expect_rc 1 "local, 31 GB of memory: exit 1"
+expect_line FAIL "memory: 31 GB, below the 48 GB" "31 GB: FAIL (48 GB from nextflow.config)"
+lpf rt_none
+expect_line FAIL "no container runtime" "no container runtime: FAIL"
+lpf rt_app NXF_SINGULARITY_CACHEDIR= NXF_APPTAINER_CACHEDIR="$TMP/cache"
+expect_line PASS "apptainer: apptainer version 1.3.4" "Apptainer found"
+expect_line PASS "NXF_APPTAINER_CACHEDIR=$TMP/cache: writable" "Apptainer only: its cache variable is the one checked"
+lpf rt_docker NXF_SINGULARITY_CACHEDIR=
+expect_line PASS "docker: server 27.3.1" "Docker with a reachable daemon: PASS"
+expect_out "image cache: none needed" "Docker only: no image cache variable needed"
+lpf rt_docker_down
+expect_line WARN "docker: installed, but the daemon is not reachable" "Docker without its daemon: WARN"
+expect_line FAIL "no container runtime" "Docker without its daemon and nothing else: FAIL"
+lpf rt_sing STUB_NPROC=4
+expect_line WARN "cores: 4" "4 cores: WARN (the STAR steps ask for 8)"
+PF_OPTS="--local --submit-test" pf
+expect_rc 2 "--local with --submit-test: exit 2"
 
 finish

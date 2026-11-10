@@ -132,6 +132,10 @@ jobs:
         run: nextflow run . -profile test,docker,local_r_image -stub-run --outdir results_stub
       - name: Pipeline tests on the synthetic dataset
         run: nf-test test --profile +docker,local_r_image --verbose
+      # The same suites on the standalone-server profile: local executor,
+      # every task capped at conf/test.config's server share (2 cores, 6 GB).
+      - name: Pipeline tests with the standalone-server profile
+        run: nf-test test --profile +server,docker,local_r_image
       - name: The R steps ran in the image built from this commit
         run: |
           local_runs=$(grep -rls --include=.command.run 'mb-scrnaseq-r:local' .nf-test work || true)
