@@ -11,6 +11,7 @@
 argv <- commandArgs(trailingOnly = TRUE)
 lib <- argv[which(argv == "--lib") + 1]
 for (f in list.files(lib, pattern = "\\.R$", full.names = TRUE)) source(f)
+log_threads()
 opt_end <- 0
 while (opt_end + 2 <= length(argv) && startsWith(argv[opt_end + 1], "--")) opt_end <- opt_end + 2
 a <- parse_args(argv[seq_len(opt_end)],

@@ -17,6 +17,8 @@ process SAMPLE_QC {
     script:
     """
     # code fingerprint: ${fingerprint}
+    # Threads limited to the task's CPUs (data.table, OpenMP, BLAS); each R script logs them.
+    export OMP_NUM_THREADS=${task.cpus} OMP_THREAD_LIMIT=${task.cpus} OPENBLAS_NUM_THREADS=${task.cpus} MKL_NUM_THREADS=${task.cpus} R_DATATABLE_NUM_THREADS=${task.cpus}
     sample_qc.R --lib ${lib} --sample ${meta.id} --filtered-dir ${filtered} \\
         --nmads ${params.qc_nmads} --out-prefix ${meta.id}
 

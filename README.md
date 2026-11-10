@@ -171,7 +171,7 @@ confirming that it fails ([the list](docs/DEVELOPMENT_PLAN.md#testing-rules)).
     minus-strand, antisense, intronic, intergenic and multi-mapping reads,
     and two genes sharing a symbol.
   - The results report (`bin/phase1_report.R`) is checked on both runs'
-    outputs.
+    outputs, and every R step's logged thread count equals its CPUs.
   - `tests/server.nf.test`: the standalone-server profile's launch checks
     (too little memory, more than the machine has, no disk for one tumor).
     CI also runs both suites under `-profile server`.

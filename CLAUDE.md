@@ -106,6 +106,11 @@ fails if committed data and generators disagree.
 - `methods::new("dgCMatrix", ...)` fails in a fresh session until something
   has loaded the Matrix namespace; the unit tests always have, `bin/`
   scripts may not. Look the class up with `asNamespace("Matrix")`.
+- data.table takes half the machine's cores, whatever the task asked for.
+  Every R module exports OMP_NUM_THREADS, OMP_THREAD_LIMIT,
+  OPENBLAS_NUM_THREADS, MKL_NUM_THREADS and R_DATATABLE_NUM_THREADS as
+  `${task.cpus}`, and its script calls `log_threads()`
+  (`tests/shell/test_r_threads.sh` fails on a module that does not).
 - `r_container` is pinned as `name:tag@sha256:...`. `docker tag` cannot take
   a digest, so CI tests the image built from the commit through the
   `local_r_image` profile, and checks the pinned one in `pinned-r-image`.

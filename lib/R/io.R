@@ -227,6 +227,19 @@ read_published_counts <- function(path, chunk_rows = 2000L) {
   m
 }
 
+#' Log the threads this R step may use, for the task log.
+#'
+#' Each R module sets OMP_NUM_THREADS, OMP_THREAD_LIMIT, OPENBLAS_NUM_THREADS,
+#' MKL_NUM_THREADS and R_DATATABLE_NUM_THREADS to the task's CPUs before R
+#' starts (BLAS reads them when it loads); data.table, which otherwise takes
+#' half the machine's cores, honours them. tests/main.nf.test checks the line.
+log_threads <- function() {
+  env <- function(v) { x <- Sys.getenv(v); if (nzchar(x)) x else "unset" }
+  message(sprintf("threads: data.table %d, OMP_NUM_THREADS=%s, OMP_THREAD_LIMIT=%s, OPENBLAS_NUM_THREADS=%s, MKL_NUM_THREADS=%s",
+                  data.table::getDTthreads(), env("OMP_NUM_THREADS"), env("OMP_THREAD_LIMIT"),
+                  env("OPENBLAS_NUM_THREADS"), env("MKL_NUM_THREADS")))
+}
+
 #' Write a JSON file with stable formatting.
 write_json <- function(x, path) {
   jsonlite::write_json(x, path, auto_unbox = TRUE, pretty = TRUE, digits = NA, null = "null", na = "null")
