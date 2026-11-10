@@ -191,3 +191,19 @@ test_that("write_json writes NA as null, not as the string \"NA\"", {
   expect_null(jsonlite::read_json(p)$a)
   expect_false(grepl('"NA"', paste(readLines(p), collapse = "")))
 })
+
+test_that("log_threads reports the threads data.table will use and the limits in the environment", {
+  # Fresh sessions, as the R steps start: data.table reads the limits then.
+  run <- function(env) {
+    code <- sprintf("for (f in list.files('%s', full.names = TRUE)) source(f); log_threads()", lib_dir)
+    out <- system2(file.path(R.home("bin"), "Rscript"), c("--vanilla", "-e", shQuote(code)),
+                   env = env, stdout = TRUE, stderr = TRUE)
+    grep("^threads:", out, value = TRUE)
+  }
+  expect_identical(run(c("OMP_NUM_THREADS=1", "OMP_THREAD_LIMIT=1", "OPENBLAS_NUM_THREADS=1", "MKL_NUM_THREADS=1", "R_DATATABLE_NUM_THREADS=1")),
+                   "threads: data.table 1, OMP_NUM_THREADS=1, OMP_THREAD_LIMIT=1, OPENBLAS_NUM_THREADS=1, MKL_NUM_THREADS=1")
+  # The data.table figure is data.table's own count, not copied from the variables.
+  two <- min(2L, parallel::detectCores())
+  expect_identical(run(c(sprintf("OMP_THREAD_LIMIT=%d", two), sprintf("R_DATATABLE_NUM_THREADS=%d", two), "OMP_NUM_THREADS=7")),
+                   sprintf("threads: data.table %d, OMP_NUM_THREADS=7, OMP_THREAD_LIMIT=%d, OPENBLAS_NUM_THREADS=unset, MKL_NUM_THREADS=unset", two, two))
+})
