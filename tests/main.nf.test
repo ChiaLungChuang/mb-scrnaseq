@@ -114,6 +114,89 @@ nextflow_pipeline {
         }
     }
 
+    test("a run that allows unlocked criteria is not pre-registered, even when they are locked and pushed") {
+        when {
+            // A locked criteria file, committed and pushed to a remote in a
+            // scratch git repository, so every check on the criteria passes.
+            def out = new File("$outputDir"); out.mkdirs()
+            def git = { File dir, List args ->
+                def p = (['git', '-c', 'user.name=test', '-c', 'user.email=test@example.org', '-C', dir.path] + args).execute()
+                def err = p.err.text
+                p.waitFor()
+                assert p.exitValue() == 0 : "git ${args}: ${err}"
+            }
+            def repo = new File(out, 'criteria_repo'); repo.mkdirs()
+            git(out, ['init', '-q', '--bare', 'remote.git'])
+            git(repo, ['init', '-q', '-b', 'main'])
+            new File(repo, 'acceptance_criteria.yaml').text =
+                new File("${projectDir}/preregistration/acceptance_criteria.yaml").text.replaceFirst(/(?m)^status:.*$/, 'status: locked')
+            git(repo, ['add', 'acceptance_criteria.yaml'])
+            git(repo, ['commit', '-q', '-m', 'lock'])
+            git(repo, ['remote', 'add', 'origin', '../remote.git'])
+            git(repo, ['push', '-q', 'origin', 'main'])
+            params {
+                outdir = "$outputDir"
+                criteria = "$outputDir/criteria_repo/acceptance_criteria.yaml"
+                allow_unlocked_criteria = true
+            }
+        }
+        then {
+            assert workflow.success
+            def pre = new groovy.json.JsonSlurper().parse(file("$outputDir/pipeline_info/preregistration_check.json"))
+            // The criteria's own checks all pass...
+            assert pre.locked && pre.tracked && !pre.uncommitted_changes && pre.pushed_to
+            // ...but the gate was switched off, so the run is not pre-registered, and says why.
+            assert pre.preregistered == false
+            assert pre.problems.any { p -> p.contains('--allow_unlocked_criteria') }
+            def verdict = new groovy.json.JsonSlurper().parse(file("$outputDir/concordance/concordance_summary.verdict.json"))
+            assert verdict.preregistered == false
+        }
+    }
+
+    test("locked, committed and pushed criteria pass the gate when it is enforced") {
+        when {
+            def out = new File("$outputDir"); out.mkdirs()
+            def git = { File dir, List args ->
+                def p = (['git', '-c', 'user.name=test', '-c', 'user.email=test@example.org', '-C', dir.path] + args).execute()
+                def err = p.err.text
+                p.waitFor()
+                assert p.exitValue() == 0 : "git ${args}: ${err}"
+            }
+            def repo = new File(out, 'criteria_repo'); repo.mkdirs()
+            git(out, ['init', '-q', '--bare', 'remote.git'])
+            git(repo, ['init', '-q', '-b', 'main'])
+            new File(repo, 'acceptance_criteria.yaml').text =
+                new File("${projectDir}/preregistration/acceptance_criteria.yaml").text.replaceFirst(/(?m)^status:.*$/, 'status: locked')
+            git(repo, ['add', 'acceptance_criteria.yaml'])
+            git(repo, ['commit', '-q', '-m', 'lock'])
+            git(repo, ['remote', 'add', 'origin', '../remote.git'])
+            git(repo, ['push', '-q', 'origin', 'main'])
+            params {
+                outdir = "$outputDir"
+                criteria = "$outputDir/criteria_repo/acceptance_criteria.yaml"
+                allow_unlocked_criteria = "false"
+            }
+        }
+        then {
+            // The gate also needs the pipeline's own code committed: true in
+            // CI, not while editing. Either way the outcome is determined.
+            def p = ['git', '-C', "${projectDir}", 'status', '--porcelain', '--untracked-files=no'].execute()
+            def codeDirty = p.text.trim()
+            p.waitFor()
+            if (codeDirty) {
+                assert workflow.failed
+                assert (workflow.stdout + workflow.stderr).join('\n').contains('the pipeline code has uncommitted changes')
+            } else {
+                assert workflow.success
+                def pre = new groovy.json.JsonSlurper().parse(file("$outputDir/pipeline_info/preregistration_check.json"))
+                assert pre.preregistered == true
+                assert pre.problems == []
+                def verdict = new groovy.json.JsonSlurper().parse(file("$outputDir/concordance/concordance_summary.verdict.json"))
+                assert verdict.preregistered == true
+            }
+        }
+    }
+
     test("the Cell Ranger version to match must be stated") {
         when {
             params {
