@@ -153,8 +153,10 @@ confirming that it fails ([the list](docs/DEVELOPMENT_PLAN.md#testing-rules)).
   the network, containers and LSF. `check_reads.sh` on hand-built FASTQ
   folders, `fetch_inputs.sh` (MD5, size, truncation, 10x headers, SRA
   fallback), `check_versions.sh`, `hpcf_preflight.sh` (including that it
-  changes nothing unless asked to submit its one test job), the LSF
-  directives the St. Jude profile makes Nextflow write, the phase 1 sample
+  changes nothing unless asked to submit its one test job, and its
+  `--local` mode for a server), the LSF directives the St. Jude profile
+  makes Nextflow write, the caps the standalone-server profile puts on
+  each task and on the machine, the phase 1 sample
   record against the run table, and the committed test data against its
   generators.
 - **Pipeline** (`nf-test test --profile +docker`), on two synthetic
@@ -170,6 +172,9 @@ confirming that it fails ([the list](docs/DEVELOPMENT_PLAN.md#testing-rules)).
     and two genes sharing a symbol.
   - The results report (`bin/phase1_report.R`) is checked on both runs'
     outputs.
+  - `tests/server.nf.test`: the standalone-server profile's launch checks
+    (too little memory, more than the machine has, no disk for one tumor).
+    CI also runs both suites under `-profile server`.
 
 [CI](.github/workflows/ci.yml) runs all of this on every push to `main` and
 every pull request, with the pipeline tests on the R image built from that
